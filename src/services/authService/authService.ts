@@ -14,9 +14,8 @@ export const signIn = async (params: SignInRequest) => {
   const { data } = await fetchAPI.post<SignInResponse>('/auth/sign_in', {
     ...params,
   });
-  const userData = data.data;
 
-  return userData;
+  return data;
 };
 
 export const signUp = async (params: SignUpRequest) => {
@@ -24,13 +23,13 @@ export const signUp = async (params: SignUpRequest) => {
     ...params,
   });
 
-  return { userData: data.data, status: data.status };
+  return data;
 };
 
 export const signOut = async (params: SignOutRequest) => {
   const { data } = await fetchAPI.delete<SignOutResponse>('/auth/sign_out');
 
-  return { success: data.success };
+  return data;
 };
 
 export const validateToken = async (params: ValidateTokenRequest) => {
@@ -38,5 +37,5 @@ export const validateToken = async (params: ValidateTokenRequest) => {
     '/auth/validate_token'
   );
 
-  return { userData: data.data, success: data.success };
+  return data;
 };
