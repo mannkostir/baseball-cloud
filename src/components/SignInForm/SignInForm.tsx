@@ -1,22 +1,28 @@
 import React from 'react';
 import { Form, Field } from 'react-final-form';
-import { StyledForm, StyledInput } from './SignInForm.styles';
+import * as Styled from './SignInForm.styles';
 
 const SignInForm = () => {
   return (
-    <Form onSubmit={() => {}}>
-      {(props) => (
-        <StyledForm onSubmit={props.handleSubmit}>
-          <Field name="email" type="text">
-            {(props) => <StyledInput {...props.input} />}
-          </Field>
-          <Field name="password" type="password">
-            {(props) => <StyledInput {...props.input} />}
-          </Field>
-          <button type="submit">Submit</button>
-        </StyledForm>
-      )}
-    </Form>
+    <>
+      <Styled.FormHeader>
+        <h2>Welcome to BaseballCloud!</h2>
+        <span>Sign into your account here</span>
+      </Styled.FormHeader>
+      <Form onSubmit={() => {}}>
+        {(props) => (
+          <Styled.Form onSubmit={props.handleSubmit}>
+            <Field name="email" type="text">
+              {(props) => <Styled.Input {...props.input} />}
+            </Field>
+            <Field name="password" type="password">
+              {(props) => <Styled.Input {...props.input} />}
+            </Field>
+            <button type="submit">Submit</button>
+          </Styled.Form>
+        )}
+      </Form>
+    </>
   );
 };
 

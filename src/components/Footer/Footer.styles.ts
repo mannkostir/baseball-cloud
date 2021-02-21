@@ -1,6 +1,6 @@
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 
-export const StyledFooter = styled.footer`
+export const FooterContainer = styled.footer`
   background: #fff;
   border-top: 1px solid rgba(0, 0, 0, 0.1);
   display: flex;

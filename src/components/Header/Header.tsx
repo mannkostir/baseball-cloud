@@ -1,12 +1,12 @@
 import React from 'react';
 import Logo from '../Logo';
-import { StyledHeader } from './Header.styles';
+import * as Styled from './Header.styles';
 
 const Header = () => {
   return (
-    <StyledHeader>
+    <Styled.HeaderContainer>
       <Logo />
-    </StyledHeader>
+    </Styled.HeaderContainer>
   );
 };
 

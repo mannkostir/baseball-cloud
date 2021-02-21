@@ -1,4 +1,17 @@
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
+import backgroundImage from '@/assets/images/background.png';
+
+export const Container = styled.section`
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+  background-image: url(${backgroundImage});
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  flex: 1;
+`;
 
 export const ModalContainer = styled.div`
   background: hsla(0, 0%, 100%, 0.8);
@@ -12,13 +25,3 @@ export const ModalContainer = styled.div`
   width: 100%;
   max-width: 450px;
 `;
-
-export const StyledHeader = styled.header`
-  display: flex;
-  color: #667784;
-  align-items: center;
-  flex-direction: column;
-`;
-
-export const StyledAuthForm = styled.form``;
-export const StyledAuthInput = styled.input``;

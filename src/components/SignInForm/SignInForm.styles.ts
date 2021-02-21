@@ -1,6 +1,6 @@
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 
-export const StyledForm = styled.form`
+export const Form = styled.form`
   display: flex;
   flex-direction: column;
   > input:not(:last-child) {
@@ -8,7 +8,7 @@ export const StyledForm = styled.form`
   }
 `;
 
-export const StyledInput = styled.input`
+export const Input = styled.input`
   width: 100%;
   height: 50px;
   border-radius: 4px;
@@ -18,4 +18,11 @@ export const StyledInput = styled.input`
   color: #667784;
   border: 1px solid transparent;
   box-sizing: border-box;
+`;
+
+export const FormHeader = styled.header`
+  display: flex;
+  color: #667784;
+  align-items: center;
+  flex-direction: column;
 `;

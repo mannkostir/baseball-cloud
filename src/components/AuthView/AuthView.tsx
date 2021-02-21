@@ -1,16 +1,15 @@
 import React from 'react';
-import SignInForm from '../SignInForm';
-import { ModalContainer, StyledHeader } from './AuthView.styles';
+import * as Styled from './AuthView.styles';
 
-const AuthView = () => {
+interface IAuthViewProps {
+  children: JSX.Element | JSX.Element[];
+}
+
+const AuthView = ({ children }: IAuthViewProps) => {
   return (
-    <ModalContainer>
-      <StyledHeader>
-        <h1>Welcome to BaseBallCloud</h1>
-        <span>Sign into your account here:</span>
-      </StyledHeader>
-      <SignInForm />
-    </ModalContainer>
+    <Styled.Container>
+      <Styled.ModalContainer>{children}</Styled.ModalContainer>
+    </Styled.Container>
   );
 };
 

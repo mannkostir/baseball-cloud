@@ -1,9 +1,9 @@
 import React from 'react';
-import { StyledFooter } from './Footer.styles';
+import * as Styled from './Footer.styles';
 
 const Footer = () => {
   return (
-    <StyledFooter>
+    <Styled.FooterContainer>
       <div>
         <span>© 2018 BaseballCloud</span>
         <a href="/legal/terms">Terms of Service</a>
@@ -23,7 +23,7 @@ const Footer = () => {
           Facebook
         </a>
       </div>
-    </StyledFooter>
+    </Styled.FooterContainer>
   );
 };
 

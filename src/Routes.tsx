@@ -1,10 +1,11 @@
 import React from 'react';
 import { Redirect, Route, RouteProps, Switch } from 'react-router-dom';
-import Auth from '@/pages/Auth';
 import Profile from '@/pages/Profile';
 import Leaderboard from '@/pages/Leaderboard';
 import PlayersList from '@/pages/PlayersList';
 import PlayerInfo from '@/pages/PlayerInfo';
+import SignIn from './pages/SignIn';
+import SignUp from './pages/SignUp';
 
 const isAuthenticated = false;
 
@@ -38,10 +39,10 @@ const Routes = () => {
   return (
     <Switch>
       <UnAuthOnlyRoute path="/login">
-        <Auth />
+        <SignIn />
       </UnAuthOnlyRoute>
       <UnAuthOnlyRoute path="/registration">
-        <Auth />
+        <SignUp />
       </UnAuthOnlyRoute>
       <AuthOnlyRoute path="/profile">
         <Profile />
