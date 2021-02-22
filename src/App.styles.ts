@@ -1,9 +1,22 @@
-import styled, { createGlobalStyle } from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components/macro';
 
 export const AppContainer = styled.div`
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas:
+    'header header'
+    'content content'
+    'footer footer';
   min-height: 100vh;
+`;
+
+export const MainContent = styled.main`
+  grid-area: content;
+  background: #fff;
   display: flex;
-  flex-flow: column;
+  justify-content: space-between;
+  overflow: hidden;
 `;
 
 export const GlobalStyles = createGlobalStyle`
@@ -18,6 +31,39 @@ export const GlobalStyles = createGlobalStyle`
     color: #667784;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    margin: 0;
+    line-height: 1.5;
+  }
+  input {
+    font-family: 'Lato';
+    font-size: 1rem;
+    font-weight: 400;
+    font-style: normal;
+  }
+  button {
+    cursor: pointer;
+    font-family: 'Lato';
+    font-size: 1rem;
+    font-weight: 400;
+    font-style: normal;
+  }
+  a {
+    color: #337ab7;
+    text-decoration: none;
+    cursor: pointer;
+    outline: none;
+    &:hover {
+      color: #23527c;
+      text-decoration: underline;
+    }
+  }
+  h1 {
+    font-size: 36px;
+    font-weight: 700;
+    font-style: normal;
+    line-height: 1.25;
+    margin: 0;
+    margin-bottom: 21px;
   }
   h2 {
     font-size: 24px;

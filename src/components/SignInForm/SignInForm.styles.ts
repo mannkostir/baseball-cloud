@@ -1,23 +1,13 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components/macro';
+
+export const Container = styled.div`
+  font-size: 1rem;
+`;
 
 export const Form = styled.form`
   display: flex;
   flex-direction: column;
-  > input:not(:last-child) {
-    margin-bottom: 10px;
-  }
-`;
-
-export const Input = styled.input`
-  width: 100%;
-  height: 50px;
-  border-radius: 4px;
-  background-color: #eff1f3;
-  padding: 6px 12px 10px 37px;
-  font-weight: 400;
-  color: #667784;
-  border: 1px solid transparent;
-  box-sizing: border-box;
 `;
 
 export const FormHeader = styled.header`
@@ -25,4 +15,27 @@ export const FormHeader = styled.header`
   color: #667784;
   align-items: center;
   flex-direction: column;
+  margin-bottom: 3em;
+`;
+
+export const ForgottenPassword = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 15px;
+`;
+
+export const FormFooter = styled.footer`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const SigUpLink = styled(Link)`
+  margin-left: 4px;
+  text-decoration: underline;
+  color: #48bbff;
+  &:hover,
+  &:active {
+    color: #48bbff;
+  }
 `;

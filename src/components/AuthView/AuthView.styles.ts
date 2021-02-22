@@ -11,6 +11,7 @@ export const Container = styled.section`
   background-repeat: no-repeat;
   background-position: center;
   flex: 1;
+  padding: 20px;
 `;
 
 export const ModalContainer = styled.div`

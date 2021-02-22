@@ -4,12 +4,12 @@ import * as Styled from './Footer.styles';
 const Footer = () => {
   return (
     <Styled.FooterContainer>
-      <div>
-        <span>© 2018 BaseballCloud</span>
+      <Styled.Legal>
+        <Styled.Copyright>© 2018 BaseballCloud</Styled.Copyright>
         <a href="/legal/terms">Terms of Service</a>
         <a href="/legal/privacy">Privacy Policy</a>
-      </div>
-      <div>
+      </Styled.Legal>
+      <Styled.Social>
         <a href="https://baseballcloud.blog" target="_blank">
           Blog
         </a>
@@ -22,7 +22,7 @@ const Footer = () => {
         <a href="http://www.facebook.com/BaseballCloudUS/" target="_blank">
           Facebook
         </a>
-      </div>
+      </Styled.Social>
     </Styled.FooterContainer>
   );
 };
