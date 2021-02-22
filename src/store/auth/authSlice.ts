@@ -10,7 +10,7 @@ import { AuthState } from './authStoreTypes';
 import { UserCredentials } from '@/types/commonTypes';
 
 export const defaultAuth: AuthState = {
-  user: null,
+  userId: null,
   isLoading: false,
   error: '',
 };
@@ -23,7 +23,7 @@ const authSlice = createSlice({
       state,
       action: PayloadAction<SignInResponse & { credentials: UserCredentials }>
     ) {
-      state.user = action.payload.data;
+      state.userId = action.payload.data.id;
       state.isLoading = false;
       state.error = '';
 
@@ -56,7 +56,7 @@ const authSlice = createSlice({
       state,
       action: PayloadAction<ValidateTokenResponse>
     ) {
-      state.user = action.payload.data;
+      state.userId = action.payload.data.id;
       state.isLoading = false;
       state.error = '';
     },

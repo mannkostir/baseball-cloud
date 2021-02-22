@@ -1,7 +1,5 @@
-import { User } from '@/types/commonTypes';
-
 export type AuthState = {
-  user: User | null;
+  userId: number | null;
   isLoading: boolean;
   error: string;
 };

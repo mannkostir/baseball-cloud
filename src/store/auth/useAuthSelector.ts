@@ -5,10 +5,15 @@ import { RootState } from '..';
 export const useAuthSelector = () => {
   const authState = useSelector((state: RootState) => state.auth);
 
-  const isAuthenticated = useMemo(
-    () => authState.user?.id && authState.user?.uid && !authState.error,
-    [authState.user]
-  );
+  const isAuthenticated = useMemo(() => authState.userId && !authState.error, [
+    authState.userId,
+    authState.error,
+  ]);
 
-  return { currentUser: authState.user, isAuthenticated };
+  return {
+    userId: authState.userId,
+    isAuthenticated,
+    isLoading: authState.isLoading,
+    error: authState.error,
+  };
 };
