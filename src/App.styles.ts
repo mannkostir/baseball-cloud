@@ -46,6 +46,12 @@ export const GlobalStyles = createGlobalStyle`
     font-size: 1rem;
     font-weight: 400;
     font-style: normal;
+    outline: none;
+  }
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
   }
   a {
     color: #337ab7;
@@ -73,5 +79,12 @@ export const GlobalStyles = createGlobalStyle`
     color: #667784;
     margin: 0;
     margin-bottom: 8px;
+  }
+  h3 {
+    font-size: 18px;
+    line-height: 1.25;
+    font-weight: 900;
+    color: #414f5a;
+    margin: 0;
   }
 `;
