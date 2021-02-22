@@ -1,3 +1,4 @@
+import { authActions } from '.';
 import {
   SignInResponse,
   SignOutResponse,
@@ -6,31 +7,78 @@ import {
 } from '@/services/authService/authServiceTypes';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AuthState } from './authStoreTypes';
+import { UserCredentials } from '@/types/commonTypes';
 
 export const defaultAuth: AuthState = {
   user: null,
+  isLoading: false,
+  error: '',
 };
 
 const authSlice = createSlice({
   name: 'auth',
   initialState: defaultAuth,
   reducers: {
-    signInSucceeded(state, action: PayloadAction<SignInResponse>) {
+    signInSucceeded(
+      state,
+      action: PayloadAction<SignInResponse & { credentials: UserCredentials }>
+    ) {
       state.user = action.payload.data;
+      state.isLoading = false;
+      state.error = '';
+
+      localStorage.setItem(
+        'credentials',
+        JSON.stringify({ ...action.payload.credentials })
+      );
     },
-    signInFailed(state, action: PayloadAction<{ message: string }>) {},
-    signUpSucceeded(state, action: PayloadAction<SignUpResponse>) {},
-    signUpFailed(state, action: PayloadAction<{ message: string }>) {},
-    signOutSucceeded(state, action: PayloadAction<SignOutResponse>) {},
-    signOutFailed(state, action: PayloadAction<{ message: string }>) {},
+    signInFailed(state, action: PayloadAction<{ message: string }>) {
+      state.error = action.payload.message;
+      state.isLoading = false;
+    },
+    signUpSucceeded(state, action: PayloadAction<SignUpResponse>) {
+      state.isLoading = false;
+      state.error = '';
+    },
+    signUpFailed(state, action: PayloadAction<{ message: string }>) {
+      state.error = action.payload.message;
+      state.isLoading = false;
+    },
+    signOutSucceeded(state, action: PayloadAction<SignOutResponse>) {
+      state = defaultAuth;
+      localStorage.removeItem('token');
+    },
+    signOutFailed(state, action: PayloadAction<{ message: string }>) {
+      state.error = action.payload.message;
+      state.isLoading = false;
+    },
     validateTokenSucceeded(
       state,
       action: PayloadAction<ValidateTokenResponse>
     ) {
       state.user = action.payload.data;
+      state.isLoading = false;
+      state.error = '';
     },
-    validateTokenFailed(state, action: PayloadAction<{ message: string }>) {},
+    validateTokenFailed(state, action: PayloadAction<{ message: string }>) {
+      state.error = action.payload.message;
+      state.isLoading = false;
+    },
   },
+  extraReducers: (builder) =>
+    builder
+      .addCase(authActions.signIn, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(authActions.signUp, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(authActions.signOut, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(authActions.validateToken, (state) => {
+        state.isLoading = true;
+      }),
 });
 
 export const authInternalActions = authSlice.actions;

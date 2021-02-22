@@ -4,6 +4,7 @@ import authReducer from './auth/authSlice';
 import createSagaMiddleware from 'redux-saga';
 import rootSaga from './sagas';
 import { Provider } from 'react-redux';
+import { useEffect } from 'react';
 
 const defaultState = {
   auth: defaultAuth,
@@ -19,9 +20,9 @@ const rootReducer = combineReducers({
 
 export type RootState = ReturnType<typeof rootReducer>;
 
-const sagaMiddleware = createSagaMiddleware();
-
 const StoreProvider = ({ children }: IStoreProps) => {
+  const sagaMiddleware = createSagaMiddleware();
+
   const store = configureStore({
     reducer: rootReducer,
     preloadedState: defaultState,

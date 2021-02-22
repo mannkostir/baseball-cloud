@@ -4,6 +4,7 @@ import { Form, Field } from 'react-final-form';
 import Input from '../Input';
 import { UserRole } from '@/types/commonTypes';
 import SubmitButton from '../SubmitButton';
+import { SignUpRequest } from '@/services/authService/authServiceTypes';
 
 const rolesDescription: Record<UserRole, { title: string; content: string }> = {
   player: {
@@ -18,8 +19,27 @@ const rolesDescription: Record<UserRole, { title: string; content: string }> = {
   },
 };
 
-const SignUpForm = () => {
+type FormValues = {
+  email: string;
+  password: string;
+  passwordConfirmation: string;
+};
+
+interface ISignUpFormProps {
+  signUp: (values: SignUpRequest) => void;
+}
+
+const SignUpForm = ({ signUp }: ISignUpFormProps) => {
   const [selectedRole, setSelectedRole] = useState<UserRole>('player');
+
+  const onSubmit = (values: FormValues) => {
+    signUp({
+      email: values.email,
+      password: values.password,
+      password_confirmation: values.passwordConfirmation,
+      role: selectedRole,
+    });
+  };
   return (
     <>
       <Styled.FormHeader>
@@ -46,7 +66,7 @@ const SignUpForm = () => {
           </Styled.RoleText>
         </Styled.RoleDescription>
       </Styled.FormHeader>
-      <Form onSubmit={() => {}}>
+      <Form onSubmit={onSubmit}>
         {(props) => (
           <form>
             <Field name="email">

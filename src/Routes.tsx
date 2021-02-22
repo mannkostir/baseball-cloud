@@ -6,8 +6,7 @@ import PlayersList from '@/pages/PlayersList';
 import PlayerInfo from '@/pages/PlayerInfo';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
-
-const isAuthenticated = false;
+import { useAuthSelector } from './store/auth';
 
 const AuthOnlyRoute = ({
   children,
@@ -15,6 +14,7 @@ const AuthOnlyRoute = ({
 }: RouteProps & {
   children: JSX.Element | JSX.Element[];
 }) => {
+  const { isAuthenticated } = useAuthSelector();
   return (
     <Route {...props}>
       {isAuthenticated ? children : <Redirect to={{ pathname: '/login' }} />}
@@ -28,6 +28,7 @@ const UnAuthOnlyRoute = ({
 }: RouteProps & {
   children: JSX.Element | JSX.Element[];
 }) => {
+  const { isAuthenticated } = useAuthSelector();
   return (
     <Route {...props}>
       {!isAuthenticated ? children : <Redirect to={{ pathname: '/profile' }} />}

@@ -1,8 +1,5 @@
-import axios from 'axios';
-
-const accessToken = 'asd';
-const client = 'adsd';
-const uid = 'dasdasd';
+import { RequestHeaders, UserCredentials } from '@/types/commonTypes';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 
 const instance = axios.create({
   baseURL: process.env.REACT_APP_API_BASE,
@@ -11,42 +8,36 @@ const instance = axios.create({
     'Content-Type': 'application/json',
   },
 });
-type UserCredentials = {
-  ['Access-Token']: string;
-  Client: string;
-  Uid: string;
+
+const cachedCredentials:
+  | UserCredentials
+  | Record<string, any> = localStorage.getItem('credentials')
+  ? JSON.parse(localStorage.getItem('credentials')!)
+  : {};
+
+const headers: RequestHeaders = {
+  'access-token': cachedCredentials.token || '',
+  client: cachedCredentials.client || '',
+  uid: cachedCredentials.uid || '',
 };
 
-const headers: UserCredentials = {
-  'Access-Token': accessToken,
-  Client: client,
-  Uid: uid,
+const handleError = ({ message }: { message: string }) => {
+  return Promise.reject({ message });
 };
 
-const handleError = ({
-  data,
-  message,
-  status,
-}: {
-  message: string;
-  data: any;
-  status: string;
-}) => {
-  return Promise.reject({ message, data, status });
-};
+instance.interceptors.request.use((request) => {
+  request.headers = {
+    ...request.headers,
+    ...headers,
+  };
 
-instance.interceptors.request.use(
-  (request) =>
-    (request.headers = {
-      ...request.headers,
-      ...headers,
-    })
-);
+  return request;
+});
 
 instance.interceptors.response.use(
-  (response) => response,
-  ({ message, response: { data, status } }) => {
-    return handleError({ message, data, status });
+  (response: AxiosResponse) => response,
+  (error: AxiosError) => {
+    return handleError(error);
   }
 );
 

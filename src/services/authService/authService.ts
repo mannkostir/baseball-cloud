@@ -9,13 +9,24 @@ import {
   ValidateTokenResponse,
 } from './authServiceTypes';
 import fetchAPI from '@/services';
+import { RequestHeaders, UserCredentials } from '@/types/commonTypes';
 
-export const signIn = async (params: SignInRequest) => {
-  const { data } = await fetchAPI.post<SignInResponse>('/auth/sign_in', {
+export const signIn = async (
+  params: SignInRequest
+): Promise<SignInResponse & { credentials: UserCredentials }> => {
+  const res = await fetchAPI.post<SignInResponse>('/auth/sign_in', {
     ...params,
   });
 
-  return data;
+  const headers: RequestHeaders = res.headers;
+
+  const credentials: UserCredentials = {
+    token: headers['access-token'],
+    client: headers.client,
+    uid: headers.uid,
+  };
+
+  return { ...res.data, credentials };
 };
 
 export const signUp = async (params: SignUpRequest) => {

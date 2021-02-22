@@ -37,3 +37,15 @@ export type ResponseError = {
   errors: string[];
   success: false;
 };
+
+export type UserCredentials = {
+  token: string;
+  client: string;
+  uid: string;
+};
+
+export type RequestHeaders = {
+  'access-token': string;
+  client: string;
+  uid: string;
+};
