@@ -47,6 +47,10 @@ export const GlobalStyles = createGlobalStyle`
     font-weight: 400;
     font-style: normal;
     outline: none;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    color: #788B99;
   }
   ul {
     margin: 0;
