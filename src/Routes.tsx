@@ -2,7 +2,7 @@ import React from 'react';
 import { Redirect, Route, RouteProps, Switch } from 'react-router-dom';
 import Profile from '@/pages/Profile';
 import Leaderboard from '@/pages/Leaderboard';
-import PlayersList from '@/pages/PlayersList';
+import Network from '@/pages/Network';
 import PlayerInfo from '@/pages/PlayerInfo';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
@@ -52,7 +52,7 @@ const Routes = () => {
         <Leaderboard />
       </AuthOnlyRoute>
       <AuthOnlyRoute path="/network">
-        <PlayersList />
+        <Network />
       </AuthOnlyRoute>
       <AuthOnlyRoute path="/profile/:id">
         <PlayerInfo />

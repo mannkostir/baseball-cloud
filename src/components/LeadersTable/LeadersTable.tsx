@@ -1,16 +1,6 @@
 import { LeaderboardRecord } from '@/services/leaderboardService/leaderboardServiceTypes';
 import React from 'react';
-import styled from 'styled-components/macro';
-
-const StyledTable = styled.table`
-  width: 100%;
-  th {
-    font-weight: 400;
-    font-size: 14px;
-    color: #667784;
-    text-align: left;
-  }
-`;
+import StyledTable from '../StyledTable';
 
 interface ILeadersTableProps {
   leaderboardItems: LeaderboardRecord[];
