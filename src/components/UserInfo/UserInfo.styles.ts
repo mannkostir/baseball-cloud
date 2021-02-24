@@ -19,3 +19,20 @@ export const Role = styled.span`
   line-height: 19px;
   color: #788b99;
 `;
+
+export const ChoosePhotoLabel = styled.label`
+  display: inline-flex;
+  align-self: center;
+  padding: 10px;
+  margin-bottom: 0;
+  font-size: 14px;
+  line-height: 1;
+  font-weight: 400;
+  color: #788b99;
+  cursor: pointer;
+  white-space: nowrap;
+  &:hover {
+    color: #48bbff;
+    text-decoration: underline;
+  }
+`;
