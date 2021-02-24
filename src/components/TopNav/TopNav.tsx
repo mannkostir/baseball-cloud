@@ -2,7 +2,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import * as Styled from './TopNav.styled';
 
-const TopNav = () => {
+interface ITopNavProps {
+  username: string;
+}
+
+const TopNav = ({ username }: ITopNavProps) => {
   return (
     <Styled.Container>
       <Styled.NavList>
@@ -18,7 +22,7 @@ const TopNav = () => {
           </Link>
         </Styled.NavItem>
         <Styled.NavItem>
-          <Styled.UserDropdownToggle>Username</Styled.UserDropdownToggle>
+          <Styled.UserDropdownToggle>{username}</Styled.UserDropdownToggle>
         </Styled.NavItem>
       </Styled.NavList>
     </Styled.Container>

@@ -6,6 +6,7 @@ import Footer from './components/Footer';
 import Header from './components/Header';
 import Routes from './Routes';
 import { authActions, useAuthSelector } from './store/auth';
+import { profileActions } from './store/profile';
 
 function App() {
   const { isAuthenticated } = useAuthSelector();
@@ -16,6 +17,13 @@ function App() {
 
     dispatch(authActions.validateToken());
   }, []);
+
+  useEffect(() => {
+    if (!isAuthenticated) return;
+
+    dispatch(profileActions.getCurrentProfile());
+  }, [isAuthenticated]);
+
   return (
     <Router>
       <GlobalStyles />

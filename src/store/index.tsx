@@ -1,10 +1,10 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { defaultAuth } from './auth/authSlice';
 import authReducer from './auth/authSlice';
+import profileReducer from './profile/profileSlice';
 import createSagaMiddleware from 'redux-saga';
 import rootSaga from './sagas';
 import { Provider } from 'react-redux';
-import { useEffect } from 'react';
 
 const defaultState = {
   auth: defaultAuth,
@@ -16,6 +16,7 @@ interface IStoreProps {
 
 const rootReducer = combineReducers({
   auth: authReducer,
+  profile: profileReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
