@@ -21,3 +21,12 @@ export type RequestHeaders = {
   client: string;
   uid: string;
 };
+
+export type PlayerPosition =
+  | 'catcher'
+  | 'first_base'
+  | 'second_base'
+  | 'shortshop'
+  | 'third_base'
+  | 'outfield'
+  | 'pitcher';

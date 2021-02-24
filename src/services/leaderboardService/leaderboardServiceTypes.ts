@@ -1,3 +1,5 @@
+import { PlayerPosition } from '@/types/commonTypes';
+
 export type LeaderboardRecord = {
   age: number;
   batter_datraks_id: number;
@@ -15,14 +17,7 @@ export type GetLeaderboardQuery = {
   date?: 'last_week' | 'last_month';
   school?: string;
   team?: string;
-  position?:
-    | 'catcher'
-    | 'first_base'
-    | 'second_base'
-    | 'shortshop'
-    | 'third_base'
-    | 'outfield'
-    | 'pitcher';
+  position?: PlayerPosition;
   age?: number;
   favorite?: 1;
 };

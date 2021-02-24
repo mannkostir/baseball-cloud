@@ -30,5 +30,5 @@ export const getLeaderboard = async (query: GetLeaderboardQuery) => {
     variables: { input: { ...query } },
   });
 
-  return res.data;
+  return res.data.data.leaderboard_batting.leaderboard_batting;
 };

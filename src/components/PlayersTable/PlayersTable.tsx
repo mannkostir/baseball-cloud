@@ -1,7 +1,12 @@
+import { ProfileRecord } from '@/services/profilesService/profileServiceTypes';
 import React from 'react';
 import StyledTable from '../StyledTable';
 
-const PlayersTable = () => {
+interface IPlayersTableProps {
+  profiles: ProfileRecord[];
+}
+
+const PlayersTable = ({ profiles }: IPlayersTableProps) => {
   return (
     <StyledTable>
       <thead>
@@ -15,14 +20,16 @@ const PlayersTable = () => {
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>Name</td>
-          <td>-</td>
-          <td>FSU</td>
-          <td>Scorps</td>
-          <td>20</td>
-          <td>false</td>
-        </tr>
+        {profiles.map((profile) => (
+          <tr key={profile.id}>
+            <td>{profile.first_name}</td>
+            <td>-</td>
+            <td>{profile.school ? profile.school.name : '-'}</td>
+            <td>{profile.teams[0] ? profile.teams[0].name : '-'}</td>
+            <td>{profile.age}</td>
+            <td>{profile.favorite ? 'Love' : 'Hate'}</td>
+          </tr>
+        ))}
       </tbody>
     </StyledTable>
   );

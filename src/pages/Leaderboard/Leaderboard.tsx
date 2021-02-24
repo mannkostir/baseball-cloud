@@ -35,9 +35,7 @@ const Leaderboard = () => {
           type: 'exit_velocity',
         });
 
-        setLeaderboardItems(
-          leaders.data.leaderboard_batting.leaderboard_batting
-        );
+        setLeaderboardItems(leaders);
       } catch (e) {
         throw e;
       } finally {
