@@ -29,4 +29,7 @@ export type PlayerPosition =
   | 'shortshop'
   | 'third_base'
   | 'outfield'
-  | 'pitcher';
+  | 'pitcher'
+  | '';
+
+export type SchoolYear = 'freshman' | 'sophomore' | 'junior' | 'senior' | '';

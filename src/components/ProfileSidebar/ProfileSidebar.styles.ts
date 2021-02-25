@@ -1,5 +1,6 @@
 import styled from 'styled-components/macro';
 import Input from '../Input';
+import Select from 'react-select';
 
 export const DataItem = styled.div`
   display: flex;
@@ -49,7 +50,7 @@ export const Value = styled.span`
 export const InlineInputsWrapper = styled.div`
   display: flex;
   justify-content: space-between;
-  > input {
+  > * {
     flex: 0 0 48%;
   }
 `;
@@ -57,4 +58,25 @@ export const InlineInputsWrapper = styled.div`
 export const TextInput = styled(Input)`
   height: 40px;
   padding: 0 16px;
+`;
+
+export const TextareaInput = styled.textarea`
+  display: block;
+  width: 100%;
+  min-height: 110px;
+  resize: none;
+  border-radius: 4px;
+  background-color: #eff1f3;
+  padding: 11px 16px;
+  font-size: 1rem;
+  line-height: 1.13;
+  font-weight: 400;
+  color: #667784;
+  border: 1px solid transparent;
+  &:focus,
+  &:active {
+    outline: none;
+    background-color: #fff;
+    border: solid 1px #48bbff;
+  }
 `;

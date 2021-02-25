@@ -8,7 +8,17 @@ interface IPersonalInfoProps {
   isEditing?: boolean;
 }
 
-const PersonalInfo = ({ isEditing = true }: IPersonalInfoProps) => {
+type ThrowsOptionsType = { label: string; value: 'l' | 'r' }[];
+type BatsOptionsType = ThrowsOptionsType;
+
+const throwsOptions: ThrowsOptionsType = [
+  { value: 'r', label: 'R' },
+  { value: 'l', label: 'L' },
+];
+
+const batsOptions: BatsOptionsType = throwsOptions;
+
+const PersonalInfo = ({ isEditing = false }: IPersonalInfoProps) => {
   return !isEditing ? (
     <Styled.Container>
       <Styled.TraitsList>
@@ -40,22 +50,42 @@ const PersonalInfo = ({ isEditing = true }: IPersonalInfoProps) => {
       <Form onSubmit={() => {}}>
         {(props) => (
           <form>
-            <Field name="age">
-              {(props) => <ProfileSidebar.TextInput placeholder="Age *" />}
-            </Field>
-            <Field name="feet">
-              {(props) => <ProfileSidebar.TextInput placeholder="Feet *" />}
-            </Field>
-            <Field name="inches">
-              {(props) => <ProfileSidebar.TextInput placeholder="Inches" />}
-            </Field>
-            <Field name="weight">
-              {(props) => <ProfileSidebar.TextInput placeholder="Weight *" />}
-            </Field>
-            <Field name="throws">
-              {(props) => <ProfileSidebar.TextInput />}
-            </Field>
-            <Field name="bats">{(props) => <ProfileSidebar.TextInput />}</Field>
+            <Field
+              name="age"
+              component={ProfileSidebar.TextInput}
+              placeholder="Age *"
+            />
+            <ProfileSidebar.InlineInputsWrapper>
+              <Field
+                name="feet"
+                component={ProfileSidebar.TextInput}
+                placeholder="Feet *"
+              />
+              <Field
+                name="inches"
+                component={ProfileSidebar.TextInput}
+                placeholder="Inches"
+              />
+            </ProfileSidebar.InlineInputsWrapper>
+            <Field
+              name="weight"
+              component={ProfileSidebar.TextInput}
+              placeholder="Weight *"
+            />
+            <ProfileSidebar.InlineInputsWrapper>
+              <Field
+                name="throws"
+                component={ProfileSidebar.SelectInput}
+                placeholder="Throws *"
+                options={throwsOptions}
+              />
+              <Field
+                name="bats"
+                component={ProfileSidebar.SelectInput}
+                placeholder="Bats *"
+                options={batsOptions}
+              />
+            </ProfileSidebar.InlineInputsWrapper>
           </form>
         )}
       </Form>

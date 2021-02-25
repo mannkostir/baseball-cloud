@@ -6,7 +6,13 @@ interface IFacilityInfoProps {
   isEditing?: boolean;
 }
 
-const FacilityInfo = ({ isEditing = true }: IFacilityInfoProps) => {
+type FacilityOptionsType = { value: string; label: string }[];
+
+const facilityOptions: FacilityOptionsType = [
+  { value: 'example', label: 'Example' },
+];
+
+const FacilityInfo = ({ isEditing = false }: IFacilityInfoProps) => {
   return !isEditing ? (
     <div>
       <ProfileSidebar.DataItem>
@@ -19,9 +25,12 @@ const FacilityInfo = ({ isEditing = true }: IFacilityInfoProps) => {
       <ProfileSidebar.SectionTitle>Facility</ProfileSidebar.SectionTitle>
       <Form onSubmit={() => {}}>
         {(props) => (
-          <Field name="facility">
-            {(props) => <ProfileSidebar.TextInput />}
-          </Field>
+          <Field
+            name="facility"
+            component={ProfileSidebar.SelectInput}
+            placeholder="Facility"
+            options={facilityOptions}
+          />
         )}
       </Form>
     </>

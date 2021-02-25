@@ -40,6 +40,9 @@ export const GlobalStyles = createGlobalStyle`
     font-weight: 400;
     font-style: normal;
   }
+  input, textarea, button, select, a {
+    font-family: inherit;
+  }
   button {
     cursor: pointer;
     font-family: 'Lato';

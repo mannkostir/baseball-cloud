@@ -3,7 +3,7 @@ import PitcherSummary from '@/components/PitcherSummary';
 import ProfileAnalysis from '@/components/ProfileAnalysis';
 import RecentEvents from '@/components/RecentEvents';
 import UserImage from '@/components/UserImage';
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components/macro';
 import PersonalInfo from '@/components/PersonalInfo';
 import SchoolInfo from '@/components/SchoolInfo';
@@ -15,6 +15,7 @@ import DiscardButton from '@/components/DiscardButton';
 
 const Container = styled.div`
   display: flex;
+  width: 100%;
 `;
 
 const ProfileMain = styled.main`
@@ -46,20 +47,36 @@ const ButtonsWrapper = styled.div`
 `;
 
 const Profile = () => {
+  const [isEditingProfile, setIsEditingProfile] = useState(false);
   return (
     <Container>
       <ProfileSidebarContainer>
-        <UserInfo />
-        <PersonalInfo />
-        <SchoolInfo />
-        <FacilityInfo />
-        <ProfileAbout />
-        <ButtonsWrapper>
-          <DiscardButton style={{ marginRight: 12 }}>Cancel</DiscardButton>
-          <SubmitButton style={{ padding: '7px 19px 10px 18px' }}>
-            Save
-          </SubmitButton>
-        </ButtonsWrapper>
+        <UserInfo
+          onEditButtonClick={() => setIsEditingProfile(true)}
+          isEditing={isEditingProfile}
+        />
+        <PersonalInfo isEditing={isEditingProfile} />
+        <SchoolInfo isEditing={isEditingProfile} />
+        <FacilityInfo isEditing={isEditingProfile} />
+        <ProfileAbout isEditing={isEditingProfile} />
+        {isEditingProfile ? (
+          <ButtonsWrapper>
+            <DiscardButton
+              onClick={() => setIsEditingProfile(false)}
+              style={{ marginRight: 12 }}
+            >
+              Cancel
+            </DiscardButton>
+            <SubmitButton
+              onClick={() => {
+                setIsEditingProfile(false);
+              }}
+              style={{ padding: '7px 19px 10px 18px' }}
+            >
+              Save
+            </SubmitButton>
+          </ButtonsWrapper>
+        ) : null}
       </ProfileSidebarContainer>
       <ProfileMain>
         <ProfileSummary>

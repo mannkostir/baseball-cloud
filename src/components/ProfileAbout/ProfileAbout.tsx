@@ -12,7 +12,7 @@ interface IProfileAboutProps {
   isEditing?: boolean;
 }
 
-const ProfileAbout = ({ isEditing = true }: IProfileAboutProps) => {
+const ProfileAbout = ({ isEditing = false }: IProfileAboutProps) => {
   return !isEditing ? (
     <div>
       <ProfileSidebar.SectionTitle>About</ProfileSidebar.SectionTitle>
@@ -26,7 +26,7 @@ const ProfileAbout = ({ isEditing = true }: IProfileAboutProps) => {
           <form>
             <Field name="about">
               {(props) => (
-                <ProfileSidebar.TextInput placeholder="Describe yourself in a few words..." />
+                <ProfileSidebar.TextareaInput placeholder="Describe yourself in a few words" />
               )}
             </Field>
           </form>
