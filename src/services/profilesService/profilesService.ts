@@ -1,6 +1,7 @@
 import fetchAPI from '@/services';
 import {
   GetCurrentProfileResponse,
+  GetProfileQuery,
   GetProfileResponse,
   GetProfilesQuery,
   GetProfilesResponse,
@@ -82,7 +83,7 @@ export const getCurrentProfile = async () => {
   return res.data.data.current_profile;
 };
 
-export const getProfile = async (query: GetProfileResponse) => {
+export const getProfile = async (query: GetProfileQuery) => {
   const res = await fetchAPI.post<GetProfileResponse>('/graphql', {
     query: `query Profile($id: String!) {
       profile(id: $id) {
@@ -101,21 +102,6 @@ export const getProfile = async (query: GetProfileResponse) => {
         inches
         weight
         age
-        recentEvents {
-          id
-          event_type
-          event_name
-          date
-          is_pitcher
-          data_rows_count
-          recent_avatars {
-            id
-            first_name
-            last_name
-            avatar
-          }
-        }
-        wingspan
         grip_right
         grip_left
         wrist_to_elbow
@@ -165,5 +151,7 @@ export const getProfile = async (query: GetProfileResponse) => {
     variables: { ...query },
   });
 
-  return res.data;
+  console.log(res);
+
+  return res.data.data.profile;
 };

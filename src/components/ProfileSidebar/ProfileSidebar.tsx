@@ -21,6 +21,18 @@ const SectionTitle = ({
   );
 };
 
+interface ITextInputAdapterProps {
+  input: Record<string, any>;
+  [key: string]: any;
+}
+
+const TextInputAdapter = ({
+  input,
+  ...props
+}: ITextInputAdapterProps & HTMLAttributes<HTMLInputElement>) => {
+  return <Styled.TextInput type="text" {...input} {...props} />;
+};
+
 interface IReactSelectAdapterProps {
   input: Record<string, any>;
   [key: string]: any;
@@ -110,7 +122,7 @@ ProfileSidebar.SectionTitle = SectionTitle;
 ProfileSidebar.Heading = Styled.Heading;
 ProfileSidebar.Value = Styled.Value;
 ProfileSidebar.InlineInputsWrapper = Styled.InlineInputsWrapper;
-ProfileSidebar.TextInput = Styled.TextInput;
+ProfileSidebar.TextInput = TextInputAdapter;
 ProfileSidebar.SelectInput = ReactSelectAdapter;
 ProfileSidebar.TextareaInput = Styled.TextareaInput;
 

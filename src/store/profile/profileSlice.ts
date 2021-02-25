@@ -7,6 +7,7 @@ export const defaultProfile: ProfileState = {
   avatar: null,
   firstName: '',
   fullName: '',
+  currentProfileId: '',
   lastName: '',
   isLoading: false,
   error: '',
@@ -26,6 +27,7 @@ const profileSlice = createSlice({
         action.payload.last_name || ''
       }`;
       state.avatar = action.payload.avatar;
+      state.currentProfileId = action.payload.id;
 
       state.isLoading = false;
       state.error = '';

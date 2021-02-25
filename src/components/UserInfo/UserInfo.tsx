@@ -4,10 +4,12 @@ import UserImage from '../UserImage';
 import { Field, Form } from 'react-final-form';
 import ProfileSidebar from '../ProfileSidebar';
 import { PlayerPosition } from '@/types/commonTypes';
+import { ExtendedProfileRecord } from '@/services/profilesService/profileServiceTypes';
 
 interface IUserInfoProps {
   isEditing?: boolean;
   onEditButtonClick?: () => void;
+  profileData: ExtendedProfileRecord;
 }
 
 type PositionOptionsType = {
@@ -33,7 +35,17 @@ const secondaryPositionOptions: typeof primaryPositionOptions = [
   ...primaryPositionOptions,
 ];
 
-const UserInfo = ({ isEditing = false, onEditButtonClick }: IUserInfoProps) => {
+const defaultData = {
+  first_name: 'Unknown',
+  last_name: '',
+  position: 'Position',
+};
+
+const UserInfo = ({
+  isEditing = false,
+  onEditButtonClick,
+  profileData,
+}: IUserInfoProps) => {
   return !isEditing ? (
     <Styled.Container>
       <span
@@ -51,8 +63,8 @@ const UserInfo = ({ isEditing = false, onEditButtonClick }: IUserInfoProps) => {
         Edit
       </span>
       <UserImage />
-      <Styled.Username>Username</Styled.Username>
-      <Styled.Role>Role</Styled.Role>
+      <Styled.Username>{`${profileData.first_name} ${profileData.last_name}`}</Styled.Username>
+      <Styled.Role>{profileData.position}</Styled.Role>
     </Styled.Container>
   ) : (
     <>
@@ -65,23 +77,27 @@ const UserInfo = ({ isEditing = false, onEditButtonClick }: IUserInfoProps) => {
               <Field
                 name="first_name"
                 placeholder="First Name *"
+                defaultValue={profileData.first_name}
                 component={ProfileSidebar.TextInput}
               />
               <Field
                 name="last_name"
                 placeholder="Last Name *"
+                defaultValue={profileData.last_name}
                 component={ProfileSidebar.TextInput}
               />
             </ProfileSidebar.InlineInputsWrapper>
             <Field
               name="position"
               placeholder="Position in Game *"
+              defaultValue={profileData.position}
               component={ProfileSidebar.SelectInput}
               options={primaryPositionOptions}
             />
             <Field
               name="position2"
               placeholder="Secondary Position in Game"
+              defaultValue={profileData.position2}
               component={ProfileSidebar.SelectInput}
               options={secondaryPositionOptions}
             />

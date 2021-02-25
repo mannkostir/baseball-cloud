@@ -20,6 +20,64 @@ export type ProfileRecord = {
   weight: number;
 };
 
+export type ExtendedProfileRecord = {
+  act_score: number;
+  age: number;
+  avatar: string | null;
+  bats_hand: 'l' | 'r';
+  batter_summary: {
+    exit_velocity: number;
+    distance: number;
+    launch_angle: number;
+  }[];
+  batting_top_values: {
+    distance: number;
+    exit_velocity: number;
+    launch_angle: number;
+    pitch_type: string;
+  }[];
+  biography: string;
+  broad_jump: number | null;
+  events_opened: boolean;
+  facilities: { email: string; id: string; u_name: string }[];
+  favorite: boolean;
+  feet: number;
+  first_name: string;
+  gpa_score: number;
+  grip_left: number | null;
+  grip_right: number | null;
+  id: string;
+  inches: number;
+  last_name: string;
+  paid: boolean;
+  pitcher_summary: any[];
+  pitching_top_values: any[];
+  position: PlayerPosition;
+  position2: PlayerPosition;
+  recent_events: {
+    data_rows_count: number;
+    date: string;
+    event_name: string;
+    event_type: string;
+    id: string;
+    is_pitcher: boolean;
+    recent_avatars: {
+      avatar: string | null;
+      first_name: string;
+      id: string;
+      last_name: string;
+    }[];
+  }[];
+  sat_score: number;
+  school: { id: string; name: string };
+  school_year: string;
+  teams: { id: string; name: string }[];
+  throws_hand: 'l' | 'r';
+  weight: number;
+  wingspan: number | null;
+  wrist_to_elbow: number | null;
+};
+
 export type CurrentProfileRecord = {
   age: number;
   avatar: {
@@ -84,62 +142,6 @@ export type GetProfileQuery = {
 };
 export type GetProfileResponse = {
   data: {
-    profile: {
-      act_score: number;
-      age: number;
-      avatar: string | null;
-      bats_hand: 'l' | 'r';
-      batter_summary: {
-        exit_velocity: number;
-        distance: number;
-        launch_angle: number;
-      }[];
-      batting_top_values: {
-        distance: number;
-        exit_velocity: number;
-        launch_angle: number;
-        pitch_type: string;
-      }[];
-      biography: string;
-      broad_jump: number | null;
-      events_opened: boolean;
-      facilities: { email: string; id: string; u_name: string }[];
-      favorite: boolean;
-      feet: number;
-      first_name: string;
-      gpa_score: number;
-      grip_left: number | null;
-      grip_right: number | null;
-      id: string;
-      inches: number;
-      last_name: string;
-      paid: boolean;
-      pitcher_summary: any[];
-      pitching_top_values: any[];
-      position: PlayerPosition;
-      position2: PlayerPosition;
-      recent_events: {
-        data_rows_count: number;
-        date: string;
-        event_name: string;
-        event_type: string;
-        id: string;
-        is_pitcher: boolean;
-        recent_avatars: {
-          avatar: string | null;
-          first_name: string;
-          id: string;
-          last_name: string;
-        }[];
-      }[];
-      sat_score: number;
-      school: { id: string; name: string }[];
-      school_year: string;
-      teams: { id: string; name: string }[];
-      throws_hand: 'l' | 'r';
-      weight: number;
-      wingspan: number | null;
-      wrist_to_elbow: number | null;
-    };
+    profile: ExtendedProfileRecord;
   };
 };

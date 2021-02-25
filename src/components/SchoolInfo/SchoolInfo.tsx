@@ -1,3 +1,4 @@
+import { ExtendedProfileRecord } from '@/services/profilesService/profileServiceTypes';
 import { SchoolYear } from '@/types/commonTypes';
 import React from 'react';
 import { Field, Form } from 'react-final-form';
@@ -5,6 +6,7 @@ import ProfileSidebar from '../ProfileSidebar';
 
 interface ISchoolInfoProps {
   isEditing?: boolean;
+  profileData: ExtendedProfileRecord;
 }
 
 type SchoolOptionsType = {
@@ -32,20 +34,20 @@ const teamOptions: TeamOptionsType = [
   { value: 'good_team', label: 'Good Team' },
 ];
 
-const SchoolInfo = ({ isEditing = false }: ISchoolInfoProps) => {
+const SchoolInfo = ({ isEditing = false, profileData }: ISchoolInfoProps) => {
   return !isEditing ? (
     <div>
       <ProfileSidebar.DataItem>
         <ProfileSidebar.Heading>School</ProfileSidebar.Heading>
-        <ProfileSidebar.Value>FSU</ProfileSidebar.Value>
+        <ProfileSidebar.Value>{profileData.school.name}</ProfileSidebar.Value>
       </ProfileSidebar.DataItem>
       <ProfileSidebar.DataItem>
         <ProfileSidebar.Heading>School Year</ProfileSidebar.Heading>
-        <ProfileSidebar.Value>Freshman</ProfileSidebar.Value>
+        <ProfileSidebar.Value>{profileData.school_year}</ProfileSidebar.Value>
       </ProfileSidebar.DataItem>
       <ProfileSidebar.DataItem>
         <ProfileSidebar.Heading>Team</ProfileSidebar.Heading>
-        <ProfileSidebar.Value>Scorps</ProfileSidebar.Value>
+        <ProfileSidebar.Value>{profileData.teams[0].name}</ProfileSidebar.Value>
       </ProfileSidebar.DataItem>
     </div>
   ) : (
@@ -57,18 +59,30 @@ const SchoolInfo = ({ isEditing = false }: ISchoolInfoProps) => {
             <Field
               name="name"
               component={ProfileSidebar.SelectInput}
+              defaultValue={schoolOptions.find(
+                (option) =>
+                  option.value === profileData.school.name.toLowerCase()
+              )}
               placeholder="School"
               options={schoolOptions}
             />
             <Field
               name="year"
               component={ProfileSidebar.SelectInput}
+              defaultValue={schoolYearOptions.find(
+                (option) =>
+                  option.value === profileData.school_year.toLowerCase()
+              )}
               placeholder="School Year"
               options={schoolYearOptions}
             />
             <Field
               name="teams"
               component={ProfileSidebar.SelectInput}
+              defaultValue={teamOptions.find(
+                (option) =>
+                  option.value === profileData.teams[0].name.toLowerCase()
+              )}
               placeholder="Teams"
               options={teamOptions}
               isMulti={true}

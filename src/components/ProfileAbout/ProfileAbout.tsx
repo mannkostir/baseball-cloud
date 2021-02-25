@@ -2,6 +2,7 @@ import React from 'react';
 import ProfileSidebar from '../ProfileSidebar';
 import styled from 'styled-components/macro';
 import { Form, Field } from 'react-final-form';
+import { ExtendedProfileRecord } from '@/services/profilesService/profileServiceTypes';
 
 const AboutContent = styled(ProfileSidebar.Value)`
   color: #788b99;
@@ -10,13 +11,17 @@ const AboutContent = styled(ProfileSidebar.Value)`
 
 interface IProfileAboutProps {
   isEditing?: boolean;
+  profileData: ExtendedProfileRecord;
 }
 
-const ProfileAbout = ({ isEditing = false }: IProfileAboutProps) => {
+const ProfileAbout = ({
+  isEditing = false,
+  profileData,
+}: IProfileAboutProps) => {
   return !isEditing ? (
     <div>
       <ProfileSidebar.SectionTitle>About</ProfileSidebar.SectionTitle>
-      <AboutContent>dasfasfasfas</AboutContent>
+      <AboutContent>{profileData.biography}</AboutContent>
     </div>
   ) : (
     <>

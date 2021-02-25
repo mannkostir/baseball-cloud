@@ -2,6 +2,7 @@ export type ProfileState = {
   firstName: string;
   lastName: string;
   fullName: string;
+  currentProfileId: string;
   avatar: {
     size_20_20: {
       url: string | null;
