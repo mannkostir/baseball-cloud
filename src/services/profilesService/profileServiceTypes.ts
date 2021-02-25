@@ -1,4 +1,4 @@
-import { PlayerPosition } from '@/types/commonTypes';
+import { Facility, PlayerPosition, SchoolYear } from '@/types/commonTypes';
 
 export type ProfileRecord = {
   age: number;
@@ -15,7 +15,7 @@ export type ProfileRecord = {
     id: string;
     name: string;
   };
-  school_year: string | null;
+  school_year: SchoolYear;
   teams: any[];
   weight: number;
 };
@@ -39,7 +39,7 @@ export type ExtendedProfileRecord = {
   biography: string;
   broad_jump: number | null;
   events_opened: boolean;
-  facilities: { email: string; id: string; u_name: string }[];
+  facilities: Facility[];
   favorite: boolean;
   feet: number;
   first_name: string;
@@ -53,7 +53,7 @@ export type ExtendedProfileRecord = {
   pitcher_summary: any[];
   pitching_top_values: any[];
   position: PlayerPosition;
-  position2: PlayerPosition;
+  position2: PlayerPosition | null;
   recent_events: {
     data_rows_count: number;
     date: string;
@@ -70,7 +70,7 @@ export type ExtendedProfileRecord = {
   }[];
   sat_score: number;
   school: { id: string; name: string };
-  school_year: string;
+  school_year: SchoolYear;
   teams: { id: string; name: string }[];
   throws_hand: 'l' | 'r';
   weight: number;
@@ -97,7 +97,7 @@ export type CurrentProfileRecord = {
   } | null;
   bats_hand: 'l' | 'r';
   biography: string;
-  facilities: any[];
+  facilities: Facility[];
   feet: number;
   first_name: string;
   id: string;
@@ -106,7 +106,7 @@ export type CurrentProfileRecord = {
   position: PlayerPosition;
   position2: PlayerPosition | null;
   school: string | null;
-  school_year: string | null;
+  school_year: SchoolYear;
   teams: any[];
   throws_hand: 'l' | 'r';
   weight: number;
@@ -143,5 +143,57 @@ export type GetProfileQuery = {
 export type GetProfileResponse = {
   data: {
     profile: ExtendedProfileRecord;
+  };
+};
+
+export type UpdateProfileQuery = {
+  avatar?: string | null;
+  feet?: number;
+  inches?: number;
+  weight?: number;
+  age?: number;
+  school_year?: SchoolYear;
+  bats_hand?: 'l' | 'r';
+  biography?: string;
+  first_name?: string;
+  id: string;
+  last_name?: string;
+  position?: PlayerPosition;
+  position2?: PlayerPosition | null;
+  school?: {
+    name: string;
+    id: string;
+  };
+  teams: {
+    name: string;
+    id: string;
+  }[];
+  throws_hand?: 'l' | 'r';
+  facilities: Facility[];
+};
+export type UpdateProfileResponse = {
+  data: {
+    update_profile: {
+      profile: {
+        age: number;
+        avatar: string | null;
+        bats_hand: 'l' | 'r';
+        biography: string;
+        facilities: Facility[];
+        feet: number;
+        first_name: string;
+        id: string;
+        inches: number;
+        last_name: string;
+        position: PlayerPosition;
+        position2: PlayerPosition | null;
+        recentEvents: any[];
+        school: { id: string; name: string };
+        school_year: SchoolYear;
+        teams: { id: string; name: string }[];
+        throws_hand: 'l' | 'r';
+        weight: number;
+      };
+    };
   };
 };

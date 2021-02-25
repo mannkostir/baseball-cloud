@@ -5,6 +5,8 @@ import {
   GetProfileResponse,
   GetProfilesQuery,
   GetProfilesResponse,
+  UpdateProfileQuery,
+  UpdateProfileResponse,
 } from './profileServiceTypes';
 
 export const getProfiles = async (query: GetProfilesQuery) => {
@@ -151,7 +153,52 @@ export const getProfile = async (query: GetProfileQuery) => {
     variables: { ...query },
   });
 
-  console.log(res);
-
   return res.data.data.profile;
+};
+
+export const updateProfile = async (query: UpdateProfileQuery) => {
+  const res = await fetchAPI.post<UpdateProfileResponse>('/graphql', {
+    query: `mutation UpdateProfile ($form:UpdateProfileInput!) {
+      update_profile (input:$form) {
+        profile {
+          id
+          first_name
+          last_name
+          position
+          position2
+          avatar
+          throws_hand
+          bats_hand
+          biography
+          school_year
+          feet
+          inches
+          weight
+          age
+          recent_events {
+            id
+            event_type
+            event_name
+            date
+          }
+          school {
+            id
+            name
+          }
+          teams {
+            id
+            name
+          }
+          facilities {
+            id
+            email
+            u_name
+          }
+        }
+      }
+    }`,
+    variables: { form: { ...query } },
+  });
+
+  return res.data.data.update_profile.profile;
 };

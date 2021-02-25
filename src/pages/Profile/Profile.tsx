@@ -66,6 +66,22 @@ const Profile = ({ playerId }: IProfileProps) => {
 
   const { currentProfileId } = useProfileSelector();
 
+  const saveChanges = async () => {
+    try {
+      if (!profileData) return;
+
+      const updatedProfile = await profilesService.updateProfile({
+        id: profileData.id,
+        teams: profileData.teams,
+        facilities: profileData.facilities,
+      });
+
+      setProfileData({ ...profileData, ...updatedProfile });
+    } catch (e) {
+      throw e;
+    }
+  };
+
   useEffect(() => {
     let id: number | string;
 
@@ -138,6 +154,7 @@ const Profile = ({ playerId }: IProfileProps) => {
             </DiscardButton>
             <SubmitButton
               onClick={() => {
+                saveChanges();
                 setIsEditingProfile(false);
               }}
               style={{ padding: '7px 19px 10px 18px' }}

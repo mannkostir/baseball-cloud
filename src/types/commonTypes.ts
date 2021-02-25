@@ -33,3 +33,5 @@ export type PlayerPosition =
   | '';
 
 export type SchoolYear = 'freshman' | 'sophomore' | 'junior' | 'senior' | '';
+
+export type Facility = { id: string; email: string; u_name: string };
