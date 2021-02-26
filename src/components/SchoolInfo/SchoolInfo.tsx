@@ -1,21 +1,13 @@
 import { ExtendedProfileRecord } from '@/services/profilesService/profileServiceTypes';
-import { School, SchoolYear } from '@/types/commonTypes';
-import React from 'react';
+import { schoolsService } from '@/services/schoolsService';
+import { teamsService } from '@/services/teamsService';
+import { School, SchoolYear, Team } from '@/types/commonTypes';
+import React, { useEffect, useState } from 'react';
 import { Field, Form } from 'react-final-form';
 import ProfileSidebar from '../ProfileSidebar';
 
-type SchoolOptionsType = {
-  label: string;
-  value: School;
-}[];
 type SchoolYearOptionsType = { value: SchoolYear; label: string }[];
-type TeamOptionsType = { value: string; label: string }[];
 
-const schoolOptions: SchoolOptionsType = [
-  { value: { name: 'fsu', id: '1' }, label: 'FSU' },
-  { value: { name: 'rockledge', id: '2' }, label: 'Rockledge' },
-  { value: { name: 'good', id: '3' }, label: 'Good' },
-];
 const schoolYearOptions: SchoolYearOptionsType = [
   { value: 'freshman', label: 'Freshman' },
   { value: 'sophomore', label: 'Sophomore' },
@@ -23,12 +15,6 @@ const schoolYearOptions: SchoolYearOptionsType = [
   { value: 'senior', label: 'Senior' },
   { value: '', label: 'None' },
 ];
-const teamOptions: TeamOptionsType = [
-  { value: 'scorps', label: 'Scorps' },
-  { value: 'ftb', label: 'FTB' },
-  { value: 'good_team', label: 'Good Team' },
-];
-
 const SchoolInfoCompound = () => {
   return <div></div>;
 };
@@ -46,7 +32,10 @@ const SchoolInfoView = ({ profileData }: ISchoolInfoCompoundProps) => {
       </ProfileSidebar.DataItem>
       <ProfileSidebar.DataItem>
         <ProfileSidebar.Heading>School Year</ProfileSidebar.Heading>
-        <ProfileSidebar.Value>{profileData.school_year}</ProfileSidebar.Value>
+        <ProfileSidebar.Value>
+          {profileData.school_year[0].toUpperCase() +
+            profileData.school_year.slice(1)}
+        </ProfileSidebar.Value>
       </ProfileSidebar.DataItem>
       <ProfileSidebar.DataItem>
         <ProfileSidebar.Heading>Team</ProfileSidebar.Heading>
@@ -61,16 +50,31 @@ interface ISchoolInfoEditProps {
 }
 
 const SchoolInfoEdit = ({ profileData }: ISchoolInfoEditProps) => {
+  const [schools, setSchools] = useState<School[]>([]);
+  const [teams, setTeams] = useState<Team[]>([]);
+
+  useEffect(() => {
+    (async () => {
+      const schoolsRes = await schoolsService.getSchools({ search: '' });
+
+      setSchools(schoolsRes);
+
+      const teamsRes = await teamsService.getTeams({ search: '' });
+
+      setTeams(teamsRes);
+    })();
+  }, []);
+
   return (
     <>
       <Field
         name="school"
         component={ProfileSidebar.SelectInput}
-        defaultValue={schoolOptions.find(
-          (option) => option.value.name === profileData.school.name
-        )}
         placeholder="School"
-        options={schoolOptions}
+        options={schools.map((school) => ({
+          label: school.name,
+          value: school,
+        }))}
       />
       <Field
         name="school_year"
@@ -84,11 +88,11 @@ const SchoolInfoEdit = ({ profileData }: ISchoolInfoEditProps) => {
       <Field
         name="teams"
         component={ProfileSidebar.SelectInput}
-        defaultValue={teamOptions.find(
-          (option) => option.value === profileData.teams[0].name.toLowerCase()
-        )}
         placeholder="Teams"
-        options={teamOptions}
+        options={teams.map((team) => ({
+          label: team.name,
+          value: team,
+        }))}
         isMulti={true}
         isClearable={false}
       />
