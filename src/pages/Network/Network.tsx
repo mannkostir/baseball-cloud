@@ -1,7 +1,9 @@
+import Filters from '@/components/Filters';
 import PlayersTable from '@/components/PlayersTable';
 import { profilesService } from '@/services/profilesService';
 import { ProfileRecord } from '@/services/profilesService/profileServiceTypes';
 import React, { useEffect, useState } from 'react';
+import { Form } from 'react-final-form';
 import styled from 'styled-components/macro';
 
 const Container = styled.section`
@@ -44,6 +46,18 @@ const Network = () => {
     <Container>
       <Header>
         <h2>Network</h2>
+        <Form onSubmit={() => {}}>
+          {(props) => (
+            <form
+              style={{ display: 'flex', flex: 1, justifyContent: 'flex-end' }}
+            >
+              <Filters.TextInput name="school" placeholder="School" />
+              <Filters.TextInput name="team" placeholder="Team" />
+              <Filters.SelectInput name="position" placeholder="Position" />
+              <Filters.TextInput name="age" placeholder="Age" />
+            </form>
+          )}
+        </Form>
       </Header>
       <main>
         <div>Available Players (-)</div>

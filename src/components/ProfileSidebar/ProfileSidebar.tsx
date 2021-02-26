@@ -1,5 +1,5 @@
 import React, { HTMLAttributes } from 'react';
-import Select from 'react-select';
+import Select, { Styles } from 'react-select';
 import * as Styled from './ProfileSidebar.styles';
 
 interface IProfileSidebar {
@@ -48,10 +48,23 @@ const TextareaInputAdapter = ({
 
 interface IReactSelectAdapterProps {
   input: Record<string, any>;
+  styles?: Partial<
+    Styles<
+      {
+        label: string;
+        value: string;
+      },
+      false
+    >
+  >;
   [key: string]: any;
 }
 
-const ReactSelectAdapter = ({ input, ...props }: IReactSelectAdapterProps) => {
+const ReactSelectAdapter = ({
+  input,
+  styles = {},
+  ...props
+}: IReactSelectAdapterProps) => {
   return (
     <Select
       styles={{
@@ -122,6 +135,7 @@ const ReactSelectAdapter = ({ input, ...props }: IReactSelectAdapterProps) => {
           ...provided,
           left: 0,
         }),
+        ...styles,
       }}
       placeholder={props.placeholder}
       {...input}
