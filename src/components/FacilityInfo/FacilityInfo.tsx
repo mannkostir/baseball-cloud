@@ -1,24 +1,28 @@
 import { ExtendedProfileRecord } from '@/services/profilesService/profileServiceTypes';
+import { Facility } from '@/types/commonTypes';
 import React from 'react';
-import { Field, Form } from 'react-final-form';
+import { Field } from 'react-final-form';
 import ProfileSidebar from '../ProfileSidebar';
 
-interface IFacilityInfoProps {
-  isEditing?: boolean;
+type FacilityOptionsType = { value: Facility; label: string }[];
+
+const facilityOptions: FacilityOptionsType = [
+  {
+    value: { id: '32', email: 'facility@example.com', u_name: 'Example' },
+    label: 'Example',
+  },
+];
+
+const FacilityInfoCompound = () => {
+  return <div></div>;
+};
+
+interface IFacilityInfoViewProps {
   profileData: ExtendedProfileRecord;
 }
 
-type FacilityOptionsType = { value: string; label: string }[];
-
-const facilityOptions: FacilityOptionsType = [
-  { value: 'example', label: 'Example' },
-];
-
-const FacilityInfo = ({
-  isEditing = false,
-  profileData,
-}: IFacilityInfoProps) => {
-  return !isEditing ? (
+const FacilityInfoView = ({ profileData }: IFacilityInfoViewProps) => {
+  return (
     <div>
       <ProfileSidebar.DataItem>
         <ProfileSidebar.Heading>Facility</ProfileSidebar.Heading>
@@ -27,21 +31,30 @@ const FacilityInfo = ({
         </ProfileSidebar.Value>
       </ProfileSidebar.DataItem>
     </div>
-  ) : (
+  );
+};
+
+interface IFacilityInfoViewProps {
+  profileData: ExtendedProfileRecord;
+}
+
+const FacilityInfoEdit = ({ profileData }: IFacilityInfoViewProps) => {
+  return (
     <>
-      <ProfileSidebar.SectionTitle>Facility</ProfileSidebar.SectionTitle>
-      <Form onSubmit={() => {}}>
-        {(props) => (
-          <Field
-            name="facility"
-            component={ProfileSidebar.SelectInput}
-            placeholder="Facility"
-            options={facilityOptions}
-          />
+      <Field
+        name="facilities"
+        component={ProfileSidebar.SelectInput}
+        placeholder="Facility"
+        options={facilityOptions}
+        defaultValue={facilityOptions.find(
+          (option) => option.value.id === profileData.facilities[0].id
         )}
-      </Form>
+      />
     </>
   );
 };
 
-export default FacilityInfo;
+FacilityInfoCompound.View = FacilityInfoView;
+FacilityInfoCompound.EditForm = FacilityInfoEdit;
+
+export default FacilityInfoCompound;

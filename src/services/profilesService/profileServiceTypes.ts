@@ -1,4 +1,10 @@
-import { Facility, PlayerPosition, SchoolYear } from '@/types/commonTypes';
+import {
+  Facility,
+  PlayerPosition,
+  School,
+  SchoolYear,
+  Team,
+} from '@/types/commonTypes';
 
 export type ProfileRecord = {
   age: number;
@@ -11,12 +17,9 @@ export type ProfileRecord = {
   last_name: string;
   position: PlayerPosition;
   position2: PlayerPosition | '';
-  school: {
-    id: string;
-    name: string;
-  };
+  school: School;
   school_year: SchoolYear;
-  teams: any[];
+  teams: Team[];
   weight: number;
 };
 
@@ -69,9 +72,9 @@ export type ExtendedProfileRecord = {
     }[];
   }[];
   sat_score: number;
-  school: { id: string; name: string };
+  school: School;
   school_year: SchoolYear;
-  teams: { id: string; name: string }[];
+  teams: Team[];
   throws_hand: 'l' | 'r';
   weight: number;
   wingspan: number | null;
@@ -105,9 +108,9 @@ export type CurrentProfileRecord = {
   last_name: string;
   position: PlayerPosition;
   position2: PlayerPosition | null;
-  school: string | null;
+  school: School;
   school_year: SchoolYear;
-  teams: any[];
+  teams: Team[];
   throws_hand: 'l' | 'r';
   weight: number;
 };
@@ -115,7 +118,7 @@ export type CurrentProfileRecord = {
 export type GetProfilesQuery = {
   profiles_count: number;
   offset: number;
-  school?: string;
+  school?: School;
   team?: string;
   position?: PlayerPosition;
   age?: number;
@@ -160,14 +163,8 @@ export type UpdateProfileQuery = {
   last_name?: string;
   position?: PlayerPosition;
   position2?: PlayerPosition | null;
-  school?: {
-    name: string;
-    id: string;
-  };
-  teams: {
-    name: string;
-    id: string;
-  }[];
+  school?: School;
+  teams: Team[];
   throws_hand?: 'l' | 'r';
   facilities: Facility[];
 };
@@ -188,9 +185,9 @@ export type UpdateProfileResponse = {
         position: PlayerPosition;
         position2: PlayerPosition | null;
         recentEvents: any[];
-        school: { id: string; name: string };
+        school: School;
         school_year: SchoolYear;
-        teams: { id: string; name: string }[];
+        teams: Team[];
         throws_hand: 'l' | 'r';
         weight: number;
       };

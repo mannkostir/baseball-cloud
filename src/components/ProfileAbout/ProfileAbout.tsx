@@ -9,36 +9,44 @@ const AboutContent = styled(ProfileSidebar.Value)`
   line-height: 1.75;
 `;
 
-interface IProfileAboutProps {
-  isEditing?: boolean;
+const ProfileAboutCompound = () => {
+  return <div></div>;
+};
+
+interface IProfileAboutViewProps {
   profileData: ExtendedProfileRecord;
 }
 
-const ProfileAbout = ({
-  isEditing = false,
-  profileData,
-}: IProfileAboutProps) => {
-  return !isEditing ? (
+const ProfileAboutView = ({ profileData }: IProfileAboutViewProps) => {
+  return (
     <div>
       <ProfileSidebar.SectionTitle>About</ProfileSidebar.SectionTitle>
       <AboutContent>{profileData.biography}</AboutContent>
     </div>
-  ) : (
+  );
+};
+
+interface IProfileAboutEditProps {
+  profileData: ExtendedProfileRecord;
+}
+
+const ProfileAboutEdit = ({ profileData }: IProfileAboutEditProps) => {
+  return (
     <>
-      <ProfileSidebar.SectionTitle>About</ProfileSidebar.SectionTitle>
-      <Form onSubmit={() => {}}>
+      <Field name="biography">
         {(props) => (
-          <form>
-            <Field name="about">
-              {(props) => (
-                <ProfileSidebar.TextareaInput placeholder="Describe yourself in a few words" />
-              )}
-            </Field>
-          </form>
+          <ProfileSidebar.TextareaInput
+            placeholder="Describe yourself in a few words"
+            defaultValue={profileData.biography}
+            {...props}
+          />
         )}
-      </Form>
+      </Field>
     </>
   );
 };
 
-export default ProfileAbout;
+ProfileAboutCompound.View = ProfileAboutView;
+ProfileAboutCompound.EditForm = ProfileAboutEdit;
+
+export default ProfileAboutCompound;

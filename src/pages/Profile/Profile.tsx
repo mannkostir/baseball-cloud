@@ -1,24 +1,19 @@
-import UserInfo from '@/components/UserInfo';
 import PitcherSummary from '@/components/PitcherSummary';
 import ProfileAnalysis from '@/components/ProfileAnalysis';
 import RecentEvents from '@/components/RecentEvents';
-import UserImage from '@/components/UserImage';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components/macro';
-import PersonalInfo from '@/components/PersonalInfo';
-import SchoolInfo from '@/components/SchoolInfo';
-import ProfileSidebar from '@/components/ProfileSidebar';
-import ProfileAbout from '@/components/ProfileAbout';
-import FacilityInfo from '@/components/FacilityInfo';
 import SubmitButton from '@/components/SubmitButton';
 import DiscardButton from '@/components/DiscardButton';
 import { profilesService } from '@/services/profilesService';
-import { useAuthSelector } from '@/store/auth';
-import {
-  ExtendedProfileRecord,
-  ProfileRecord,
-} from '@/services/profilesService/profileServiceTypes';
+import { ExtendedProfileRecord } from '@/services/profilesService/profileServiceTypes';
 import { useProfileSelector } from '@/store/profile';
+import UserInfoCompound from '@/components/UserInfoCompound';
+import { Form } from 'react-final-form';
+import SchoolInfoCompound from '@/components/SchoolInfo';
+import FacilityInfoCompound from '@/components/FacilityInfo';
+import ProfileAboutCompound from '@/components/ProfileAbout';
+import PersonalInfo from '@/components/PersonalInfo';
 
 const Container = styled.div`
   display: flex;
@@ -53,6 +48,10 @@ const ButtonsWrapper = styled.div`
   margin-top: 15px;
 `;
 
+type FormValues = {
+  bats_hand: { label: string; value: string } | string | number;
+};
+
 interface IProfileProps {
   playerId?: number;
 }
@@ -66,19 +65,43 @@ const Profile = ({ playerId }: IProfileProps) => {
 
   const { currentProfileId } = useProfileSelector();
 
-  const saveChanges = async () => {
+  const saveChanges = async (values: FormValues) => {
     try {
       if (!profileData) return;
+
+      console.log(values);
+
+      const submitValues = Object.entries(values).reduce<Record<string, any>>(
+        (acc, [key, value]) => {
+          let changeValue = value;
+
+          if (typeof value === 'object') {
+            changeValue = value?.label && value?.value ? value.value : value;
+          }
+
+          if (+value > 0) {
+            changeValue = +value;
+          }
+
+          acc[key] = changeValue;
+
+          return acc;
+        },
+        {}
+      );
 
       const updatedProfile = await profilesService.updateProfile({
         id: profileData.id,
         teams: profileData.teams,
         facilities: profileData.facilities,
+        ...submitValues,
       });
 
       setProfileData({ ...profileData, ...updatedProfile });
     } catch (e) {
       throw e;
+    } finally {
+      setIsEditingProfile(false);
     }
   };
 
@@ -112,65 +135,64 @@ const Profile = ({ playerId }: IProfileProps) => {
 
   return (
     <Container>
-      <ProfileSidebarContainer>
-        {profileData ? (
-          <>
-            <UserInfo
-              onEditButtonClick={() =>
-                setIsEditingProfile(
-                  !playerId && currentProfileId ? true : false
-                )
-              }
-              isEditing={isEditingProfile && !playerId}
-              profileData={profileData}
-            />
-            <PersonalInfo
-              profileData={profileData}
-              isEditing={isEditingProfile}
-            />
-            <SchoolInfo
-              profileData={profileData}
-              isEditing={isEditingProfile}
-            />
-            <FacilityInfo
-              profileData={profileData}
-              isEditing={isEditingProfile}
-            />
-            <ProfileAbout
-              profileData={profileData}
-              isEditing={isEditingProfile}
-            />
-          </>
-        ) : (
-          'Loading'
-        )}
-        {isEditingProfile ? (
-          <ButtonsWrapper>
-            <DiscardButton
-              onClick={() => setIsEditingProfile(false)}
-              style={{ marginRight: 12 }}
-            >
-              Cancel
-            </DiscardButton>
-            <SubmitButton
-              onClick={() => {
-                saveChanges();
-                setIsEditingProfile(false);
-              }}
-              style={{ padding: '7px 19px 10px 18px' }}
-            >
-              Save
-            </SubmitButton>
-          </ButtonsWrapper>
-        ) : null}
-      </ProfileSidebarContainer>
-      <ProfileMain>
-        <ProfileSummary>
-          <PitcherSummary />
-          <RecentEvents />
-        </ProfileSummary>
-        <ProfileAnalysis />
-      </ProfileMain>
+      {profileData ? (
+        <>
+          <ProfileSidebarContainer>
+            {isEditingProfile ? (
+              <Form onSubmit={saveChanges}>
+                {(props) => (
+                  <form onSubmit={props.handleSubmit}>
+                    <UserInfoCompound.EditForm profileData={profileData} />
+                    <PersonalInfo.EditForm profileData={profileData} />
+                    <SchoolInfoCompound.EditForm profileData={profileData} />
+                    <FacilityInfoCompound.EditForm profileData={profileData} />
+                    <ProfileAboutCompound.EditForm profileData={profileData} />
+                    <ButtonsWrapper>
+                      <DiscardButton
+                        onClick={() => setIsEditingProfile(false)}
+                        style={{ marginRight: 12 }}
+                      >
+                        Cancel
+                      </DiscardButton>
+                      <SubmitButton style={{ padding: '7px 19px 10px 18px' }}>
+                        Save
+                      </SubmitButton>
+                    </ButtonsWrapper>
+                  </form>
+                )}
+              </Form>
+            ) : (
+              <>
+                <UserInfoCompound.UserInfo
+                  profileData={profileData}
+                  onEditButtonClick={() =>
+                    setIsEditingProfile(
+                      !playerId && currentProfileId ? true : false
+                    )
+                  }
+                />
+                <PersonalInfo.View profileData={profileData} />
+                <SchoolInfoCompound.View profileData={profileData} />
+                <FacilityInfoCompound.View profileData={profileData} />
+                <ProfileAboutCompound.View profileData={profileData} />
+              </>
+            )}
+          </ProfileSidebarContainer>
+          <ProfileMain>
+            <ProfileSummary>
+              <PitcherSummary
+                summary={{ batter_summary: profileData.batter_summary }}
+              />
+              <RecentEvents
+                events={{ recent_events: profileData.recent_events }}
+              />
+            </ProfileSummary>
+            <ProfileAnalysis />
+          </ProfileMain>
+        </>
+      ) : (
+        'Loading'
+      )}
     </Container>
   );
 };

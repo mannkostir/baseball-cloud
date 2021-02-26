@@ -55,7 +55,7 @@ const Routes = () => {
         <Network />
       </AuthOnlyRoute>
       <AuthOnlyRoute path="/profile/:id">
-        <PlayerInfo />
+        <Profile />
       </AuthOnlyRoute>
       <Redirect to={{ pathname: '/profile' }} />
     </Switch>

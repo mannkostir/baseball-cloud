@@ -9,7 +9,11 @@ const SubmitButton = ({
   children,
   ...props
 }: React.ButtonHTMLAttributes<HTMLButtonElement> & ISubmitButtonProps) => {
-  return <Styled.Button {...props}>{children}</Styled.Button>;
+  return (
+    <Styled.Button type="submit" {...props}>
+      {children}
+    </Styled.Button>
+  );
 };
 
 export default SubmitButton;
