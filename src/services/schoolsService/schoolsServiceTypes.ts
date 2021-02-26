@@ -1,7 +1,7 @@
 import { School } from '@/types/commonTypes';
 
 export type GetSchoolsQuery = {
-  search: '';
+  search: string;
 };
 export type GetSchoolsResponse = {
   data: {
