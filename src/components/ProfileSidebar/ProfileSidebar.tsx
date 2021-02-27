@@ -1,4 +1,4 @@
-import React, { HTMLAttributes } from 'react';
+import React, { HTMLAttributes, useState } from 'react';
 import Select, { Styles } from 'react-select';
 import * as Styled from './ProfileSidebar.styles';
 
@@ -140,6 +140,7 @@ const ReactSelectAdapter = ({
       placeholder={props.placeholder}
       {...input}
       {...props}
+      onChange={(e: any) => input.onChange(e.value)}
     />
   );
 };

@@ -2,9 +2,20 @@ import Filters from '@/components/Filters';
 import LeadersTable from '@/components/LeadersTable';
 import TabButton from '@/components/TabButton';
 import { leaderboardService } from '@/services/leaderboardService';
-import { LeaderboardRecord } from '@/services/leaderboardService/leaderboardServiceTypes';
+import {
+  GetLeaderboardQuery,
+  LeaderboardRecord,
+} from '@/services/leaderboardService/leaderboardServiceTypes';
+import {
+  FilterType,
+  FormValue,
+  PlayerPosition,
+  ReactSelectOptions,
+  School,
+} from '@/types/commonTypes';
 import React, { useEffect, useState } from 'react';
-import { Field, Form } from 'react-final-form';
+import { Field, Form, FormSpy } from 'react-final-form';
+import Select from 'react-select';
 import styled from 'styled-components/macro';
 
 const Container = styled.div`
@@ -21,17 +32,50 @@ const Header = styled.header`
 
 type Mode = 'batting' | 'pitching';
 
-const DateOptions = [
+const DateOptions: ReactSelectOptions<'all' | 'last_week' | 'last_month'> = [
   { value: 'all', label: 'All' },
   { value: 'last_week', label: 'Last Week' },
   { value: 'last_month', label: 'Last Month' },
 ];
+
+const FavoriteOptions: ReactSelectOptions<1 | null> = [
+  { value: null, label: 'All' },
+  { value: 1, label: 'Favorite' },
+];
+
+const TypeOptions: ReactSelectOptions<FilterType> = [
+  { value: 'exit_velocity', label: 'Exit Velocity' },
+  { value: 'carry_distance', label: 'Carry Distance' },
+];
+
+const PositionOptions: ReactSelectOptions<PlayerPosition> = [
+  { value: 'catcher', label: 'Catcher' },
+  { value: 'first_base', label: 'First Base' },
+  { value: 'second_base', label: 'Second Base' },
+  { value: 'shortshop', label: 'Shortshop' },
+  { value: 'third_base', label: 'Third Base' },
+  { value: 'outfield', label: 'Outfield' },
+  { value: 'pitcher', label: 'Pitcher' },
+];
+
+type FormValues = {
+  date: 'last_week' | 'last_month';
+  school: string;
+  team: string;
+  position: PlayerPosition;
+  age: number;
+  favorite: 1;
+  type: FilterType;
+};
 
 const Leaderboard = () => {
   const [selectedMode, setSelectedMode] = useState<Mode>('batting');
   const [leaderboardItems, setLeaderboardItems] = useState<LeaderboardRecord[]>(
     []
   );
+  const [query, setQuery] = useState<GetLeaderboardQuery>({
+    type: 'exit_velocity',
+  });
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -40,7 +84,7 @@ const Leaderboard = () => {
         setIsLoading(true);
 
         const leaders = await leaderboardService.getLeaderboard({
-          type: 'exit_velocity',
+          ...query,
         });
 
         setLeaderboardItems(leaders);
@@ -50,13 +94,17 @@ const Leaderboard = () => {
         setIsLoading(false);
       }
     })();
-  }, []);
+  }, [query]);
+
+  const onSubmit = (values: FormValues) => {
+    setQuery((prevQuery) => ({ ...prevQuery, ...values }));
+  };
 
   return (
     <Container>
       <Header>
         <h2>Leaderboard</h2>
-        <Form onSubmit={() => {}}>
+        <Form onSubmit={onSubmit}>
           {(props) => (
             <form
               style={{ display: 'flex', flex: 1, justifyContent: 'flex-end' }}
@@ -64,9 +112,8 @@ const Leaderboard = () => {
               <Field
                 name="date"
                 placeholder="Date"
-                component={Filters.SelectInput}
                 options={DateOptions}
-                style={{ width: '80px' }}
+                component={Filters.SelectInput}
               />
               <Field
                 name="school"
@@ -82,13 +129,33 @@ const Leaderboard = () => {
                 name="position"
                 placeholder="Position"
                 component={Filters.SelectInput}
-                style={{ width: '110px' }}
+                options={PositionOptions}
               />
               <Field
                 name="age"
                 placeholder="Age"
                 component={Filters.TextInput}
               />
+              <Field
+                name="favorite"
+                placeholder="Favorite"
+                component={Filters.SelectInput}
+                options={FavoriteOptions}
+              />
+              <Field
+                name="type"
+                placeholder="Type"
+                component={Filters.SelectInput}
+                options={TypeOptions}
+              />
+              {props.values ? (
+                <FormSpy
+                  onChange={() => {
+                    props.handleSubmit();
+                  }}
+                  subscription={{ values: true }}
+                ></FormSpy>
+              ) : null}
             </form>
           )}
         </Form>

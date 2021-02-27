@@ -118,7 +118,7 @@ export type CurrentProfileRecord = {
 export type GetProfilesQuery = {
   profiles_count: number;
   offset: number;
-  school?: School;
+  school?: string;
   team?: string;
   position?: PlayerPosition;
   age?: number;

@@ -28,10 +28,12 @@ interface IFilterSelectProps {
 }
 
 const FilterSelect = ({
+  input,
   ...props
 }: IFilterSelectProps & SelectHTMLAttributes<HTMLSelectElement>) => {
   return (
     <ProfileSidebar.SelectInput
+      input={input}
       styles={{
         container: (provided, state) => ({
           ...provided,

@@ -1,17 +1,12 @@
 import { ExtendedProfileRecord } from '@/services/profilesService/profileServiceTypes';
-import { PlayerPosition } from '@/types/commonTypes';
+import { PlayerPosition, ReactSelectOptions } from '@/types/commonTypes';
 import React from 'react';
 import { Field, FormRenderProps } from 'react-final-form';
 import ProfileSidebar from '../ProfileSidebar';
 import { UserImage } from '../TopNav/TopNav.styled';
 import * as Styled from './UserInfoCompound.styles';
 
-interface IPositionOptionsTypes
-  extends Array<{ value: PlayerPosition; label: string }> {}
-interface ISecondaryPositionOptionsTypes
-  extends Array<{ value: PlayerPosition | null; label: string }> {}
-
-const primaryPositionOptions: IPositionOptionsTypes = [
+const primaryPositionOptions: ReactSelectOptions<PlayerPosition> = [
   { value: 'catcher', label: 'Catcher' },
   { value: 'first_base', label: 'First Base' },
   { value: 'second_base', label: 'Second Base' },
@@ -21,7 +16,7 @@ const primaryPositionOptions: IPositionOptionsTypes = [
   { value: 'pitcher', label: 'Pitcher' },
 ];
 
-const secondaryPositionOptions: ISecondaryPositionOptionsTypes = [
+const secondaryPositionOptions: ReactSelectOptions<PlayerPosition | null> = [
   { value: null, label: '-' },
   ...primaryPositionOptions,
 ];
