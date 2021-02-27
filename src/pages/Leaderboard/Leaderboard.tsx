@@ -69,12 +69,16 @@ type FormValues = {
 };
 
 const Leaderboard = () => {
+  const defaultQuery: GetLeaderboardQuery = {
+    type: 'exit_velocity',
+  };
+
   const [selectedMode, setSelectedMode] = useState<Mode>('batting');
   const [leaderboardItems, setLeaderboardItems] = useState<LeaderboardRecord[]>(
     []
   );
-  const [query, setQuery] = useState<GetLeaderboardQuery>({
-    type: 'exit_velocity',
+  const [query, setQuery] = useState<typeof defaultQuery>({
+    ...defaultQuery,
   });
   const [isLoading, setIsLoading] = useState(false);
 
@@ -98,7 +102,7 @@ const Leaderboard = () => {
 
   const onSubmit = (values: FormValues) => {
     console.log(query, values);
-    setQuery((prevQuery) => ({ ...prevQuery, ...values }));
+    setQuery({ ...defaultQuery, ...values });
   };
 
   return (

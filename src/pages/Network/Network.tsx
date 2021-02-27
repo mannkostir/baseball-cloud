@@ -61,10 +61,14 @@ const PositionOptions: ReactSelectOptions<PlayerPosition> = [
 const currentPage = 0;
 
 const Network = () => {
-  const [profiles, setProfiles] = useState<ProfileRecord[]>([]);
-  const [query, setQuery] = useState<GetProfilesQuery>({
+  const defaultQuery: GetProfilesQuery = {
     profiles_count: 10,
     offset: 10 * currentPage,
+  };
+
+  const [profiles, setProfiles] = useState<ProfileRecord[]>([]);
+  const [query, setQuery] = useState<typeof defaultQuery>({
+    ...defaultQuery,
   });
   const [profilesTotalCount, setProfilesTotalCount] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
