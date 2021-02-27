@@ -66,6 +66,7 @@ const Leaderboard = () => {
                 placeholder="Date"
                 component={Filters.SelectInput}
                 options={DateOptions}
+                style={{ width: '80px' }}
               />
               <Field
                 name="school"
@@ -81,6 +82,7 @@ const Leaderboard = () => {
                 name="position"
                 placeholder="Position"
                 component={Filters.SelectInput}
+                style={{ width: '110px' }}
               />
               <Field
                 name="age"

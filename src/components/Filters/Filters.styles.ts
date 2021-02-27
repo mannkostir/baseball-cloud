@@ -15,6 +15,7 @@ export const FilterInput = styled(ProfileSidebar.TextInput)`
   transition: width 0.5s;
   border: none;
   border-radius: 0;
+  flex: 1;
   &:focus {
     width: 180px;
     border: none;
