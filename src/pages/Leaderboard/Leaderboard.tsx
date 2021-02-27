@@ -111,11 +111,10 @@ const Leaderboard = () => {
     setQuery({ ...defaultQuery, ...values });
   };
 
-  const toggleMyHolyFavor = async (id: number, isInFavor: boolean) => {
-    await profilesService.updateFavoriteProfile({
-      profile_id: id,
-      favorite: isInFavor ? false : true,
-    });
+  const { toggleMyHolyFavor } = useProfileService();
+
+  const toggleFavor = async (id: number, isInFavor: boolean) => {
+    await toggleMyHolyFavor(id, isInFavor);
     await fetchLeaderboard();
   };
 
@@ -197,7 +196,7 @@ const Leaderboard = () => {
         </div>
         <div>
           <LeadersTable
-            toggleFavorite={toggleMyHolyFavor}
+            toggleFavorite={toggleFavor}
             leaderboardItems={leaderboardItems}
           />
         </div>
