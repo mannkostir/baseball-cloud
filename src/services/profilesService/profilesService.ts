@@ -217,5 +217,5 @@ export const updateFavoriteProfile = async (
     variables: { form: { ...query } },
   });
 
-  return res.data.data.update_favorite_profile.favorite;
+  return res.data.data.update_favorite_profile;
 };

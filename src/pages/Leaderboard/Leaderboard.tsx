@@ -7,6 +7,7 @@ import {
   LeaderboardRecord,
 } from '@/services/leaderboardService/leaderboardServiceTypes';
 import { profilesService } from '@/services/profilesService';
+import { useProfileService } from '@/services/profilesService/useProfileService';
 import {
   FilterType,
   FormValue,
