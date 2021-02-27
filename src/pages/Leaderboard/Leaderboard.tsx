@@ -151,7 +151,9 @@ const Leaderboard = () => {
               {props.values ? (
                 <FormSpy
                   onChange={() => {
-                    props.handleSubmit();
+                    setTimeout(() => {
+                      props.handleSubmit();
+                    }, 0);
                   }}
                   subscription={{ values: true }}
                 ></FormSpy>
