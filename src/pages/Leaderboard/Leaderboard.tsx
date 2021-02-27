@@ -97,6 +97,7 @@ const Leaderboard = () => {
   }, [query]);
 
   const onSubmit = (values: FormValues) => {
+    console.log(query, values);
     setQuery((prevQuery) => ({ ...prevQuery, ...values }));
   };
 
@@ -155,7 +156,6 @@ const Leaderboard = () => {
                       props.handleSubmit();
                     }, 0);
                   }}
-                  subscription={{ values: true }}
                 ></FormSpy>
               ) : null}
             </form>

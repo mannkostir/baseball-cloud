@@ -14,6 +14,7 @@ import SchoolInfoCompound from '@/components/SchoolInfo';
 import FacilityInfoCompound from '@/components/FacilityInfo';
 import ProfileAboutCompound from '@/components/ProfileAbout';
 import PersonalInfo from '@/components/PersonalInfo';
+import { useParams } from 'react-router-dom';
 
 const Container = styled.div`
   display: flex;
@@ -52,24 +53,21 @@ type FormValues = {
   bats_hand: { label: string; value: string } | string | number;
 };
 
-interface IProfileProps {
-  playerId?: number;
-}
-
-const Profile = ({ playerId }: IProfileProps) => {
+const Profile = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [profileData, setProfileData] = useState<ExtendedProfileRecord | null>(
     null
   );
+
   const [isEditingProfile, setIsEditingProfile] = useState(false);
 
   const { currentProfileId } = useProfileSelector();
 
+  const params = useParams<{ id: string }>();
+
   const saveChanges = async (values: FormValues) => {
     try {
       if (!profileData) return;
-
-      console.log(values);
 
       const submitValues = Object.entries(values).reduce<Record<string, any>>(
         (acc, [key, value]) => {
@@ -108,8 +106,8 @@ const Profile = ({ playerId }: IProfileProps) => {
   useEffect(() => {
     let id: number | string;
 
-    if (playerId) {
-      id = playerId;
+    if (params.id) {
+      id = params.id;
     } else if (currentProfileId) {
       id = currentProfileId;
     } else {
@@ -121,7 +119,7 @@ const Profile = ({ playerId }: IProfileProps) => {
         setIsLoading(true);
 
         const profile = await profilesService.getProfile({
-          id: typeof id === 'string' ? id : id.toString(),
+          id: typeof id === 'string' ? id : id,
         });
 
         setProfileData(profile);
@@ -131,7 +129,7 @@ const Profile = ({ playerId }: IProfileProps) => {
         setIsLoading(false);
       }
     })();
-  }, [playerId, currentProfileId]);
+  }, [currentProfileId, params.id]);
 
   return (
     <Container>
@@ -167,14 +165,20 @@ const Profile = ({ playerId }: IProfileProps) => {
                   profileData={profileData}
                   onEditButtonClick={() =>
                     setIsEditingProfile(
-                      !playerId && currentProfileId ? true : false
+                      !params.id && currentProfileId ? true : false
                     )
                   }
                 />
                 <PersonalInfo.View profileData={profileData} />
-                <SchoolInfoCompound.View profileData={profileData} />
-                <FacilityInfoCompound.View profileData={profileData} />
-                <ProfileAboutCompound.View profileData={profileData} />
+                {profileData.school && profileData.teams.length ? (
+                  <SchoolInfoCompound.View profileData={profileData} />
+                ) : null}
+                {profileData.facilities.length ? (
+                  <FacilityInfoCompound.View profileData={profileData} />
+                ) : null}
+                {profileData.biography ? (
+                  <ProfileAboutCompound.View profileData={profileData} />
+                ) : null}
               </>
             )}
           </ProfileSidebarContainer>

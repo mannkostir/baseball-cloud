@@ -145,7 +145,6 @@ const Network = () => {
                     props.handleSubmit();
                   }, 0);
                 }}
-                subscription={{ values: true, invalid: true }}
               ></FormSpy>
             </form>
           )}

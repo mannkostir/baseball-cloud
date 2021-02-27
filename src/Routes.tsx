@@ -7,6 +7,7 @@ import PlayerInfo from '@/pages/PlayerInfo';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import { useAuthSelector } from './store/auth';
+import { useProfileSelector } from './store/profile';
 
 const AuthOnlyRoute = ({
   children,
@@ -45,6 +46,9 @@ const Routes = () => {
       <UnAuthOnlyRoute path="/registration">
         <SignUp />
       </UnAuthOnlyRoute>
+      <AuthOnlyRoute path="/profile/:id">
+        <Profile />
+      </AuthOnlyRoute>
       <AuthOnlyRoute path="/profile">
         <Profile />
       </AuthOnlyRoute>
@@ -53,9 +57,6 @@ const Routes = () => {
       </AuthOnlyRoute>
       <AuthOnlyRoute path="/network">
         <Network />
-      </AuthOnlyRoute>
-      <AuthOnlyRoute path="/profile/:id">
-        <Profile />
       </AuthOnlyRoute>
       <Redirect to={{ pathname: '/profile' }} />
     </Switch>

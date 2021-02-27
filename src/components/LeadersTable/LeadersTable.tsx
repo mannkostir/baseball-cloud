@@ -1,5 +1,8 @@
 import { LeaderboardRecord } from '@/services/leaderboardService/leaderboardServiceTypes';
+import { profileActions } from '@/store/profile';
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import StyledTable from '../StyledTable';
 
 interface ILeadersTableProps {
@@ -27,7 +30,9 @@ const LeadersTable = ({ leaderboardItems = [] }: ILeadersTableProps) => {
           <tr key={index + 1}>
             <td>{index + 1}</td>
             <td>
-              <a>{leader.batter_name}</a>
+              <Link to={`/profile/${leader.batter_datraks_id}`}>
+                {leader.batter_name}
+              </Link>
             </td>
             <td>{leader.age}</td>
             <td>{leader.school.name}</td>

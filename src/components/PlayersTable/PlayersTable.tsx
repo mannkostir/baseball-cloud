@@ -1,5 +1,6 @@
 import { ProfileRecord } from '@/services/profilesService/profileServiceTypes';
 import React from 'react';
+import { Link } from 'react-router-dom';
 import StyledTable from '../StyledTable';
 
 interface IPlayersTableProps {
@@ -22,7 +23,9 @@ const PlayersTable = ({ profiles }: IPlayersTableProps) => {
       <tbody>
         {profiles.map((profile) => (
           <tr key={profile.id}>
-            <td>{profile.first_name}</td>
+            <td>
+              <Link to={`/profile/${profile.id}`}>{profile.first_name}</Link>
+            </td>
             <td>-</td>
             <td>{profile.school ? profile.school.name : '-'}</td>
             <td>{profile.teams[0] ? profile.teams[0].name : '-'}</td>
