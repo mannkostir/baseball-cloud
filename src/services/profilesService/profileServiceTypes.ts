@@ -194,3 +194,15 @@ export type UpdateProfileResponse = {
     };
   };
 };
+
+export type UpdateFavoriteProfileQuery = {
+  profile_id: number;
+  favorite: boolean;
+};
+export type UpdateFavoriteProfileResponse = {
+  data: {
+    update_favorite_profile: {
+      favorite: boolean;
+    };
+  };
+};

@@ -1,4 +1,5 @@
 import { LeaderboardRecord } from '@/services/leaderboardService/leaderboardServiceTypes';
+import { profilesService } from '@/services/profilesService';
 import { profileActions } from '@/store/profile';
 import React from 'react';
 import { useDispatch } from 'react-redux';
@@ -7,9 +8,13 @@ import StyledTable from '../StyledTable';
 
 interface ILeadersTableProps {
   leaderboardItems: LeaderboardRecord[];
+  toggleFavorite: (id: number, isInFavor: boolean) => void;
 }
 
-const LeadersTable = ({ leaderboardItems = [] }: ILeadersTableProps) => {
+const LeadersTable = ({
+  leaderboardItems = [],
+  toggleFavorite,
+}: ILeadersTableProps) => {
   return (
     <StyledTable>
       <thead>
@@ -40,7 +45,15 @@ const LeadersTable = ({ leaderboardItems = [] }: ILeadersTableProps) => {
             <td>{leader.exit_velocity}</td>
             <td>{leader.launch_angle}</td>
             <td>{leader.distance}</td>
-            <td>{leader.favorite}</td>
+            <td>
+              <a
+                onClick={() =>
+                  toggleFavorite(leader.batter_datraks_id, leader.favorite)
+                }
+              >
+                {leader.favorite ? 'Love' : 'Hate'}
+              </a>
+            </td>
           </tr>
         ))}
       </tbody>

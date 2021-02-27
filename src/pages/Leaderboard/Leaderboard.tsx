@@ -6,6 +6,7 @@ import {
   GetLeaderboardQuery,
   LeaderboardRecord,
 } from '@/services/leaderboardService/leaderboardServiceTypes';
+import { profilesService } from '@/services/profilesService';
 import {
   FilterType,
   FormValue,
@@ -82,27 +83,39 @@ const Leaderboard = () => {
   });
   const [isLoading, setIsLoading] = useState(false);
 
+  const fetchLeaderboard = async () => {
+    try {
+      setIsLoading(true);
+
+      const leaders = await leaderboardService.getLeaderboard({
+        ...query,
+      });
+
+      setLeaderboardItems(leaders);
+    } catch (e) {
+      throw e;
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
     (async () => {
-      try {
-        setIsLoading(true);
-
-        const leaders = await leaderboardService.getLeaderboard({
-          ...query,
-        });
-
-        setLeaderboardItems(leaders);
-      } catch (e) {
-        throw e;
-      } finally {
-        setIsLoading(false);
-      }
+      fetchLeaderboard();
     })();
   }, [query]);
 
   const onSubmit = (values: FormValues) => {
     console.log(query, values);
     setQuery({ ...defaultQuery, ...values });
+  };
+
+  const toggleMyHolyFavor = async (id: number, isInFavor: boolean) => {
+    await profilesService.updateFavoriteProfile({
+      profile_id: id,
+      favorite: isInFavor ? false : true,
+    });
+    await fetchLeaderboard();
   };
 
   return (
@@ -182,7 +195,10 @@ const Leaderboard = () => {
           </TabButton>
         </div>
         <div>
-          <LeadersTable leaderboardItems={leaderboardItems} />
+          <LeadersTable
+            toggleFavorite={toggleMyHolyFavor}
+            leaderboardItems={leaderboardItems}
+          />
         </div>
       </main>
     </Container>

@@ -5,6 +5,8 @@ import {
   GetProfileResponse,
   GetProfilesQuery,
   GetProfilesResponse,
+  UpdateFavoriteProfileQuery,
+  UpdateFavoriteProfileResponse,
   UpdateProfileQuery,
   UpdateProfileResponse,
 } from './profileServiceTypes';
@@ -201,4 +203,19 @@ export const updateProfile = async (query: UpdateProfileQuery) => {
   });
 
   return res.data.data.update_profile.profile;
+};
+
+export const updateFavoriteProfile = async (
+  query: UpdateFavoriteProfileQuery
+) => {
+  const res = await fetchAPI.post<UpdateFavoriteProfileResponse>('graphql', {
+    query: `mutation UpdateFavoriteProfile($form:UpdateFavoriteProfileInput!) {
+      update_favorite_profile(input: $form) {
+        favorite
+      }
+    }`,
+    variables: { form: { ...query } },
+  });
+
+  return res.data.data.update_favorite_profile.favorite;
 };
