@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import { profilesService } from '@/services/profilesService';
+import { BattingSummary, ProfileAnalysisInfo } from '@/types/commonTypes';
+import React, { useEffect, useState } from 'react';
 import BattingValues from '../BattingValues';
 import Card from '../Card';
 import TabButton from '../TabButton';
@@ -6,8 +8,27 @@ import * as Styled from './ProfileAnalysis.styles';
 
 type ProfileTabs = 'batting' | 'sessionReports' | 'comparison';
 
-const ProfileAnalysis = ({ profileId }: { profileId: string }) => {
+interface IProfileAnalysisProps {
+  profileData: ProfileAnalysisInfo;
+}
+
+const ProfileAnalysis = ({ profileData }: IProfileAnalysisProps) => {
   const [selectedTab, setSelectedTab] = useState<ProfileTabs>('batting');
+
+  const [battingSummary, setBattingSummary] = useState<{
+    average_values: BattingSummary[];
+    top_values: BattingSummary[];
+  }>();
+
+  useEffect(() => {
+    (async () => {
+      const data = await profilesService.getBattingSummary({
+        id: profileData.id,
+      });
+
+      setBattingSummary(data);
+    })();
+  }, []);
 
   return (
     <Card>
@@ -38,7 +59,9 @@ const ProfileAnalysis = ({ profileId }: { profileId: string }) => {
         </li>
       </Styled.ProfileTabsList>
       <Styled.TabContent>
-        {selectedTab === 'batting' && <BattingValues playerId={profileId} />}
+        {selectedTab === 'batting' && battingSummary && (
+          <BattingValues battingSummary={battingSummary} />
+        )}
       </Styled.TabContent>
     </Card>
   );

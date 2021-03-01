@@ -62,3 +62,12 @@ export type BattingSummary = {
   launch_angle: number;
   pitch_type: string;
 };
+
+export type ProfileAnalysisInfo = {
+  id: string;
+  age: number;
+  first_name: string;
+  last_name: string;
+  feet: number;
+  weight: number;
+};

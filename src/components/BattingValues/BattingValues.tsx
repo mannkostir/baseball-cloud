@@ -4,23 +4,13 @@ import StyledTable from '../StyledTable';
 import { BattingSummary, Unpromise } from '@/types/commonTypes';
 
 interface IBattingValuesProps {
-  playerId: string;
+  battingSummary: {
+    top_values: BattingSummary[];
+    average_values: BattingSummary[];
+  };
 }
 
-const BattingValues = ({ playerId }: IBattingValuesProps) => {
-  const [battingSummary, setBattingSummary] = useState<{
-    average_values: BattingSummary[];
-    top_values: BattingSummary[];
-  }>();
-
-  useEffect(() => {
-    (async () => {
-      const data = await profilesService.getBattingSummary({ id: playerId });
-
-      setBattingSummary(data);
-    })();
-  }, []);
-
+const BattingValues = ({ battingSummary }: IBattingValuesProps) => {
   return (
     <div>
       <h3>Top Batting Values</h3>

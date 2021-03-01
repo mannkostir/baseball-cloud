@@ -192,7 +192,7 @@ const Profile = () => {
                 events={{ recent_events: profileData.recent_events }}
               />
             </ProfileSummary>
-            <ProfileAnalysis profileId={profileData.id} />
+            <ProfileAnalysis profileData={profileData} />
           </ProfileMain>
         </>
       ) : (
