@@ -94,6 +94,7 @@ const Leaderboard = () => {
       setIsLoading(true);
 
       const leaders = await leaderboardService.getLeaderboard({
+        ...defaultQuery,
         ...query,
       });
 
@@ -106,15 +107,13 @@ const Leaderboard = () => {
   };
 
   useEffect(() => {
-    console.log('Ooops');
     (async () => {
       fetchLeaderboard();
     })();
   }, [query]);
 
   const onSubmit = (values: FormValues) => {
-    // if (!Object.keys(values).length) return;
-    setQuery((prevQuery) => ({ ...prevQuery, ...values }));
+    setQuery({ ...values });
   };
 
   const { toggleMyHolyFavor } = useProfileService();

@@ -79,6 +79,7 @@ const Network = () => {
         setIsLoading(true);
 
         const profilesResponse = await profilesService.getProfiles({
+          ...defaultQuery,
           ...query,
         });
 
@@ -93,7 +94,7 @@ const Network = () => {
   }, [query]);
 
   const onSubmit = (values: FormValues) => {
-    setQuery((prevQuery) => ({ ...prevQuery, ...values }));
+    setQuery({ ...values });
   };
 
   return (
