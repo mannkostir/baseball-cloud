@@ -4,16 +4,19 @@ import { profileActions } from '@/store/profile';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import LoadingScreen from '../LoadingScreen';
 import StyledTable from '../StyledTable';
 
 interface ILeadersTableProps {
   leaderboardItems: LeaderboardRecord[];
   toggleFavorite: (id: number, isInFavor: boolean) => void;
+  isLoading: boolean;
 }
 
 const LeadersTable = ({
   leaderboardItems = [],
   toggleFavorite,
+  isLoading,
 }: ILeadersTableProps) => {
   return (
     <StyledTable>

@@ -4,16 +4,18 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { AppContainer, GlobalStyles, MainContent } from './App.styles';
 import Footer from './components/Footer';
 import Header from './components/Header';
+import LoadingScreen from './components/LoadingScreen';
 import Notifications from './components/Notifications';
 import Routes from './Routes';
 import { authActions, useAuthSelector } from './store/auth';
 import { useNotificationSelector } from './store/notifications';
-import { profileActions } from './store/profile';
+import { profileActions, useProfileSelector } from './store/profile';
 
 function App() {
   const { currentNotifications } = useNotificationSelector();
 
-  const { isAuthenticated } = useAuthSelector();
+  const { isAuthenticated, isAuthLoading } = useAuthSelector();
+  const { isProfileLoading } = useProfileSelector();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -38,7 +40,7 @@ function App() {
         />
         <Header />
         <MainContent>
-          <Routes />
+          {isAuthLoading || isProfileLoading ? <LoadingScreen /> : <Routes />}
         </MainContent>
         <Footer />
       </AppContainer>

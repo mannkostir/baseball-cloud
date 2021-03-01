@@ -15,6 +15,7 @@ import FacilityInfoCompound from '@/components/FacilityInfo';
 import ProfileAboutCompound from '@/components/ProfileAbout';
 import PersonalInfo from '@/components/PersonalInfo';
 import { useParams } from 'react-router-dom';
+import LoadingScreen from '@/components/LoadingScreen';
 
 const Container = styled.div`
   display: flex;
@@ -133,7 +134,7 @@ const Profile = () => {
 
   return (
     <Container>
-      {profileData ? (
+      {profileData && !isLoading ? (
         <>
           <ProfileSidebarContainer>
             {isEditingProfile ? (
@@ -195,7 +196,7 @@ const Profile = () => {
           </ProfileMain>
         </>
       ) : (
-        'Loading'
+        <LoadingScreen />
       )}
     </Container>
   );

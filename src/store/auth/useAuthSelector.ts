@@ -13,7 +13,7 @@ export const useAuthSelector = () => {
   return {
     userId: authState.userId,
     isAuthenticated,
-    isLoading: authState.isLoading,
+    isAuthLoading: authState.isLoading,
     error: authState.error,
   };
 };

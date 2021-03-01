@@ -1,5 +1,6 @@
 import Filters from '@/components/Filters';
 import LeadersTable from '@/components/LeadersTable';
+import LoadingScreen from '@/components/LoadingScreen';
 import TabButton from '@/components/TabButton';
 import { leaderboardService } from '@/services/leaderboardService';
 import {
@@ -105,14 +106,15 @@ const Leaderboard = () => {
   };
 
   useEffect(() => {
+    console.log('Ooops');
     (async () => {
       fetchLeaderboard();
     })();
   }, [query]);
 
   const onSubmit = (values: FormValues) => {
-    console.log(query, values);
-    setQuery({ ...defaultQuery, ...values });
+    if (!Object.keys(values).length) return;
+    setQuery((prevQuery) => ({ ...prevQuery, ...values }));
   };
 
   const { toggleMyHolyFavor } = useProfileService();
@@ -185,15 +187,13 @@ const Leaderboard = () => {
                 component={Filters.SelectInput}
                 options={TypeOptions}
               />
-              {props.values ? (
-                <FormSpy
-                  onChange={() => {
-                    setTimeout(() => {
-                      props.handleSubmit();
-                    }, 0);
-                  }}
-                ></FormSpy>
-              ) : null}
+              <FormSpy
+                onChange={() => {
+                  setTimeout(() => {
+                    props.handleSubmit();
+                  }, 0);
+                }}
+              ></FormSpy>
             </form>
           )}
         </Form>
@@ -217,6 +217,7 @@ const Leaderboard = () => {
           <LeadersTable
             toggleFavorite={toggleFavor}
             leaderboardItems={leaderboardItems}
+            isLoading={isLoading}
           />
         </div>
       </main>
