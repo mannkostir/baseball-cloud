@@ -45,8 +45,8 @@ const authSlice = createSlice({
       state.isLoading = false;
     },
     signOutSucceeded(state, action: PayloadAction<SignOutResponse>) {
-      state = defaultAuth;
-      localStorage.removeItem('token');
+      localStorage.removeItem('credentials');
+      return defaultAuth;
     },
     signOutFailed(state, action: PayloadAction<{ message: string }>) {
       state.error = action.payload.message;

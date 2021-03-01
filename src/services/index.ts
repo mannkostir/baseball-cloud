@@ -9,16 +9,20 @@ const instance = axios.create({
   },
 });
 
-const cachedCredentials:
-  | UserCredentials
-  | Record<string, any> = localStorage.getItem('credentials')
-  ? JSON.parse(localStorage.getItem('credentials')!)
-  : {};
+const getHeaders = () => {
+  const headers: RequestHeaders = {
+    'access-token':
+      JSON.parse(localStorage.getItem('credentials') || JSON.stringify({}))
+        ?.token || '',
+    client:
+      JSON.parse(localStorage.getItem('credentials') || JSON.stringify({}))
+        ?.client || '',
+    uid:
+      JSON.parse(localStorage.getItem('credentials') || JSON.stringify({}))
+        ?.uid || '',
+  };
 
-const headers: RequestHeaders = {
-  'access-token': cachedCredentials.token || '',
-  client: cachedCredentials.client || '',
-  uid: cachedCredentials.uid || '',
+  return headers;
 };
 
 const handleError = ({ message }: { message: string }) => {
@@ -26,6 +30,8 @@ const handleError = ({ message }: { message: string }) => {
 };
 
 instance.interceptors.request.use((request) => {
+  const headers = getHeaders();
+
   request.headers = {
     ...request.headers,
     ...headers,

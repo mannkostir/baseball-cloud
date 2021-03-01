@@ -15,7 +15,6 @@ function App() {
   const { currentNotifications } = useNotificationSelector();
 
   const { isAuthenticated, isAuthLoading } = useAuthSelector();
-  const { isProfileLoading } = useProfileSelector();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -40,7 +39,7 @@ function App() {
         />
         <Header />
         <MainContent>
-          {isAuthLoading || isProfileLoading ? <LoadingScreen /> : <Routes />}
+          {isAuthLoading ? <LoadingScreen /> : <Routes />}
         </MainContent>
         <Footer />
       </AppContainer>

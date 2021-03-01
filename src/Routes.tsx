@@ -15,7 +15,7 @@ const AuthOnlyRoute = ({
 }: RouteProps & {
   children: JSX.Element | JSX.Element[];
 }) => {
-  const { isAuthenticated } = useAuthSelector();
+  const { isAuthenticated, userId } = useAuthSelector();
   return (
     <Route {...props}>
       {isAuthenticated ? children : <Redirect to={{ pathname: '/login' }} />}

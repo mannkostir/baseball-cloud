@@ -1,5 +1,9 @@
-import React from 'react';
+import { authActions } from '@/store/auth';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import Icons from '../Icons';
+import ProfileSidebar from '../ProfileSidebar';
 import * as Styled from './TopNav.styled';
 
 interface ITopNavProps {
@@ -7,6 +11,14 @@ interface ITopNavProps {
 }
 
 const TopNav = ({ username }: ITopNavProps) => {
+  const dispatch = useDispatch();
+
+  const [isDropdownOpened, setIsDropdownOpened] = useState(false);
+
+  const signOut = () => {
+    dispatch(authActions.signOut());
+  };
+
   return (
     <Styled.Container>
       <Styled.NavList>
@@ -22,7 +34,25 @@ const TopNav = ({ username }: ITopNavProps) => {
           </Link>
         </Styled.NavItem>
         <Styled.NavItem>
-          <Styled.UserDropdownToggle>{username}</Styled.UserDropdownToggle>
+          <Styled.UserDropdownToggle
+            onClick={() => setIsDropdownOpened((isOpened) => !isOpened)}
+          >
+            {username}{' '}
+            <Icons.DropdownCaret
+              style={{ marginLeft: '6px', transform: 'translateY(-15%)' }}
+            />
+          </Styled.UserDropdownToggle>
+          <Styled.UserDropdownContent
+            onClick={() => setIsDropdownOpened(false)}
+            isDropdownOpened={isDropdownOpened}
+          >
+            <Styled.UserDropdownLink to="/profile">
+              Profile
+            </Styled.UserDropdownLink>
+            <Styled.UserSignOutLink onClick={signOut}>
+              Sign Out
+            </Styled.UserSignOutLink>
+          </Styled.UserDropdownContent>
         </Styled.NavItem>
       </Styled.NavList>
     </Styled.Container>
