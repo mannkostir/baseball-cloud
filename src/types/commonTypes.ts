@@ -69,5 +69,7 @@ export type ProfileAnalysisInfo = {
   first_name: string;
   last_name: string;
   feet: number;
+  inches: number;
   weight: number;
+  avatar: string | null;
 };

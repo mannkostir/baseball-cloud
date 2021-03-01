@@ -3,6 +3,7 @@ import { BattingSummary, ProfileAnalysisInfo } from '@/types/commonTypes';
 import React, { useEffect, useState } from 'react';
 import BattingValues from '../BattingValues';
 import Card from '../Card';
+import ProfileComparison from '../ProfileComparison';
 import TabButton from '../TabButton';
 import * as Styled from './ProfileAnalysis.styles';
 
@@ -61,6 +62,12 @@ const ProfileAnalysis = ({ profileData }: IProfileAnalysisProps) => {
       <Styled.TabContent>
         {selectedTab === 'batting' && battingSummary && (
           <BattingValues battingSummary={battingSummary} />
+        )}
+        {selectedTab === 'comparison' && battingSummary && (
+          <ProfileComparison
+            playerData={profileData}
+            summary={battingSummary}
+          />
         )}
       </Styled.TabContent>
     </Card>
