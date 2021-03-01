@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
+import BattingValues from '../BattingValues';
 import Card from '../Card';
 import TabButton from '../TabButton';
 import * as Styled from './ProfileAnalysis.styles';
 
 type ProfileTabs = 'batting' | 'sessionReports' | 'comparison';
 
-const ProfileAnalysis = () => {
+const ProfileAnalysis = ({ profileId }: { profileId: string }) => {
   const [selectedTab, setSelectedTab] = useState<ProfileTabs>('batting');
 
   return (
@@ -36,7 +37,9 @@ const ProfileAnalysis = () => {
           </TabButton>
         </li>
       </Styled.ProfileTabsList>
-      <Styled.TabContent></Styled.TabContent>
+      <Styled.TabContent>
+        {selectedTab === 'batting' && <BattingValues playerId={profileId} />}
+      </Styled.TabContent>
     </Card>
   );
 };

@@ -4,6 +4,7 @@ import {
   School,
   SchoolYear,
   Team,
+  BattingSummary,
 } from '@/types/commonTypes';
 
 export type ProfileRecord = {
@@ -203,6 +204,18 @@ export type UpdateFavoriteProfileResponse = {
   data: {
     update_favorite_profile: {
       favorite: boolean;
+    };
+  };
+};
+
+export type GetBattingSummaryQuery = {
+  id: string;
+};
+export type GetBattingSummaryResponse = {
+  data: {
+    batting_summary: {
+      average_values: BattingSummary[];
+      top_values: BattingSummary[];
     };
   };
 };

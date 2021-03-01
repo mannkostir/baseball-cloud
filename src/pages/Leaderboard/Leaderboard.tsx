@@ -113,7 +113,7 @@ const Leaderboard = () => {
   }, [query]);
 
   const onSubmit = (values: FormValues) => {
-    if (!Object.keys(values).length) return;
+    // if (!Object.keys(values).length) return;
     setQuery((prevQuery) => ({ ...prevQuery, ...values }));
   };
 

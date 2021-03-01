@@ -1,5 +1,7 @@
 import fetchAPI from '@/services';
 import {
+  GetBattingSummaryQuery,
+  GetBattingSummaryResponse,
   GetCurrentProfileResponse,
   GetProfileQuery,
   GetProfileResponse,
@@ -218,4 +220,30 @@ export const updateFavoriteProfile = async (
   });
 
   return res.data.data.update_favorite_profile;
+};
+
+export const getBattingSummary = async (query: GetBattingSummaryQuery) => {
+  const res = await fetchAPI.post<GetBattingSummaryResponse>('graphql', {
+    query: `query BattingSummary($id:ID!) {
+      batting_summary(id: $id) {
+        top_values {
+          id
+          distance
+          pitch_type
+          launch_angle
+          exit_velocity
+        }
+        average_values {
+          id
+          distance
+          pitch_type
+          launch_angle
+          exit_velocity
+        }
+      }
+    }`,
+    variables: { ...query },
+  });
+
+  return res.data.data.batting_summary;
 };

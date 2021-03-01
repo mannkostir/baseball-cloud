@@ -54,3 +54,11 @@ export type Notification = {
   message: string;
   status: NotificationStatus;
 };
+
+export type BattingSummary = {
+  distance: number;
+  exit_velocity: number;
+  id: string | null;
+  launch_angle: number;
+  pitch_type: string;
+};
