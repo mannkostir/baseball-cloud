@@ -46,3 +46,11 @@ export type FormValue<T = string> = ReactSelectValue<T> | string | number;
 export type ReactSelectOptions<T = string> = { value: T; label: string }[];
 
 export type FilterType = 'exit_velocity' | 'carry_distance';
+
+export type NotificationStatus = 'success' | 'failure';
+
+export type Notification = {
+  id: string;
+  message: string;
+  status: NotificationStatus;
+};

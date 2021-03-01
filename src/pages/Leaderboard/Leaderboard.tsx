@@ -8,6 +8,7 @@ import {
 } from '@/services/leaderboardService/leaderboardServiceTypes';
 import { profilesService } from '@/services/profilesService';
 import { useProfileService } from '@/services/profilesService/useProfileService';
+import { notificationsActions } from '@/store/notifications';
 import {
   FilterType,
   FormValue,
@@ -17,6 +18,7 @@ import {
 } from '@/types/commonTypes';
 import React, { useEffect, useState } from 'react';
 import { Field, Form, FormSpy } from 'react-final-form';
+import { useDispatch } from 'react-redux';
 import Select from 'react-select';
 import styled from 'styled-components/macro';
 
@@ -71,6 +73,8 @@ type FormValues = {
 };
 
 const Leaderboard = () => {
+  const dispatch = useDispatch();
+
   const defaultQuery: GetLeaderboardQuery = {
     type: 'exit_velocity',
   };
@@ -116,6 +120,21 @@ const Leaderboard = () => {
   const toggleFavor = async (id: number, isInFavor: boolean) => {
     await toggleMyHolyFavor(id, isInFavor);
     await fetchLeaderboard();
+
+    let message: string;
+
+    if (isInFavor) {
+      message = 'Removed from favorite';
+    } else {
+      message = 'Added to favorite';
+    }
+
+    dispatch(
+      notificationsActions.addNotification({
+        status: 'success',
+        message,
+      })
+    );
   };
 
   return (

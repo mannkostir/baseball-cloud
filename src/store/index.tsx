@@ -2,6 +2,7 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { defaultAuth } from './auth/authSlice';
 import authReducer from './auth/authSlice';
 import profileReducer from './profile/profileSlice';
+import notificationsReducer from './notifications/notificationsSlice';
 import createSagaMiddleware from 'redux-saga';
 import rootSaga from './sagas';
 import { Provider } from 'react-redux';
@@ -17,6 +18,7 @@ interface IStoreProps {
 const rootReducer = combineReducers({
   auth: authReducer,
   profile: profileReducer,
+  notifications: notificationsReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
