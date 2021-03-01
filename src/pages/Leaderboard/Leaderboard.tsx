@@ -173,6 +173,7 @@ const Leaderboard = () => {
                 name="age"
                 placeholder="Age"
                 component={Filters.TextInput}
+                parse={(value) => (+value > 0 ? +value : null)}
               />
               <Field
                 name="favorite"
