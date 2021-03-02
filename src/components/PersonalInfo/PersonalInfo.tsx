@@ -2,6 +2,7 @@ import { profilesService } from '@/services/profilesService';
 import { Unpromise } from '@/types/commonTypes';
 import React from 'react';
 import { Field, Form } from 'react-final-form';
+import Icons from '../Icons';
 import ProfileSidebar from '../ProfileSidebar';
 import * as Styled from './PersonalInfo.styles';
 
@@ -28,25 +29,50 @@ const PersonalInfoView = ({ profileData }: IPersonalInfoViewProps) => {
     <Styled.Container>
       <Styled.TraitsList>
         <Styled.TraitsItem>
-          <span>Age</span>
+          <Styled.TraitTitleWrapper>
+            <Styled.TraitIcon>
+              <Icons.ProfileAge />
+            </Styled.TraitIcon>
+            <Styled.TraitTitle>Age</Styled.TraitTitle>
+          </Styled.TraitTitleWrapper>
           <span>{profileData.age}</span>
         </Styled.TraitsItem>
         <Styled.TraitsItem>
-          <span>Height</span>
+          <Styled.TraitTitleWrapper>
+            <Styled.TraitIcon>
+              <Icons.ProfileHeight />
+            </Styled.TraitIcon>
+            <Styled.TraitTitle>Height</Styled.TraitTitle>
+          </Styled.TraitTitleWrapper>
           <span>{`${profileData.feet} ft ${
             profileData.inches ? profileData.inches : 0
           } in`}</span>
         </Styled.TraitsItem>
         <Styled.TraitsItem>
-          <span>Weight</span>
+          <Styled.TraitTitleWrapper>
+            <Styled.TraitIcon>
+              <Icons.ProfileWeight />
+            </Styled.TraitIcon>
+            <Styled.TraitTitle>Weight</Styled.TraitTitle>
+          </Styled.TraitTitleWrapper>
           <span>{profileData.weight} lbs</span>
         </Styled.TraitsItem>
         <Styled.TraitsItem>
-          <span>Throws</span>
+          <Styled.TraitTitleWrapper>
+            <Styled.TraitIcon>
+              <Icons.ProfileThrows />
+            </Styled.TraitIcon>
+            <Styled.TraitTitle>Throws</Styled.TraitTitle>
+          </Styled.TraitTitleWrapper>
           <span>{profileData.throws_hand.toUpperCase()}</span>
         </Styled.TraitsItem>
         <Styled.TraitsItem>
-          <span>Bats</span>
+          <Styled.TraitTitleWrapper>
+            <Styled.TraitIcon>
+              <Icons.ProfileBats />
+            </Styled.TraitIcon>
+            <Styled.TraitTitle>Bats</Styled.TraitTitle>
+          </Styled.TraitTitleWrapper>
           <span>{profileData.bats_hand.toUpperCase()}</span>
         </Styled.TraitsItem>
       </Styled.TraitsList>

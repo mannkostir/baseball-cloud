@@ -6,8 +6,9 @@ import {
 } from '@/types/commonTypes';
 import React from 'react';
 import { Field, FormRenderProps } from 'react-final-form';
+import Icons from '../Icons';
 import ProfileSidebar from '../ProfileSidebar';
-import { UserImage } from '../TopNav/TopNav.styled';
+import UserImage from '../UserImage';
 import * as Styled from './UserInfoCompound.styles';
 
 const primaryPositionOptions: ReactSelectOptions<PlayerPosition> = [
@@ -37,7 +38,7 @@ interface IUserInfoProps {
 const UserInfo = ({ onEditButtonClick, profileData }: IUserInfoProps) => {
   return (
     <Styled.Container>
-      <span
+      <Icons.Edit
         style={{
           position: 'absolute',
           right: '13px',
@@ -50,7 +51,7 @@ const UserInfo = ({ onEditButtonClick, profileData }: IUserInfoProps) => {
         }}
       >
         Edit
-      </span>
+      </Icons.Edit>
       <UserImage />
       <Styled.Username>{`${profileData.first_name} ${profileData.last_name}`}</Styled.Username>
       <Styled.Role>{profileData.position}</Styled.Role>
