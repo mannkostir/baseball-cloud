@@ -72,4 +72,5 @@ export type ProfileAnalysisInfo = {
   inches: number;
   weight: number;
   avatar: string | null;
+  position: PlayerPosition;
 };

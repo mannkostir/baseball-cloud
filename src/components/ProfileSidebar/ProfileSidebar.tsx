@@ -140,7 +140,7 @@ const ReactSelectAdapter = ({
       placeholder={props.placeholder}
       {...input}
       {...props}
-      onChange={(e: any) => input.onChange(e.value)}
+      // onChange={(e: any) => input.onChange(e.value)}
     />
   );
 };

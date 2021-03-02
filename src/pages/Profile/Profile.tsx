@@ -51,7 +51,7 @@ const ButtonsWrapper = styled.div`
 `;
 
 type FormValues = {
-  bats_hand: { label: string; value: string } | string | number;
+  [key: string]: { label: string; value: string } | string | number;
 };
 
 const Profile = () => {
@@ -69,6 +69,8 @@ const Profile = () => {
   const saveChanges = async (values: FormValues) => {
     try {
       if (!profileData) return;
+
+      console.log(values);
 
       const submitValues = Object.entries(values).reduce<Record<string, any>>(
         (acc, [key, value]) => {

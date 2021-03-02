@@ -70,19 +70,16 @@ const SchoolInfoEdit = ({ profileData }: ISchoolInfoEditProps) => {
       <Field
         name="school"
         component={ProfileSidebar.SelectInput}
-        placeholder="School"
         options={schools.map((school) => ({
           label: school.name,
           value: school,
         }))}
-      />
+        placeholder={profileData.school.name}
+      ></Field>
       <Field
         name="school_year"
         component={ProfileSidebar.SelectInput}
-        defaultValue={schoolYearOptions.find(
-          (option) => option.value === profileData.school_year.toLowerCase()
-        )}
-        placeholder="School Year"
+        placeholder={profileData.school_year}
         options={schoolYearOptions}
       />
       <Field
