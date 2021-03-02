@@ -67,34 +67,31 @@ const Network = () => {
   };
 
   const [profiles, setProfiles] = useState<ProfileRecord[]>([]);
-  const [query, setQuery] = useState<typeof defaultQuery>({
-    ...defaultQuery,
-  });
+  const [query, setQuery] = useState<typeof defaultQuery>();
   const [profilesTotalCount, setProfilesTotalCount] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    (async () => {
-      try {
-        setIsLoading(true);
+  const fetchNetwork = async (fetchQuery: Partial<typeof query>) => {
+    try {
+      setIsLoading(true);
 
-        const profilesResponse = await profilesService.getProfiles({
-          ...defaultQuery,
-          ...query,
-        });
+      const profilesResponse = await profilesService.getProfiles({
+        ...defaultQuery,
+        ...fetchQuery,
+      });
 
-        setProfiles(profilesResponse.profiles);
-        setProfilesTotalCount(profilesResponse.total_count);
-      } catch (e) {
-        throw e;
-      } finally {
-        setIsLoading(false);
-      }
-    })();
-  }, [query]);
+      setProfiles(profilesResponse.profiles);
+      setProfilesTotalCount(profilesResponse.total_count);
+    } catch (e) {
+      throw e;
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-  const onSubmit = (values: FormValues) => {
+  const onSubmit = async (values: FormValues) => {
     setQuery({ ...values });
+    await fetchNetwork({ ...values });
   };
 
   return (
@@ -146,6 +143,7 @@ const Network = () => {
                 component={Filters.TextInput}
               />
               <FormSpy
+                subscription={{ values: true }}
                 onChange={() => {
                   setTimeout(() => {
                     props.handleSubmit();

@@ -82,18 +82,16 @@ const Leaderboard = () => {
   const [leaderboardItems, setLeaderboardItems] = useState<
     Unpromise<ReturnType<typeof leaderboardService.getLeaderboard>>
   >([]);
-  const [query, setQuery] = useState<typeof defaultQuery>({
-    ...defaultQuery,
-  });
+  const [query, setQuery] = useState<typeof defaultQuery>();
   const [isLoading, setIsLoading] = useState(false);
 
-  const fetchLeaderboard = async () => {
+  const fetchLeaderboard = async (fetchQuery: Partial<typeof query>) => {
     try {
       setIsLoading(true);
 
       const leaders = await leaderboardService.getLeaderboard({
         ...defaultQuery,
-        ...query,
+        ...fetchQuery,
       });
 
       setLeaderboardItems(leaders);
@@ -104,21 +102,16 @@ const Leaderboard = () => {
     }
   };
 
-  useEffect(() => {
-    (async () => {
-      fetchLeaderboard();
-    })();
-  }, [query]);
-
-  const onSubmit = (values: FormValues) => {
+  const onSubmit = async (values: FormValues) => {
     setQuery({ ...values });
+    await fetchLeaderboard({ ...values });
   };
 
   const { toggleMyHolyFavor } = useProfileService();
 
   const toggleFavor = async (id: number, isInFavor: boolean) => {
     await toggleMyHolyFavor(id, isInFavor);
-    await fetchLeaderboard();
+    await fetchLeaderboard({ ...query });
 
     let message: string;
 
@@ -186,12 +179,13 @@ const Leaderboard = () => {
                 options={TypeOptions}
               />
               <FormSpy
+                subscription={{ values: true }}
                 onChange={() => {
                   setTimeout(() => {
                     props.handleSubmit();
                   }, 0);
                 }}
-              ></FormSpy>
+              />
             </form>
           )}
         </Form>
