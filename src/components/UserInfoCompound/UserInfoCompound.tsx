@@ -4,7 +4,7 @@ import {
   ReactSelectOptions,
   Unpromise,
 } from '@/types/commonTypes';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Field, FormRenderProps } from 'react-final-form';
 import Icons from '../Icons';
 import ProfileSidebar from '../ProfileSidebar';
@@ -21,8 +21,8 @@ const primaryPositionOptions: ReactSelectOptions<PlayerPosition> = [
   { value: 'pitcher', label: 'Pitcher' },
 ];
 
-const secondaryPositionOptions: ReactSelectOptions<PlayerPosition | null> = [
-  { value: null, label: '-' },
+const secondaryPositionOptions: ReactSelectOptions<PlayerPosition | ''> = [
+  { value: '', label: '-' },
   ...primaryPositionOptions,
 ];
 
@@ -64,6 +64,17 @@ interface IUserInfoEditFormProps {
 }
 
 const UserInfoEditForm = ({ profileData }: IUserInfoEditFormProps) => {
+  const defaultPrimaryPosition = useMemo(() => {
+    return primaryPositionOptions.find(
+      (position) => position.value === profileData.position
+    );
+  }, []);
+
+  const defaultSecondaryPosition = useMemo(() => {
+    return secondaryPositionOptions.find(
+      (position) => position.value === profileData.position2
+    );
+  }, []);
   return (
     <>
       <ProfileSidebar.InlineInputsWrapper>
@@ -85,14 +96,13 @@ const UserInfoEditForm = ({ profileData }: IUserInfoEditFormProps) => {
       </ProfileSidebar.InlineInputsWrapper>
       <Field
         name="position"
-        placeholder="Position in Game *"
-        defaultValue={profileData.position}
+        placeholder={defaultPrimaryPosition?.label || 'Position in Game *'}
         component={ProfileSidebar.SelectInput}
         options={primaryPositionOptions}
       />
       <Field
         name="position2"
-        placeholder="Secondary Position in Game"
+        placeholder={'Secondary Position in Game'}
         defaultValue={profileData.position2}
         component={ProfileSidebar.SelectInput}
         options={secondaryPositionOptions}

@@ -16,6 +16,7 @@ import PersonalInfo from '@/components/PersonalInfo';
 import { useParams } from 'react-router-dom';
 import LoadingScreen from '@/components/LoadingScreen';
 import { Unpromise } from '@/types/commonTypes';
+import { parseFormValues } from '@/utils/parseFormValues';
 
 const Container = styled.div`
   display: flex;
@@ -51,7 +52,7 @@ const ButtonsWrapper = styled.div`
 `;
 
 type FormValues = {
-  [key: string]: { label: string; value: string } | string | number;
+  [key: string]: { label: string; value: string } | string | number | any;
 };
 
 const Profile = () => {
@@ -70,26 +71,7 @@ const Profile = () => {
     try {
       if (!profileData) return;
 
-      console.log(values);
-
-      const submitValues = Object.entries(values).reduce<Record<string, any>>(
-        (acc, [key, value]) => {
-          let changeValue = value;
-
-          if (typeof value === 'object') {
-            changeValue = value?.label && value?.value ? value.value : value;
-          }
-
-          if (+value > 0) {
-            changeValue = +value;
-          }
-
-          acc[key] = changeValue;
-
-          return acc;
-        },
-        {}
-      );
+      const submitValues = parseFormValues(values);
 
       const updatedProfile = await profilesService.updateProfile({
         id: profileData.id,

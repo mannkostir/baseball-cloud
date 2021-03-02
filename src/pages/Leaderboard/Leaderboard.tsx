@@ -9,12 +9,12 @@ import { useProfileService } from '@/services/profilesService/useProfileService'
 import { notificationsActions } from '@/store/notifications';
 import {
   FilterType,
-  FormValue,
   PlayerPosition,
   ReactSelectOptions,
   School,
   Unpromise,
 } from '@/types/commonTypes';
+import { parseFormValues } from '@/utils/parseFormValues';
 import React, { useEffect, useState } from 'react';
 import { Field, Form, FormSpy } from 'react-final-form';
 import { useDispatch } from 'react-redux';
@@ -61,14 +61,18 @@ const PositionOptions: ReactSelectOptions<PlayerPosition> = [
   { value: 'pitcher', label: 'Pitcher' },
 ];
 
+// type FormValues = {
+//   date: 'last_week' | 'last_month';
+//   school: string;
+//   team: string;
+//   position: PlayerPosition;
+//   age: number;
+//   favorite: 1;
+//   type: FilterType;
+// };
+
 type FormValues = {
-  date: 'last_week' | 'last_month';
-  school: string;
-  team: string;
-  position: PlayerPosition;
-  age: number;
-  favorite: 1;
-  type: FilterType;
+  [key: string]: { label: string; value: string } | string | number | any;
 };
 
 const Leaderboard = () => {
@@ -103,8 +107,10 @@ const Leaderboard = () => {
   };
 
   const onSubmit = async (values: FormValues) => {
-    setQuery({ ...values });
-    await fetchLeaderboard({ ...values });
+    const submitValues = parseFormValues(values);
+
+    setQuery({ ...defaultQuery, ...submitValues });
+    await fetchLeaderboard({ ...submitValues });
   };
 
   const { toggleMyHolyFavor } = useProfileService();

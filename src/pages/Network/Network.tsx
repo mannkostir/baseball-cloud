@@ -10,6 +10,7 @@ import {
   PlayerPosition,
   ReactSelectOptions,
 } from '@/types/commonTypes';
+import { parseFormValues } from '@/utils/parseFormValues';
 import React, { useEffect, useState } from 'react';
 import { Field, Form, FormSpy } from 'react-final-form';
 import styled from 'styled-components/macro';
@@ -26,15 +27,19 @@ const Header = styled.header`
   justify-content: space-between;
 `;
 
+// type FormValues = {
+//   school: string;
+//   team: string;
+//   position: PlayerPosition;
+//   age: number;
+//   favorite: 1;
+//   profiles_count: number;
+//   player_name: string;
+//   offset: number;
+// };
+
 type FormValues = {
-  school: string;
-  team: string;
-  position: PlayerPosition;
-  age: number;
-  favorite: 1;
-  profiles_count: number;
-  player_name: string;
-  offset: number;
+  [key: string]: { label: string; value: string } | string | number | any;
 };
 
 const FavoriteOptions: ReactSelectOptions<1 | null> = [
@@ -90,8 +95,10 @@ const Network = () => {
   };
 
   const onSubmit = async (values: FormValues) => {
-    setQuery({ ...values });
-    await fetchNetwork({ ...values });
+    const submitValues = parseFormValues(values);
+
+    setQuery({ ...defaultQuery, ...submitValues });
+    await fetchNetwork({ ...submitValues });
   };
 
   return (
