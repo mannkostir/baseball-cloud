@@ -6,7 +6,6 @@ import styled from 'styled-components/macro';
 import SubmitButton from '@/components/SubmitButton';
 import DiscardButton from '@/components/DiscardButton';
 import { profilesService } from '@/services/profilesService';
-import { ExtendedProfileRecord } from '@/services/profilesService/profileServiceTypes';
 import { useProfileSelector } from '@/store/profile';
 import UserInfoCompound from '@/components/UserInfoCompound';
 import { Form } from 'react-final-form';
@@ -16,6 +15,7 @@ import ProfileAboutCompound from '@/components/ProfileAbout';
 import PersonalInfo from '@/components/PersonalInfo';
 import { useParams } from 'react-router-dom';
 import LoadingScreen from '@/components/LoadingScreen';
+import { Unpromise } from '@/types/commonTypes';
 
 const Container = styled.div`
   display: flex;
@@ -56,9 +56,9 @@ type FormValues = {
 
 const Profile = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [profileData, setProfileData] = useState<ExtendedProfileRecord | null>(
-    null
-  );
+  const [profileData, setProfileData] = useState<Unpromise<
+    ReturnType<typeof profilesService.getProfile>
+  > | null>(null);
 
   const [isEditingProfile, setIsEditingProfile] = useState(false);
 

@@ -3,10 +3,7 @@ import LeadersTable from '@/components/LeadersTable';
 import LoadingScreen from '@/components/LoadingScreen';
 import TabButton from '@/components/TabButton';
 import { leaderboardService } from '@/services/leaderboardService';
-import {
-  GetLeaderboardQuery,
-  LeaderboardRecord,
-} from '@/services/leaderboardService/leaderboardServiceTypes';
+import { GetLeaderboardQuery } from '@/services/leaderboardService/leaderboardServiceTypes';
 import { profilesService } from '@/services/profilesService';
 import { useProfileService } from '@/services/profilesService/useProfileService';
 import { notificationsActions } from '@/store/notifications';
@@ -16,6 +13,7 @@ import {
   PlayerPosition,
   ReactSelectOptions,
   School,
+  Unpromise,
 } from '@/types/commonTypes';
 import React, { useEffect, useState } from 'react';
 import { Field, Form, FormSpy } from 'react-final-form';
@@ -81,9 +79,9 @@ const Leaderboard = () => {
   };
 
   const [selectedMode, setSelectedMode] = useState<Mode>('batting');
-  const [leaderboardItems, setLeaderboardItems] = useState<LeaderboardRecord[]>(
-    []
-  );
+  const [leaderboardItems, setLeaderboardItems] = useState<
+    Unpromise<ReturnType<typeof leaderboardService.getLeaderboard>>
+  >([]);
   const [query, setQuery] = useState<typeof defaultQuery>({
     ...defaultQuery,
   });

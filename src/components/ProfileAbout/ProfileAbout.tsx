@@ -2,7 +2,8 @@ import React from 'react';
 import ProfileSidebar from '../ProfileSidebar';
 import styled from 'styled-components/macro';
 import { Form, Field } from 'react-final-form';
-import { ExtendedProfileRecord } from '@/services/profilesService/profileServiceTypes';
+import { profilesService } from '@/services/profilesService';
+import { Unpromise } from '@/types/commonTypes';
 
 const AboutContent = styled(ProfileSidebar.Value)`
   color: #788b99;
@@ -14,7 +15,7 @@ const ProfileAboutCompound = () => {
 };
 
 interface IProfileAboutViewProps {
-  profileData: ExtendedProfileRecord;
+  profileData: Unpromise<ReturnType<typeof profilesService.getProfile>>;
 }
 
 const ProfileAboutView = ({ profileData }: IProfileAboutViewProps) => {
@@ -27,7 +28,7 @@ const ProfileAboutView = ({ profileData }: IProfileAboutViewProps) => {
 };
 
 interface IProfileAboutEditProps {
-  profileData: ExtendedProfileRecord;
+  profileData: Unpromise<ReturnType<typeof profilesService.getProfile>>;
 }
 
 const ProfileAboutEdit = ({ profileData }: IProfileAboutEditProps) => {

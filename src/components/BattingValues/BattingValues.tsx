@@ -1,7 +1,6 @@
-import { profilesService } from '@/services/profilesService';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import StyledTable from '../StyledTable';
-import { BattingSummary, Unpromise } from '@/types/commonTypes';
+import { BattingSummary } from '@/types/commonTypes';
 
 interface IBattingValuesProps {
   battingSummary: {

@@ -1,5 +1,5 @@
-import { ExtendedProfileRecord } from '@/services/profilesService/profileServiceTypes';
-import { Facility } from '@/types/commonTypes';
+import { profilesService } from '@/services/profilesService';
+import { Facility, Unpromise } from '@/types/commonTypes';
 import React from 'react';
 import { Field } from 'react-final-form';
 import ProfileSidebar from '../ProfileSidebar';
@@ -18,7 +18,7 @@ const FacilityInfoCompound = () => {
 };
 
 interface IFacilityInfoViewProps {
-  profileData: ExtendedProfileRecord;
+  profileData: Unpromise<ReturnType<typeof profilesService.getProfile>>;
 }
 
 const FacilityInfoView = ({ profileData }: IFacilityInfoViewProps) => {
@@ -35,7 +35,7 @@ const FacilityInfoView = ({ profileData }: IFacilityInfoViewProps) => {
 };
 
 interface IFacilityInfoViewProps {
-  profileData: ExtendedProfileRecord;
+  profileData: Unpromise<ReturnType<typeof profilesService.getProfile>>;
 }
 
 const FacilityInfoEdit = ({ profileData }: IFacilityInfoViewProps) => {

@@ -1,10 +1,14 @@
-import { ExtendedProfileRecord } from '@/services/profilesService/profileServiceTypes';
+import { profilesService } from '@/services/profilesService';
+import { Unpromise } from '@/types/commonTypes';
 import React from 'react';
 import Card from '../Card';
 import * as Styled from './RecentEvents.styles';
 
 interface IRecentEvents {
-  events: Pick<ExtendedProfileRecord, 'recent_events'>;
+  events: Pick<
+    Unpromise<ReturnType<typeof profilesService.getProfile>>,
+    'recent_events'
+  >;
 }
 
 const RecentEvents = ({ events }: IRecentEvents) => {

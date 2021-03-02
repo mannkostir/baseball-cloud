@@ -1,7 +1,7 @@
-import { ExtendedProfileRecord } from '@/services/profilesService/profileServiceTypes';
+import { profilesService } from '@/services/profilesService';
 import { schoolsService } from '@/services/schoolsService';
 import { teamsService } from '@/services/teamsService';
-import { School, SchoolYear, Team } from '@/types/commonTypes';
+import { School, SchoolYear, Team, Unpromise } from '@/types/commonTypes';
 import React, { useEffect, useState } from 'react';
 import { Field, Form } from 'react-final-form';
 import ProfileSidebar from '../ProfileSidebar';
@@ -20,7 +20,7 @@ const SchoolInfoCompound = () => {
 };
 
 interface ISchoolInfoCompoundProps {
-  profileData: ExtendedProfileRecord;
+  profileData: Unpromise<ReturnType<typeof profilesService.getProfile>>;
 }
 
 const SchoolInfoView = ({ profileData }: ISchoolInfoCompoundProps) => {
@@ -46,7 +46,7 @@ const SchoolInfoView = ({ profileData }: ISchoolInfoCompoundProps) => {
 };
 
 interface ISchoolInfoEditProps {
-  profileData: ExtendedProfileRecord;
+  profileData: Unpromise<ReturnType<typeof profilesService.getProfile>>;
 }
 
 const SchoolInfoEdit = ({ profileData }: ISchoolInfoEditProps) => {

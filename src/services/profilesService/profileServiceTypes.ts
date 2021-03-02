@@ -24,7 +24,7 @@ export type ProfileRecord = {
   weight: number;
 };
 
-export type ExtendedProfileRecord = {
+type ExtendedProfileRecord = {
   act_score: number;
   age: number;
   avatar: string | null;
@@ -82,7 +82,7 @@ export type ExtendedProfileRecord = {
   wrist_to_elbow: number | null;
 };
 
-export type CurrentProfileRecord = {
+type CurrentProfileRecord = {
   age: number;
   avatar: {
     size_20_20: {
@@ -216,6 +216,27 @@ export type GetBattingSummaryResponse = {
     batting_summary: {
       average_values: BattingSummary[];
       top_values: BattingSummary[];
+    };
+  };
+};
+
+export type GetProfileNamesQuery = {
+  player_name: string;
+  position: PlayerPosition;
+};
+export type GetProfileNamesResponse = {
+  data: {
+    profile_names: {
+      profile_names: {
+        age: number;
+        feet: number;
+        first_name: string;
+        id: string;
+        inches: number;
+        last_name: string;
+        position: PlayerPosition;
+        weight: number;
+      }[];
     };
   };
 };

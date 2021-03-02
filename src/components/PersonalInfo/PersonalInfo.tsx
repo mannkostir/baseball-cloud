@@ -1,4 +1,5 @@
-import { ExtendedProfileRecord } from '@/services/profilesService/profileServiceTypes';
+import { profilesService } from '@/services/profilesService';
+import { Unpromise } from '@/types/commonTypes';
 import React from 'react';
 import { Field, Form } from 'react-final-form';
 import ProfileSidebar from '../ProfileSidebar';
@@ -19,7 +20,7 @@ const PersonalInfo = () => {
 };
 
 interface IPersonalInfoViewProps {
-  profileData: ExtendedProfileRecord;
+  profileData: Unpromise<ReturnType<typeof profilesService.getProfile>>;
 }
 
 const PersonalInfoView = ({ profileData }: IPersonalInfoViewProps) => {
@@ -54,7 +55,7 @@ const PersonalInfoView = ({ profileData }: IPersonalInfoViewProps) => {
 };
 
 interface IPersonalInfoViewProps {
-  profileData: ExtendedProfileRecord;
+  profileData: Unpromise<ReturnType<typeof profilesService.getProfile>>;
 }
 
 const PersonalInfoEdit = ({ profileData }: IPersonalInfoViewProps) => {

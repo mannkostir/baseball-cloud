@@ -1,6 +1,6 @@
 import { PlayerPosition } from '@/types/commonTypes';
 
-export type LeaderboardRecord = {
+type LeaderboardRecord = {
   age: number;
   batter_datraks_id: number;
   batter_name: string;

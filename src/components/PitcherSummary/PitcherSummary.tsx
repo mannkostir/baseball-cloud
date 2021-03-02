@@ -1,10 +1,14 @@
-import { ExtendedProfileRecord } from '@/services/profilesService/profileServiceTypes';
+import { profilesService } from '@/services/profilesService';
+import { Unpromise } from '@/types/commonTypes';
 import React from 'react';
 import Card from '../Card';
 import * as Styled from './PitcherSummary.styles';
 
 interface IPitcherSummaryProps {
-  summary: Pick<ExtendedProfileRecord, 'batter_summary'>;
+  summary: Pick<
+    Unpromise<ReturnType<typeof profilesService.getProfile>>,
+    'batter_summary'
+  >;
 }
 
 const PitcherSummary = ({ summary }: IPitcherSummaryProps) => {

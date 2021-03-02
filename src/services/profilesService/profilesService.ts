@@ -3,6 +3,8 @@ import {
   GetBattingSummaryQuery,
   GetBattingSummaryResponse,
   GetCurrentProfileResponse,
+  GetProfileNamesQuery,
+  GetProfileNamesResponse,
   GetProfileQuery,
   GetProfileResponse,
   GetProfilesQuery,
@@ -246,4 +248,29 @@ export const getBattingSummary = async (query: GetBattingSummaryQuery) => {
   });
 
   return res.data.data.batting_summary;
+};
+
+export const getProfileNames = async (query: GetProfileNamesQuery) => {
+  const res = await fetchAPI.post<GetProfileNamesResponse>('graphql', {
+    query: `query ProfileNames($input:FilterProfileNamesInput!) {
+      profile_names(input: $input) {
+        profile_names {
+          id
+          position
+          first_name
+          last_name
+          inches
+          feet
+          weight
+          age
+        }
+      }
+    }`,
+
+    variables: {
+      input: { ...query },
+    },
+  });
+
+  return res.data.data.profile_names.profile_names;
 };

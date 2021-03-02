@@ -1,5 +1,9 @@
-import { ExtendedProfileRecord } from '@/services/profilesService/profileServiceTypes';
-import { PlayerPosition, ReactSelectOptions } from '@/types/commonTypes';
+import { profilesService } from '@/services/profilesService';
+import {
+  PlayerPosition,
+  ReactSelectOptions,
+  Unpromise,
+} from '@/types/commonTypes';
 import React from 'react';
 import { Field, FormRenderProps } from 'react-final-form';
 import ProfileSidebar from '../ProfileSidebar';
@@ -27,7 +31,7 @@ const UserInfoCompound = () => {
 
 interface IUserInfoProps {
   onEditButtonClick?: () => void;
-  profileData: ExtendedProfileRecord;
+  profileData: Unpromise<ReturnType<typeof profilesService.getProfile>>;
 }
 
 const UserInfo = ({ onEditButtonClick, profileData }: IUserInfoProps) => {
@@ -55,7 +59,7 @@ const UserInfo = ({ onEditButtonClick, profileData }: IUserInfoProps) => {
 };
 
 interface IUserInfoEditFormProps {
-  profileData: ExtendedProfileRecord;
+  profileData: Unpromise<ReturnType<typeof profilesService.getProfile>>;
 }
 
 const UserInfoEditForm = ({ profileData }: IUserInfoEditFormProps) => {

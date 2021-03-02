@@ -1,14 +1,13 @@
-import { LeaderboardRecord } from '@/services/leaderboardService/leaderboardServiceTypes';
-import { profilesService } from '@/services/profilesService';
-import { profileActions } from '@/store/profile';
+import { leaderboardService } from '@/services/leaderboardService';
+import { Unpromise } from '@/types/commonTypes';
 import React from 'react';
-import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import LoadingScreen from '../LoadingScreen';
 import StyledTable from '../StyledTable';
 
 interface ILeadersTableProps {
-  leaderboardItems: LeaderboardRecord[];
+  leaderboardItems: Unpromise<
+    ReturnType<typeof leaderboardService.getLeaderboard>
+  >;
   toggleFavorite: (id: number, isInFavor: boolean) => void;
   isLoading: boolean;
 }
