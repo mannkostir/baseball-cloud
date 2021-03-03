@@ -1,6 +1,6 @@
 import styled from 'styled-components/macro';
 import Input from '../Input';
-import Select from 'react-select';
+import Select, { Styles, StylesConfig } from 'react-select';
 
 export const DataItem = styled.div`
   display: flex;
@@ -80,3 +80,94 @@ export const TextareaInput = styled.textarea`
     border: solid 1px #48bbff;
   }
 `;
+
+// export const ReactSelect = styled(Select)<{ isFocused: boolean }>`
+//   &.react-select__control {
+//     max-width: 100%;
+//     height: 40px;
+//     background-color: #eff1f3;
+//     border-width: 1px;
+//     border-style: solid;
+//     font-weight: normal;
+//     color: #667784;
+//     border-color: transparent !important;
+//     line-height: 1.13;
+//     border-spacing: 0;
+//     border-collapse: separate;
+//     &:hover {
+//       box-shadow: ${(props) =>
+//         props.isFocused ? 'none' : '0 1px 0 rgb(0 0 0 / 6%)'};
+//       border-color: #48bbff;
+//     }
+//   }
+// `;
+
+//   control: (provided, state) => ({
+//     ...provided,
+//     maxWidth: '100%',
+//     height: '40px',
+//     borderRadius: '4px',
+//     backgroundColor: '#eff1f3',
+//     borderWidth: '1px',
+//     borderStyle: 'solid',
+//     fontWeight: 'normal',
+//     color: '#667784',
+//     borderColor: 'transparent !important',
+//     lineHeight: '1.13',
+//     borderSpacing: '0',
+//     borderCollapse: 'separate',
+//     [':hover']: {
+//       boxShadow: state.isFocused ? 'none' : '0 1px 0 rgb(0 0 0 / 6%)',
+//       borderColor: '#48bbff',
+//     },
+//     ...(state.isFocused
+//       ? {
+//           backgroundColor: '#ffffff',
+//           borderColor: '#48bbff',
+//           boxShadow: 'none',
+//         }
+//       : {}),
+//   }),
+//   container: (provided, state) => ({
+//     ...provided,
+//     marginBottom: '15px',
+//   }),
+//   indicatorSeparator: (provided, state) => ({
+//     ...provided,
+//     display: 'none',
+//   }),
+//   menu: (provided, state) => ({
+//     ...provided,
+//     zIndex: 5,
+//   }),
+//   menuList: (provided, state) => ({
+//     ...provided,
+//     maxHeight: '200px',
+//     overflow: 'auto',
+//   }),
+//   dropdownIndicator: (provided, state) => ({
+//     ...provided,
+//     color: 'hsl(0, 0%, 50%) !important',
+//   }),
+//   singleValue: (provided, state) => ({
+//     ...provided,
+//     color: '#667784',
+//   }),
+//   multiValue: (provided, state) => ({
+//     ...provided,
+//     color: '#007eff',
+//   }),
+//   multiValueLabel: (provided, state) => ({
+//     ...provided,
+//     color: '#007eff',
+//   }),
+//   placeholder: (provided, state) => ({
+//     ...provided,
+//     color: '#667784',
+//   }),
+//   multiValueRemove: (provided, state) => ({
+//     ...provided,
+//     left: 0,
+//   }),
+//   ...styles,
+// }

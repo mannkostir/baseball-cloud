@@ -1,6 +1,7 @@
 import Filters from '@/components/Filters';
 import LeadersTable from '@/components/LeadersTable';
 import LoadingScreen from '@/components/LoadingScreen';
+import LeaderPitchingTable from '@/components/PitchingLeadersTable';
 import TabButton from '@/components/TabButton';
 import { leaderboardService } from '@/services/leaderboardService';
 import { GetLeaderboardQuery } from '@/services/leaderboardService/leaderboardServiceTypes';
@@ -46,11 +47,6 @@ const FavoriteOptions: ReactSelectOptions<1 | null> = [
   { value: 1, label: 'Favorite' },
 ];
 
-const TypeOptions: ReactSelectOptions<FilterType> = [
-  { value: 'exit_velocity', label: 'Exit Velocity' },
-  { value: 'carry_distance', label: 'Carry Distance' },
-];
-
 const PositionOptions: ReactSelectOptions<PlayerPosition> = [
   { value: 'catcher', label: 'Catcher' },
   { value: 'first_base', label: 'First Base' },
@@ -59,6 +55,20 @@ const PositionOptions: ReactSelectOptions<PlayerPosition> = [
   { value: 'third_base', label: 'Third Base' },
   { value: 'outfield', label: 'Outfield' },
   { value: 'pitcher', label: 'Pitcher' },
+];
+
+const BattingTypeOptions: ReactSelectOptions<
+  'exit_velocity' | 'carry_distance'
+> = [
+  { value: 'exit_velocity', label: 'Exit Velocity' },
+  { value: 'carry_distance', label: 'Carry Distance' },
+];
+
+const PitchingTypeOptions: ReactSelectOptions<
+  'pitch_velocity' | 'spin_rate'
+> = [
+  { value: 'pitch_velocity', label: 'Pitch Velocity' },
+  { value: 'spin_rate', label: 'Spin Rate' },
 ];
 
 // type FormValues = {
@@ -71,6 +81,8 @@ const PositionOptions: ReactSelectOptions<PlayerPosition> = [
 //   type: FilterType;
 // };
 
+let timeout: number | null;
+
 type FormValues = {
   [key: string]: { label: string; value: string } | string | number | any;
 };
@@ -82,23 +94,42 @@ const Leaderboard = () => {
     type: 'exit_velocity',
   };
 
+  const defaultPitchingQuery: GetLeaderboardQuery = {
+    type: 'pitch_velocity',
+  };
+
   const [selectedMode, setSelectedMode] = useState<Mode>('batting');
   const [leaderboardItems, setLeaderboardItems] = useState<
     Unpromise<ReturnType<typeof leaderboardService.getLeaderboard>>
   >([]);
+  const [leaderboardPitchingItems, setLeaderboardPitchingItems] = useState<
+    Unpromise<ReturnType<typeof leaderboardService.getPitchingLeaderboard>>
+  >([]);
   const [query, setQuery] = useState<typeof defaultQuery>();
   const [isLoading, setIsLoading] = useState(false);
 
-  const fetchLeaderboard = async (fetchQuery: Partial<typeof query>) => {
+  const fetchLeaderboard = async (
+    fetchQuery: Partial<typeof query>,
+    mode: typeof selectedMode = selectedMode
+  ) => {
     try {
       setIsLoading(true);
 
-      const leaders = await leaderboardService.getLeaderboard({
-        ...defaultQuery,
-        ...fetchQuery,
-      });
+      if (mode === 'batting') {
+        const leaders = await leaderboardService.getLeaderboard({
+          ...defaultQuery,
+          ...fetchQuery,
+        });
 
-      setLeaderboardItems(leaders);
+        setLeaderboardItems(leaders);
+      } else {
+        const leaders = await leaderboardService.getPitchingLeaderboard({
+          ...defaultPitchingQuery,
+          ...fetchQuery,
+        });
+
+        setLeaderboardPitchingItems(leaders);
+      }
     } catch (e) {
       throw e;
     } finally {
@@ -135,11 +166,28 @@ const Leaderboard = () => {
     );
   };
 
+  const changeMode = async (mode: typeof selectedMode) => {
+    setSelectedMode(mode);
+    await fetchLeaderboard(
+      {
+        ...query,
+        type: mode === 'batting' ? 'exit_velocity' : 'pitch_velocity',
+      },
+      mode
+    );
+  };
+
+  const changeType = async (
+    type: 'exit_velocity' | 'pitch_velocity' | 'carry_distance' | 'spin_rate'
+  ) => {
+    await fetchLeaderboard({ ...query, type });
+  };
+
   return (
     <Container>
       <Header>
         <h2>Leaderboard</h2>
-        <Form onSubmit={onSubmit}>
+        <Form onSubmit={() => {}}>
           {(props) => (
             <form
               style={{ display: 'flex', flex: 1, justifyContent: 'flex-end' }}
@@ -178,17 +226,13 @@ const Leaderboard = () => {
                 component={Filters.SelectInput}
                 options={FavoriteOptions}
               />
-              <Field
-                name="type"
-                placeholder="Type"
-                component={Filters.SelectInput}
-                options={TypeOptions}
-              />
               <FormSpy
                 subscription={{ values: true }}
                 onChange={(values: FormValues) => {
-                  setTimeout(() => {
-                    onSubmit(values);
+                  if (timeout) return;
+                  timeout = window.setTimeout(async () => {
+                    timeout = null;
+                    await onSubmit(values);
                   }, 0);
                 }}
               />
@@ -200,13 +244,13 @@ const Leaderboard = () => {
         <div>
           <TabButton
             isSelected={selectedMode === 'batting'}
-            onClick={() => setSelectedMode('batting')}
+            onClick={() => changeMode('batting')}
           >
             Batting
           </TabButton>
           <TabButton
             isSelected={selectedMode === 'pitching'}
-            onClick={() => setSelectedMode('pitching')}
+            onClick={() => changeMode('pitching')}
           >
             Pitching
           </TabButton>
@@ -214,12 +258,34 @@ const Leaderboard = () => {
         <div>
           {isLoading ? (
             <LoadingScreen />
+          ) : selectedMode === 'batting' ? (
+            <>
+              <Select
+                options={BattingTypeOptions}
+                onChange={(value) =>
+                  changeType(value?.value || 'exit_velocity')
+                }
+              />
+              <LeadersTable
+                type={selectedMode}
+                toggleFavorite={toggleFavor}
+                leaderboardItems={leaderboardItems}
+                isLoading={isLoading}
+              />
+            </>
           ) : (
-            <LeadersTable
-              toggleFavorite={toggleFavor}
-              leaderboardItems={leaderboardItems}
-              isLoading={isLoading}
-            />
+            <>
+              <Select
+                options={PitchingTypeOptions}
+                onChange={(value) =>
+                  changeType(value?.value || 'pitch_velocity')
+                }
+              />
+              <LeaderPitchingTable
+                leaderboardItems={leaderboardPitchingItems}
+                toggleFavorite={toggleFavor}
+              />
+            </>
           )}
         </div>
       </main>

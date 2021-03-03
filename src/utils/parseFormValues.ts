@@ -1,7 +1,7 @@
 export const parseFormValues = (values: {
   [key: string]: { label: string; value: string } | string | number | any[];
 }) => {
-  return Object.entries(values.values).reduce<Record<string, any>>(
+  return Object.entries(values.values || values).reduce<Record<string, any>>(
     (acc, [key, value]) => {
       let changeValue = value;
 

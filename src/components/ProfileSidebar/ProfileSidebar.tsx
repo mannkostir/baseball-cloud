@@ -68,6 +68,8 @@ const ReactSelectAdapter = ({
 }: IReactSelectAdapterProps) => {
   return (
     <Select
+      className="react-select-container"
+      classNamePrefix="react-select"
       styles={{
         control: (provided, state) => ({
           ...provided,

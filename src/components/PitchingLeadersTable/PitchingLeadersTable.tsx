@@ -6,19 +6,16 @@ import StyledTable from '../StyledTable';
 
 interface ILeadersTableProps {
   leaderboardItems: Unpromise<
-    ReturnType<typeof leaderboardService.getLeaderboard>
+    ReturnType<typeof leaderboardService.getPitchingLeaderboard>
   >;
   toggleFavorite: (id: number, isInFavor: boolean) => void;
-  isLoading: boolean;
-  type: 'batting' | 'pitching';
 }
 
-const LeadersTable = ({
+const LeaderPitchingTable = ({
   leaderboardItems = [],
   toggleFavorite,
-  isLoading,
-  type,
 }: ILeadersTableProps) => {
+  console.log(leaderboardItems);
   return (
     <StyledTable>
       <thead>
@@ -28,9 +25,9 @@ const LeadersTable = ({
           <th>Age</th>
           <th>School</th>
           <th>Teams</th>
-          <th>{type === 'batting' ? 'Exit Velocity' : 'Pitch Type'}</th>
-          <th>{type === 'batting' ? 'Launch Angle' : 'Velocity'}</th>
-          <th>{type === 'batting' ? 'Distance' : 'Spin Rate'}</th>
+          <th>Pitch Type</th>
+          <th>Velocity</th>
+          <th>Spin Rate</th>
           <th>Favorite</th>
         </tr>
       </thead>
@@ -39,20 +36,20 @@ const LeadersTable = ({
           <tr key={index + 1}>
             <td>{index + 1}</td>
             <td>
-              <Link to={`/profile/${leader.batter_datraks_id}`}>
-                {leader.batter_name}
+              <Link to={`/profile/${leader.pitcher_datraks_id}`}>
+                {leader.pitcher_name}
               </Link>
             </td>
             <td>{leader.age}</td>
             <td>{leader.school.name}</td>
             <td>{leader.teams[0].name}</td>
-            <td>{leader.exit_velocity}</td>
-            <td>{leader.launch_angle}</td>
-            <td>{leader.distance}</td>
+            <td>{leader.pitch_type}</td>
+            <td>{leader.velocity}</td>
+            <td>{leader.spin_rate}</td>
             <td>
               <a
                 onClick={() =>
-                  toggleFavorite(leader.batter_datraks_id, leader.favorite)
+                  toggleFavorite(leader.pitcher_datraks_id, leader.favorite)
                 }
               >
                 {leader.favorite ? 'Love' : 'Hate'}
@@ -65,4 +62,4 @@ const LeadersTable = ({
   );
 };
 
-export default LeadersTable;
+export default LeaderPitchingTable;
