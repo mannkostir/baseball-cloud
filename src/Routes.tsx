@@ -3,7 +3,6 @@ import { Redirect, Route, RouteProps, Switch } from 'react-router-dom';
 import Profile from '@/pages/Profile';
 import Leaderboard from '@/pages/Leaderboard';
 import Network from '@/pages/Network';
-import PlayerInfo from '@/pages/PlayerInfo';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import { useAuthSelector } from './store/auth';

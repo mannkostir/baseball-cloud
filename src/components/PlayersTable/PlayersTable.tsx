@@ -24,7 +24,9 @@ const PlayersTable = ({ profiles }: IPlayersTableProps) => {
         {profiles.map((profile) => (
           <tr key={profile.id}>
             <td>
-              <Link to={`/profile/${profile.id}`}>{profile.first_name}</Link>
+              <Link to={`/profile/${profile.id}`}>
+                {profile.first_name} {profile.last_name}
+              </Link>
             </td>
             <td>-</td>
             <td>{profile.school ? profile.school.name : '-'}</td>

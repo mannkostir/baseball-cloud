@@ -64,6 +64,7 @@ interface IReactSelectAdapterProps {
 const ReactSelectAdapter = ({
   input,
   styles = {},
+  isMulti = false,
   ...props
 }: IReactSelectAdapterProps) => {
   return (

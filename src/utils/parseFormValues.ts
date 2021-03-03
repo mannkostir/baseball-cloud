@@ -14,7 +14,7 @@ export const parseFormValues = (values: {
           ? value.value
           : value;
         // changeValue = value?.label && value?.value ? value.value : '';
-        if (!changeValue) return acc;
+        // if (!changeValue) return acc;
       } else if (+value > 0) {
         changeValue = +value;
       }

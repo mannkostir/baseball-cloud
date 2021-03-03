@@ -37,12 +37,14 @@ const SchoolInfoView = ({ profileData }: ISchoolInfoCompoundProps) => {
             profileData.school_year.slice(1)}
         </ProfileSidebar.Value>
       </ProfileSidebar.DataItem>
-      <ProfileSidebar.DataItem>
-        <ProfileSidebar.Heading>Team</ProfileSidebar.Heading>
-        <ProfileSidebar.Value>
-          {profileData.teams.map((team) => team.name).join(', ')}
-        </ProfileSidebar.Value>
-      </ProfileSidebar.DataItem>
+      {!!profileData.teams.length && (
+        <ProfileSidebar.DataItem>
+          <ProfileSidebar.Heading>Teams</ProfileSidebar.Heading>
+          <ProfileSidebar.Value>
+            {profileData.teams.map((team) => team.name).join(', ')}
+          </ProfileSidebar.Value>
+        </ProfileSidebar.DataItem>
+      )}
     </div>
   );
 };

@@ -155,7 +155,7 @@ const Profile = () => {
                   }
                 />
                 <PersonalInfo.View profileData={profileData} />
-                {profileData.school && profileData.teams.length ? (
+                {profileData.school ? (
                   <SchoolInfoCompound.View profileData={profileData} />
                 ) : null}
                 {profileData.facilities.length ? (
