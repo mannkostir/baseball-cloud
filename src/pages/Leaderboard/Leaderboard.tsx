@@ -73,16 +73,6 @@ const PitchingTypeOptions: ReactSelectOptions<
   { value: 'spin_rate', label: 'Spin Rate' },
 ];
 
-// type FormValues = {
-//   date: 'last_week' | 'last_month';
-//   school: string;
-//   team: string;
-//   position: PlayerPosition;
-//   age: number;
-//   favorite: 1;
-//   type: FilterType;
-// };
-
 let timeout: number | null;
 
 type FormValues = {

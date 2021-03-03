@@ -1,6 +1,7 @@
 import Filters from '@/components/Filters';
 import LoadingScreen from '@/components/LoadingScreen';
 import PlayersTable from '@/components/PlayersTable';
+import { usePagination } from '@/hooks/usePagination';
 import { profilesService } from '@/services/profilesService';
 import {
   GetProfilesQuery,
@@ -31,16 +32,30 @@ const Header = styled.header`
   justify-content: space-between;
 `;
 
-// type FormValues = {
-//   school: string;
-//   team: string;
-//   position: PlayerPosition;
-//   age: number;
-//   favorite: 1;
-//   profiles_count: number;
-//   player_name: string;
-//   offset: number;
-// };
+const Pagination = styled.div`
+  margin-top: 20px;
+  li > a {
+    position: relative;
+    float: left;
+    padding: 6px 12px;
+    line-height: 1.42857143;
+    color: #414f5a;
+    border: none;
+    -webkit-text-decoration: none;
+    text-decoration: none;
+    border-radius: 4px;
+    margin: 0 2px;
+    background-color: #f7f8f9;
+  }
+  li > a.active {
+    pointer-events: none;
+    z-index: 3;
+    color: #fff;
+    cursor: default;
+    background-color: #48bbff;
+    border: none;
+  }
+`;
 
 type FormValues = {
   [key: string]: { label: string; value: string } | string | number | any;
@@ -68,12 +83,12 @@ const PositionOptions: ReactSelectOptions<PlayerPosition | null> = [
   { value: 'pitcher', label: 'Pitcher' },
 ];
 
-const currentPage = 0;
+let timeout: number | null;
 
 const Network = () => {
   const defaultQuery: GetProfilesQuery = {
     profiles_count: 10,
-    offset: 10 * currentPage,
+    offset: 0,
   };
 
   const dispatch = useDispatch();
@@ -82,6 +97,12 @@ const Network = () => {
   const [query, setQuery] = useState<typeof defaultQuery>();
   const [profilesTotalCount, setProfilesTotalCount] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+
+  const { PageLinks, currentPage } = usePagination({
+    initialPage: 1,
+    itemsAmount: profilesTotalCount,
+    itemsPerPage: query?.profiles_count || 10,
+  });
 
   const { toggleMyHolyFavor } = useProfileService();
 
@@ -102,6 +123,20 @@ const Network = () => {
       setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (!query?.profiles_count) return;
+
+    setQuery({ ...defaultQuery, ...query, offset: 10 });
+
+    (async () => {
+      await fetchNetwork({
+        ...defaultQuery,
+        ...query,
+        offset: query?.profiles_count * currentPage - query?.profiles_count,
+      });
+    })();
+  }, [currentPage]);
 
   const onSubmit = async (values: FormValues) => {
     const submitValues = parseFormValues(values);
@@ -184,8 +219,10 @@ const Network = () => {
               <FormSpy
                 subscription={{ values: true }}
                 onChange={(values: FormValues) => {
-                  setTimeout(() => {
-                    onSubmit(values);
+                  if (timeout) return;
+                  timeout = window.setTimeout(async () => {
+                    timeout = null;
+                    await onSubmit(values);
                   }, 0);
                 }}
               ></FormSpy>
@@ -199,9 +236,21 @@ const Network = () => {
           {isLoading ? (
             <LoadingScreen />
           ) : (
-            <div style={{ padding: '0 20px', marginTop: '20px' }}>
-              <PlayersTable toggleFavorite={toggleFavor} profiles={profiles} />
-            </div>
+            <>
+              <div style={{ padding: '0 20px', marginTop: '20px' }}>
+                <PlayersTable
+                  toggleFavorite={toggleFavor}
+                  profiles={profiles}
+                />
+              </div>
+              <Pagination>
+                <>
+                  <PageLinks
+                    style={{ display: 'flex', justifyContent: 'center' }}
+                  />
+                </>
+              </Pagination>
+            </>
           )}
         </div>
       </main>
