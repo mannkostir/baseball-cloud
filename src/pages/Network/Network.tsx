@@ -54,7 +54,8 @@ const ProfilesCountOptions: ReactSelectOptions<10 | 15 | 25> = [
   { value: 25, label: '25' },
 ];
 
-const PositionOptions: ReactSelectOptions<PlayerPosition> = [
+const PositionOptions: ReactSelectOptions<PlayerPosition | null> = [
+  { value: null, label: 'All' },
   { value: 'catcher', label: 'Catcher' },
   { value: 'first_base', label: 'First Base' },
   { value: 'second_base', label: 'Second Base' },
@@ -126,6 +127,7 @@ const Network = () => {
                 placeholder="Position"
                 component={Filters.SelectInput}
                 options={PositionOptions}
+                initialValue={PositionOptions[0]}
               />
               <Field
                 name="age"
@@ -138,12 +140,14 @@ const Network = () => {
                 placeholder="Favorite"
                 component={Filters.SelectInput}
                 options={FavoriteOptions}
+                initialValue={FavoriteOptions[0]}
               />
               <Field
                 name="profiles_count"
                 placeholder="Show"
                 component={Filters.SelectInput}
                 options={ProfilesCountOptions}
+                initialValue={ProfilesCountOptions[0]}
               />
               <Field
                 name="player_name"

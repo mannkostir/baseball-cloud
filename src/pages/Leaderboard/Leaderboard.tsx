@@ -2,6 +2,7 @@ import Filters from '@/components/Filters';
 import LeadersTable from '@/components/LeadersTable';
 import LoadingScreen from '@/components/LoadingScreen';
 import LeaderPitchingTable from '@/components/PitchingLeadersTable';
+import ProfileSidebar from '@/components/ProfileSidebar';
 import TabButton from '@/components/TabButton';
 import { leaderboardService } from '@/services/leaderboardService';
 import { GetLeaderboardQuery } from '@/services/leaderboardService/leaderboardServiceTypes';
@@ -47,7 +48,8 @@ const FavoriteOptions: ReactSelectOptions<1 | null> = [
   { value: 1, label: 'Favorite' },
 ];
 
-const PositionOptions: ReactSelectOptions<PlayerPosition> = [
+const PositionOptions: ReactSelectOptions<PlayerPosition | null> = [
+  { value: null, label: 'All' },
   { value: 'catcher', label: 'Catcher' },
   { value: 'first_base', label: 'First Base' },
   { value: 'second_base', label: 'Second Base' },
@@ -93,12 +95,19 @@ const Leaderboard = () => {
   const defaultQuery: GetLeaderboardQuery = {
     type: 'exit_velocity',
   };
-
   const defaultPitchingQuery: GetLeaderboardQuery = {
     type: 'pitch_velocity',
   };
 
+  const defaultType: typeof selectedType = 'exit_velocity';
+  const defaultPitchingType: typeof selectedType = 'pitch_velocity';
+
   const [selectedMode, setSelectedMode] = useState<Mode>('batting');
+
+  const [selectedType, setSelectedType] = useState<
+    'exit_velocity' | 'pitch_velocity' | 'carry_distance' | 'spin_rate'
+  >(selectedMode === 'batting' ? 'exit_velocity' : 'pitch_velocity');
+
   const [leaderboardItems, setLeaderboardItems] = useState<
     Unpromise<ReturnType<typeof leaderboardService.getLeaderboard>>
   >([]);
@@ -168,10 +177,14 @@ const Leaderboard = () => {
 
   const changeMode = async (mode: typeof selectedMode) => {
     setSelectedMode(mode);
+    const type = mode === 'batting' ? 'exit_velocity' : 'pitch_velocity';
+
+    setSelectedType(type);
+
     await fetchLeaderboard(
       {
         ...query,
-        type: mode === 'batting' ? 'exit_velocity' : 'pitch_velocity',
+        type,
       },
       mode
     );
@@ -180,6 +193,7 @@ const Leaderboard = () => {
   const changeType = async (
     type: 'exit_velocity' | 'pitch_velocity' | 'carry_distance' | 'spin_rate'
   ) => {
+    setSelectedType(type);
     await fetchLeaderboard({ ...query, type });
   };
 
@@ -187,85 +201,117 @@ const Leaderboard = () => {
     <Container>
       <Header>
         <h2>Leaderboard</h2>
-        <Form onSubmit={() => {}}>
-          {(props) => (
-            <form
-              style={{ display: 'flex', flex: 1, justifyContent: 'flex-end' }}
-            >
-              <Field
-                name="date"
-                placeholder="Date"
-                options={DateOptions}
-                component={Filters.SelectInput}
-              />
-              <Field
-                name="school"
-                placeholder="School"
-                component={Filters.TextInput}
-              />
-              <Field
-                name="team"
-                placeholder="Team"
-                component={Filters.TextInput}
-              />
-              <Field
-                name="position"
-                placeholder="Position"
-                component={Filters.SelectInput}
-                options={PositionOptions}
-              />
-              <Field
-                name="age"
-                placeholder="Age"
-                component={Filters.TextInput}
-                parse={(value) => (+value > 0 ? +value : null)}
-              />
-              <Field
-                name="favorite"
-                placeholder="Favorite"
-                component={Filters.SelectInput}
-                options={FavoriteOptions}
-              />
-              <FormSpy
-                subscription={{ values: true }}
-                onChange={(values: FormValues) => {
-                  if (timeout) return;
-                  timeout = window.setTimeout(async () => {
-                    timeout = null;
-                    await onSubmit(values);
-                  }, 0);
-                }}
-              />
-            </form>
-          )}
-        </Form>
+        <div style={{ paddingRight: '40px' }}>
+          <Form onSubmit={() => {}}>
+            {(props) => (
+              <form
+                style={{ display: 'flex', flex: 1, justifyContent: 'flex-end' }}
+              >
+                <Field
+                  name="date"
+                  placeholder="Date"
+                  options={DateOptions}
+                  component={Filters.SelectInput}
+                  initialValue={DateOptions[0]}
+                />
+                <Field
+                  name="school"
+                  placeholder="School"
+                  component={Filters.TextInput}
+                />
+                <Field
+                  name="team"
+                  placeholder="Team"
+                  component={Filters.TextInput}
+                />
+                <Field
+                  name="position"
+                  placeholder="Position"
+                  component={Filters.SelectInput}
+                  options={PositionOptions}
+                  initialValue={PositionOptions[0]}
+                />
+                <Field
+                  name="age"
+                  placeholder="Age"
+                  component={Filters.TextInput}
+                  parse={(value) => (+value > 0 ? +value : null)}
+                />
+                <Field
+                  name="favorite"
+                  placeholder="Favorite"
+                  component={Filters.SelectInput}
+                  options={FavoriteOptions}
+                  initialValue={FavoriteOptions[0]}
+                />
+                <FormSpy
+                  subscription={{ values: true }}
+                  onChange={(values: FormValues) => {
+                    if (timeout) return;
+                    timeout = window.setTimeout(async () => {
+                      timeout = null;
+                      await onSubmit(values);
+                    }, 0);
+                  }}
+                />
+              </form>
+            )}
+          </Form>
+        </div>
       </Header>
       <main>
-        <div>
-          <TabButton
-            isSelected={selectedMode === 'batting'}
-            onClick={() => changeMode('batting')}
-          >
-            Batting
-          </TabButton>
-          <TabButton
-            isSelected={selectedMode === 'pitching'}
-            onClick={() => changeMode('pitching')}
-          >
-            Pitching
-          </TabButton>
+        <div
+          style={{
+            justifyContent: 'space-between',
+            display: 'flex',
+            paddingRight: '40px',
+            width: '100%',
+          }}
+        >
+          <div>
+            <TabButton
+              isSelected={selectedMode === 'batting'}
+              onClick={() => changeMode('batting')}
+            >
+              Batting
+            </TabButton>
+            <TabButton
+              isSelected={selectedMode === 'pitching'}
+              onClick={() => changeMode('pitching')}
+            >
+              Pitching
+            </TabButton>
+          </div>
+          <Filters.SelectInput
+            input={{}}
+            options={
+              selectedMode === 'batting'
+                ? [...BattingTypeOptions]
+                : [
+                    { value: 'pitch_velocity', label: 'Pitch Velocity' },
+                    { value: 'spin_rate', label: 'Spin Rate' },
+                  ]
+            }
+            onChange={(value: any) =>
+              changeType(value?.value || 'pitch_velocity')
+            }
+            escapeClearsValue={true}
+            value={
+              selectedMode === 'batting'
+                ? BattingTypeOptions.find(
+                    (option) => option.value === selectedType
+                  )
+                : PitchingTypeOptions.find(
+                    (option) => option.value === selectedType
+                  )
+            }
+          />
         </div>
         <div>
           {isLoading ? (
             <LoadingScreen />
           ) : selectedMode === 'batting' ? (
             <>
-              <Select
-                options={BattingTypeOptions}
-                onChange={(value) =>
-                  changeType(value?.value || 'exit_velocity')
-                }
-              />
               <LeadersTable
                 type={selectedMode}
                 toggleFavorite={toggleFavor}
@@ -275,12 +321,6 @@ const Leaderboard = () => {
             </>
           ) : (
             <>
-              <Select
-                options={PitchingTypeOptions}
-                onChange={(value) =>
-                  changeType(value?.value || 'pitch_velocity')
-                }
-              />
               <LeaderPitchingTable
                 leaderboardItems={leaderboardPitchingItems}
                 toggleFavorite={toggleFavor}
