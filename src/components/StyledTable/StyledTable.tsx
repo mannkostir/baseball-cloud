@@ -3,11 +3,25 @@ import styled from 'styled-components/macro';
 
 const Table = styled.table`
   width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  thead > tr {
+    height: 80px;
+  }
   th {
     font-weight: 400;
     font-size: 14px;
     color: #667784;
     text-align: left;
+  }
+  tbody > tr {
+    align-items: center;
+    border-radius: 4px;
+    background-color: #f7f8f9;
+  }
+  td {
+    padding: 15px 0;
+    margin-bottom: 10px;
   }
 `;
 

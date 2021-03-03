@@ -36,6 +36,7 @@ export const ProgressBarContainer = styled.div`
   bottom: 0;
   left: 0;
   right: 0;
+  border-radius: 10px;
 `;
 
 export const StatusText = styled.span`
@@ -48,6 +49,7 @@ export const ProgressBar = styled.span<{
 }>`
   display: block;
   height: 100%;
+  border-radius: 10px;
   &::after {
     content: '';
     display: block;
@@ -57,5 +59,6 @@ export const ProgressBar = styled.span<{
     animation: ${progressBar} ${(props) => props.animationTimeMs}ms ease-out;
     ${(props) => props.isMouseOver && 'animation: none'};
     animation-fill-mode: both;
+    border-radius: 10px;
   }
 `;

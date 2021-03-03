@@ -8,6 +8,8 @@ interface INotificationProps {
   dispatch: React.Dispatch<any>;
 }
 
+const notificationTerminateTimeoutMs = 2500;
+
 const NotificationsItem = ({
   notification,
   dispatch,
@@ -23,7 +25,7 @@ const NotificationsItem = ({
       dispatch(
         notificationsActions.removeNotification({ id: notification.id })
       );
-    }, 1500);
+    }, notificationTerminateTimeoutMs);
 
     setCurrentTimeoutId(timeout);
   };
@@ -46,7 +48,10 @@ const NotificationsItem = ({
       </Styled.StatusText>
       <div>{notification.message}</div>
       <Styled.ProgressBarContainer>
-        <Styled.ProgressBar animationTimeMs={1500} isMouseOver={isMouseOver} />
+        <Styled.ProgressBar
+          animationTimeMs={notificationTerminateTimeoutMs}
+          isMouseOver={isMouseOver}
+        />
       </Styled.ProgressBarContainer>
     </Styled.NotificationWrapper>
   );

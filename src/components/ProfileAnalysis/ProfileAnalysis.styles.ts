@@ -13,6 +13,6 @@ export const TabContent = styled.div`
   height: 100%;
   align-items: center;
   justify-content: center;
-  min-height: 420px;
+  margin-top: 40px;
   color: #667784;
 `;

@@ -2,12 +2,15 @@ import { ProfileRecord } from '@/services/profilesService/profileServiceTypes';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import StyledTable from '../StyledTable';
+import { ReactComponent as LikeIcon } from '@/assets/images/heart.svg';
+import { ReactComponent as FilledLikeIcon } from '@/assets/images/like.svg';
 
 interface IPlayersTableProps {
   profiles: ProfileRecord[];
+  toggleFavorite: (id: number, isInFavor: boolean) => void;
 }
 
-const PlayersTable = ({ profiles }: IPlayersTableProps) => {
+const PlayersTable = ({ profiles, toggleFavorite }: IPlayersTableProps) => {
   return (
     <StyledTable>
       <thead>
@@ -32,7 +35,15 @@ const PlayersTable = ({ profiles }: IPlayersTableProps) => {
             <td>{profile.school ? profile.school.name : '-'}</td>
             <td>{profile.teams[0] ? profile.teams[0].name : '-'}</td>
             <td>{profile.age}</td>
-            <td>{profile.favorite ? 'Love' : 'Hate'}</td>
+            <td>
+              <a onClick={() => toggleFavorite(+profile.id, profile.favorite)}>
+                {profile.favorite ? (
+                  <FilledLikeIcon width="17px" height="17px" fill="#48bbff" />
+                ) : (
+                  <LikeIcon width="17px" height="17px" fill="#48bbff" />
+                )}
+              </a>
+            </td>
           </tr>
         ))}
       </tbody>

@@ -3,6 +3,8 @@ import { Unpromise } from '@/types/commonTypes';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import StyledTable from '../StyledTable';
+import { ReactComponent as LikeIcon } from '@/assets/images/heart.svg';
+import { ReactComponent as FilledLikeIcon } from '@/assets/images/like.svg';
 
 interface ILeadersTableProps {
   leaderboardItems: Unpromise<
@@ -55,7 +57,11 @@ const LeadersTable = ({
                   toggleFavorite(leader.batter_datraks_id, leader.favorite)
                 }
               >
-                {leader.favorite ? 'Love' : 'Hate'}
+                {leader.favorite ? (
+                  <FilledLikeIcon width="17px" height="17px" fill="#48bbff" />
+                ) : (
+                  <LikeIcon width="17px" height="17px" fill="#48bbff" />
+                )}
               </a>
             </td>
           </tr>

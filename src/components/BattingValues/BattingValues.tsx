@@ -11,7 +11,7 @@ interface IBattingValuesProps {
 
 const BattingValues = ({ battingSummary }: IBattingValuesProps) => {
   return (
-    <div>
+    <div style={{ width: '100%' }}>
       <h3>Top Batting Values</h3>
       <StyledTable>
         <thead>

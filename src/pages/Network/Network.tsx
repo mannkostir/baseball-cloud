@@ -6,6 +6,8 @@ import {
   GetProfilesQuery,
   ProfileRecord,
 } from '@/services/profilesService/profileServiceTypes';
+import { useProfileService } from '@/services/profilesService/useProfileService';
+import { notificationsActions } from '@/store/notifications';
 import {
   FormValue,
   PlayerPosition,
@@ -14,6 +16,7 @@ import {
 import { parseFormValues } from '@/utils/parseFormValues';
 import React, { useEffect, useState } from 'react';
 import { Field, Form, FormSpy } from 'react-final-form';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components/macro';
 
 const Container = styled.section`
@@ -73,10 +76,14 @@ const Network = () => {
     offset: 10 * currentPage,
   };
 
+  const dispatch = useDispatch();
+
   const [profiles, setProfiles] = useState<ProfileRecord[]>([]);
   const [query, setQuery] = useState<typeof defaultQuery>();
   const [profilesTotalCount, setProfilesTotalCount] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+
+  const { toggleMyHolyFavor } = useProfileService();
 
   const fetchNetwork = async (fetchQuery: Partial<typeof query>) => {
     try {
@@ -101,6 +108,26 @@ const Network = () => {
 
     setQuery({ ...defaultQuery, ...submitValues });
     await fetchNetwork({ ...submitValues });
+  };
+
+  const toggleFavor = async (id: number, isInFavor: boolean) => {
+    await toggleMyHolyFavor(id, isInFavor);
+    await fetchNetwork({ ...query });
+
+    let message: string;
+
+    if (isInFavor) {
+      message = 'Removed from favorite';
+    } else {
+      message = 'Added to favorite';
+    }
+
+    dispatch(
+      notificationsActions.addNotification({
+        status: 'success',
+        message,
+      })
+    );
   };
 
   return (
@@ -169,7 +196,13 @@ const Network = () => {
       <main>
         <div>Available Players ({profilesTotalCount})</div>
         <div>
-          {isLoading ? <LoadingScreen /> : <PlayersTable profiles={profiles} />}
+          {isLoading ? (
+            <LoadingScreen />
+          ) : (
+            <div style={{ padding: '0 20px', marginTop: '20px' }}>
+              <PlayersTable toggleFavorite={toggleFavor} profiles={profiles} />
+            </div>
+          )}
         </div>
       </main>
     </Container>

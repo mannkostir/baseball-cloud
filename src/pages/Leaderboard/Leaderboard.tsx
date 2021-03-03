@@ -99,9 +99,6 @@ const Leaderboard = () => {
     type: 'pitch_velocity',
   };
 
-  const defaultType: typeof selectedType = 'exit_velocity';
-  const defaultPitchingType: typeof selectedType = 'pitch_velocity';
-
   const [selectedMode, setSelectedMode] = useState<Mode>('batting');
 
   const [selectedType, setSelectedType] = useState<
@@ -295,7 +292,6 @@ const Leaderboard = () => {
             onChange={(value: any) =>
               changeType(value?.value || 'pitch_velocity')
             }
-            escapeClearsValue={true}
             value={
               selectedMode === 'batting'
                 ? BattingTypeOptions.find(
@@ -311,14 +307,14 @@ const Leaderboard = () => {
           {isLoading ? (
             <LoadingScreen />
           ) : selectedMode === 'batting' ? (
-            <>
+            <div style={{ padding: '0 20px', marginTop: '20px' }}>
               <LeadersTable
                 type={selectedMode}
                 toggleFavorite={toggleFavor}
                 leaderboardItems={leaderboardItems}
                 isLoading={isLoading}
               />
-            </>
+            </div>
           ) : (
             <>
               <LeaderPitchingTable

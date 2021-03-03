@@ -19,10 +19,6 @@ interface IProfileComparisonProps {
   };
 }
 
-type FormValues = {
-  player_name: string;
-};
-
 const BattingValuesOptions: ReactSelectOptions<
   'exit_velocity' | 'launch_angle' | 'distance'
 > = [
