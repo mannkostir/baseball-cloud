@@ -186,9 +186,9 @@ const Leaderboard = () => {
               />
               <FormSpy
                 subscription={{ values: true }}
-                onChange={() => {
+                onChange={(values: FormValues) => {
                   setTimeout(() => {
-                    props.handleSubmit();
+                    onSubmit(values);
                   }, 0);
                 }}
               />
@@ -212,11 +212,15 @@ const Leaderboard = () => {
           </TabButton>
         </div>
         <div>
-          <LeadersTable
-            toggleFavorite={toggleFavor}
-            leaderboardItems={leaderboardItems}
-            isLoading={isLoading}
-          />
+          {isLoading ? (
+            <LoadingScreen />
+          ) : (
+            <LeadersTable
+              toggleFavorite={toggleFavor}
+              leaderboardItems={leaderboardItems}
+              isLoading={isLoading}
+            />
+          )}
         </div>
       </main>
     </Container>

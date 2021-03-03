@@ -1,4 +1,5 @@
 import Filters from '@/components/Filters';
+import LoadingScreen from '@/components/LoadingScreen';
 import PlayersTable from '@/components/PlayersTable';
 import { profilesService } from '@/services/profilesService';
 import {
@@ -151,9 +152,9 @@ const Network = () => {
               />
               <FormSpy
                 subscription={{ values: true }}
-                onChange={() => {
+                onChange={(values: FormValues) => {
                   setTimeout(() => {
-                    props.handleSubmit();
+                    onSubmit(values);
                   }, 0);
                 }}
               ></FormSpy>
@@ -164,7 +165,7 @@ const Network = () => {
       <main>
         <div>Available Players ({profilesTotalCount})</div>
         <div>
-          <PlayersTable profiles={profiles} />
+          {isLoading ? <LoadingScreen /> : <PlayersTable profiles={profiles} />}
         </div>
       </main>
     </Container>
