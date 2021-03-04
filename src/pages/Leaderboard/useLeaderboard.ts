@@ -3,6 +3,14 @@ import { LeaderboardMode, Unpromise } from '@/types/commonTypes';
 import { useState } from 'react';
 import { GetLeaderboardQuery } from '@/services/leaderboardService/leaderboardServiceTypes';
 
+type LeaderoardItemsType = Unpromise<
+  ReturnType<typeof leaderboardService.getLeaderboard>
+>;
+
+type LeaderboardPitchingItemsType = Unpromise<
+  ReturnType<typeof leaderboardService.getPitchingLeaderboard>
+>;
+
 export const useLeaderboard = () => {
   const defaultQuery: GetLeaderboardQuery = {
     type: 'exit_velocity',
@@ -11,12 +19,13 @@ export const useLeaderboard = () => {
     type: 'pitch_velocity',
   };
 
-  const [leaderboardItems, setLeaderboardItems] = useState<
-    Unpromise<ReturnType<typeof leaderboardService.getLeaderboard>>
-  >([]);
-  const [leaderboardPitchingItems, setLeaderboardPitchingItems] = useState<
-    Unpromise<ReturnType<typeof leaderboardService.getPitchingLeaderboard>>
-  >([]);
+  const [leaderboardItems, setLeaderboardItems] = useState<LeaderoardItemsType>(
+    []
+  );
+  const [
+    leaderboardPitchingItems,
+    setLeaderboardPitchingItems,
+  ] = useState<LeaderboardPitchingItemsType>([]);
 
   const [isLoading, setIsLoading] = useState(false);
 

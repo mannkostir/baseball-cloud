@@ -19,15 +19,19 @@ export const usePagination = ({
   ]);
 
   const nextPage = () => {
-    if (currentPage >= pagesAmount) return;
+    let targetPage = currentPage + 1;
 
-    setCurrentPage((page) => page + 1);
+    if (currentPage >= pagesAmount) targetPage = 1;
+
+    setCurrentPage(targetPage);
   };
 
   const previousPage = () => {
-    if (currentPage === 1) return;
+    let targetPage = currentPage - 1;
 
-    setCurrentPage((page) => page - 1);
+    if (currentPage === 1) targetPage = pagesAmount;
+
+    setCurrentPage(targetPage);
   };
 
   const goToPage = useCallback(
