@@ -135,19 +135,30 @@ export const usePagination = ({
         <ul {...args}>
           <li onClick={previousPage}>
             <a>{'<<'}</a>
-          </li>{' '}
-          <li key={`page${1}`} onClick={() => goToPage(1)}>
-            <Link isActive={currentPage === 1} title={'1'} />
           </li>
-          {getPreviousPageNumber()}
-          {getCurrentPageNumber()}
-          {getNextPageNumber()}
-          <li key={`page${pagesAmount}`} onClick={() => goToPage(pagesAmount)}>
-            <Link
-              isActive={currentPage === pagesAmount}
-              title={pagesAmount.toString()}
-            />
-          </li>
+          {pagesAmount ? (
+            <>
+              <li key={`page${1}`} onClick={() => goToPage(1)}>
+                <Link isActive={currentPage === 1} title={'1'} />
+              </li>
+              {getPreviousPageNumber()}
+              {getCurrentPageNumber()}
+              {getNextPageNumber()}
+              <li
+                key={`page${pagesAmount}`}
+                onClick={() => goToPage(pagesAmount)}
+              >
+                <Link
+                  isActive={currentPage === pagesAmount}
+                  title={pagesAmount.toString()}
+                />
+              </li>
+            </>
+          ) : (
+            <li>
+              <a aria-disabled={true}>...</a>
+            </li>
+          )}
           <li onClick={nextPage}>
             <a>{'>>'}</a>
           </li>
