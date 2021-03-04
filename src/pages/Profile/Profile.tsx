@@ -17,11 +17,7 @@ import { useParams } from 'react-router-dom';
 import LoadingScreen from '@/components/LoadingScreen';
 import { Unpromise } from '@/types/commonTypes';
 import { parseFormValues } from '@/utils/parseFormValues';
-
-const Container = styled.div`
-  display: flex;
-  width: 100%;
-`;
+import Container from '@/components/Container';
 
 const ProfileMain = styled.main`
   background: #788b99;
@@ -117,7 +113,7 @@ const Profile = () => {
   }, [currentProfileId, params.id]);
 
   return (
-    <Container>
+    <Container style={{ flexDirection: 'row' }}>
       {profileData && !isLoading ? (
         <>
           <ProfileSidebarContainer>

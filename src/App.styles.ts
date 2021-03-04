@@ -8,7 +8,7 @@ export const AppContainer = styled.div`
     'header header'
     'content content'
     'footer footer';
-  min-height: 100vh;
+  height: 100%;
 `;
 
 export const MainContent = styled.main`
@@ -23,6 +23,9 @@ export const GlobalStyles = createGlobalStyle`
   *, *::after, *::before {
     box-sizing: border-box;
   }
+  html {
+    height: 100%;
+  }
   body {
     font-family: 'Lato';
     font-size: 16px;
@@ -33,6 +36,10 @@ export const GlobalStyles = createGlobalStyle`
     -moz-osx-font-smoothing: grayscale;
     margin: 0;
     line-height: 1.5;
+    height: 100%;
+    & > #root {
+      height: 100%;
+    }
   }
   input {
     font-family: 'Lato';
@@ -68,6 +75,9 @@ export const GlobalStyles = createGlobalStyle`
     &:hover {
       color: #23527c;
       text-decoration: underline;
+    }
+    &[aria-disabled=true] {
+      cursor: default;
     }
   }
   h1 {

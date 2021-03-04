@@ -3,7 +3,7 @@ import styled from 'styled-components/macro';
 import Spinner from '../Spinner';
 
 const Container = styled.div`
-  background: #fff;
+  background: #fff\;
   display: flex;
   height: 100%;
   width: 100%;
@@ -11,9 +11,9 @@ const Container = styled.div`
   justify-content: center;
 `;
 
-const LoadingScreen = () => {
+const LoadingScreen = ({ ...props }: React.HTMLAttributes<HTMLDivElement>) => {
   return (
-    <Container>
+    <Container {...props}>
       <Spinner />
     </Container>
   );

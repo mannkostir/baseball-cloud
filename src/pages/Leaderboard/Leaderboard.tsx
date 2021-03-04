@@ -1,3 +1,4 @@
+import Container from '@/components/Container';
 import Filters from '@/components/Filters';
 import LeadersTable from '@/components/LeadersTable';
 import LoadingScreen from '@/components/LoadingScreen';
@@ -22,12 +23,6 @@ import { Field, Form, FormSpy } from 'react-final-form';
 import { useDispatch } from 'react-redux';
 import Select from 'react-select';
 import styled from 'styled-components/macro';
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-`;
 
 const Header = styled.header`
   padding: 16px;
@@ -293,11 +288,23 @@ const Leaderboard = () => {
             }
           />
         </div>
-        <div>
+        <div
+          style={{
+            padding: '0 20px',
+            marginTop: '20px',
+            minHeight: '436px',
+          }}
+        >
           {isLoading ? (
-            <LoadingScreen />
+            <LoadingScreen style={{ minHeight: '436px' }} />
           ) : selectedMode === 'batting' ? (
-            <div style={{ padding: '0 20px', marginTop: '20px' }}>
+            <div
+              style={{
+                padding: '0 20px',
+                marginTop: '20px',
+                marginBottom: '30px',
+              }}
+            >
               <LeadersTable
                 type={selectedMode}
                 toggleFavorite={toggleFavor}

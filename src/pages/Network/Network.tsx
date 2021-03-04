@@ -1,3 +1,4 @@
+import Container from '@/components/Container';
 import Filters from '@/components/Filters';
 import LoadingScreen from '@/components/LoadingScreen';
 import PlayersTable from '@/components/PlayersTable';
@@ -20,12 +21,6 @@ import { Field, Form, FormSpy } from 'react-final-form';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components/macro';
 
-const Container = styled.section`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-`;
-
 const Header = styled.header`
   padding: 16px;
   display: flex;
@@ -34,6 +29,9 @@ const Header = styled.header`
 
 const Pagination = styled.div`
   margin-top: 20px;
+  position: sticky;
+  bottom: 0;
+  margin-bottom: 20px;
   li > a {
     position: relative;
     float: left;
@@ -233,25 +231,33 @@ const Network = () => {
       <main>
         <div>Available Players ({profilesTotalCount})</div>
         <div>
-          {isLoading ? (
-            <LoadingScreen />
-          ) : (
+          <div
+            style={{
+              padding: '0 20px',
+              marginTop: '20px',
+              minHeight: '436px',
+            }}
+          >
+            {isLoading ? (
+              <LoadingScreen style={{ minHeight: '436px' }} />
+            ) : (
+              <PlayersTable
+                isLoading={isLoading}
+                toggleFavorite={toggleFavor}
+                profiles={profiles}
+              />
+            )}
+          </div>
+          <Pagination>
             <>
-              <div style={{ padding: '0 20px', marginTop: '20px' }}>
-                <PlayersTable
-                  toggleFavorite={toggleFavor}
-                  profiles={profiles}
-                />
-              </div>
-              <Pagination>
-                <>
-                  <PageLinks
-                    style={{ display: 'flex', justifyContent: 'center' }}
-                  />
-                </>
-              </Pagination>
+              <PageLinks
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                }}
+              />
             </>
-          )}
+          </Pagination>
         </div>
       </main>
     </Container>

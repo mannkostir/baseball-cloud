@@ -4,13 +4,19 @@ import { Link } from 'react-router-dom';
 import StyledTable from '../StyledTable';
 import { ReactComponent as LikeIcon } from '@/assets/images/heart.svg';
 import { ReactComponent as FilledLikeIcon } from '@/assets/images/like.svg';
+import LoadingScreen from '../LoadingScreen';
 
 interface IPlayersTableProps {
   profiles: ProfileRecord[];
+  isLoading: boolean;
   toggleFavorite: (id: number, isInFavor: boolean) => void;
 }
 
-const PlayersTable = ({ profiles, toggleFavorite }: IPlayersTableProps) => {
+const PlayersTable = ({
+  profiles,
+  toggleFavorite,
+  isLoading,
+}: IPlayersTableProps) => {
   return (
     <StyledTable>
       <thead>
