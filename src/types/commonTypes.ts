@@ -74,3 +74,9 @@ export type ProfileAnalysisInfo = {
   avatar: string | null;
   position: PlayerPosition;
 };
+
+export type FormValues = {
+  [key: string]: { label: string; value: string } | string | number | any;
+};
+
+export type LeaderboardMode = 'batting' | 'pitching';
