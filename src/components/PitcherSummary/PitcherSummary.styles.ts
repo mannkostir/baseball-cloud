@@ -14,6 +14,7 @@ export const SummaryItem = styled.div`
   flex: 1;
   justify-content: space-between;
   padding: 16px 24px 0 0;
+  flex-direction: column;
 `;
 
 export const SummaryValue = styled.span`
