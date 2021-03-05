@@ -1,4 +1,6 @@
 import Container from '@/components/Container';
+import Filters from '@/components/Filters';
+import Icons from '@/components/Icons';
 import LoadingScreen from '@/components/LoadingScreen';
 import NetworkFilters from '@/components/NetworkFilters';
 import Pagination from '@/components/Pagination';
@@ -89,7 +91,22 @@ const Network = () => {
         <NetworkFilters onFiltersChange={onFiltersChange} />
       </Header>
       <main>
-        <div>Available Players ({profilesTotalCount})</div>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            padding: '0 16px',
+          }}
+        >
+          <div>Available Players ({profilesTotalCount})</div>
+          <Filters.TextInput
+            width="120px"
+            placeholder="Player Name"
+            Icon={() => <Icons.Search />}
+            placeholderColor="#788b99"
+          />
+        </div>
         <div>
           <div
             style={{

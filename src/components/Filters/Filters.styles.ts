@@ -1,10 +1,14 @@
 import styled from 'styled-components/macro';
 import ProfileSidebar from '../ProfileSidebar';
 
-export const FilterInput = styled(ProfileSidebar.TextInput)`
-  display: block;
+export const FilterInput = styled(ProfileSidebar.TextInput)<{
+  placeholderColor?: string;
+  isFocused: boolean;
+}>`
+  display: flex;
+  align-items: center;
   width: 66px;
-  padding: 5px 5px 7px 0;
+  padding: 5px;
   font-size: 16px;
   line-height: 19px;
   min-height: 38px;
@@ -28,6 +32,7 @@ export const FilterInput = styled(ProfileSidebar.TextInput)`
     }
   }
   &::placeholder {
-    color: #48bbff;
+    color: ${(props) =>
+      props.placeholderColor ? props.placeholderColor : '#48bbff'};
   }
 `;

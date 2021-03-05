@@ -38,7 +38,7 @@ const TopNav = ({ username }: ITopNavProps) => {
             onClick={() => setIsDropdownOpened((isOpened) => !isOpened)}
           >
             {username}{' '}
-            <Icons.DropdownCaret
+            <Icons.NavDropdownCaret
               style={{ marginLeft: '6px', transform: 'translateY(-15%)' }}
             />
           </Styled.UserDropdownToggle>

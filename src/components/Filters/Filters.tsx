@@ -1,27 +1,76 @@
-import React, { InputHTMLAttributes, SelectHTMLAttributes } from 'react';
+import React, { InputHTMLAttributes, useState } from 'react';
 import AsyncSelect, { AsyncProps, defaultProps } from 'react-select/async';
-import { SingleValueProps } from 'react-select';
+import {
+  CommonProps,
+  components,
+  GroupTypeBase,
+  OptionTypeBase,
+  IndicatorProps,
+} from 'react-select';
 import ProfileSidebar from '../ProfileSidebar';
 import * as Styled from './Filters.styles';
+import Icons from '../Icons';
 
 const Filters = () => {
   return <div></div>;
 };
 
+const DropdownIndicator = ({
+  isExpanded,
+  ...props
+}: { isExpanded: boolean } & IndicatorProps<
+  OptionTypeBase,
+  boolean,
+  GroupTypeBase<OptionTypeBase>
+>) => {
+  return (
+    <components.DropdownIndicator {...props}>
+      <Icons.DropdownCaret
+        style={{
+          ...(isExpanded
+            ? { transform: 'rotate(180deg)' }
+            : { transform: 'rotate(0deg)' }),
+          padding: '0 8px',
+        }}
+      />
+    </components.DropdownIndicator>
+  );
+};
+
 interface IFilterInputProps {
   selected?: boolean;
   width?: string;
+  Icon?: () => JSX.Element;
+  placeholderColor?: string;
   [key: string]: any;
 }
 
 const FilterInput = ({
   selected = false,
   width,
+  Icon,
+  placeholderColor,
   ...props
 }: IFilterInputProps & InputHTMLAttributes<HTMLInputElement>) => {
   return (
-    <div>
-      <Styled.FilterInput selected={selected} style={{ width }} {...props} />
+    <div style={{ position: 'relative' }}>
+      <Styled.FilterInput
+        placeholderColor={placeholderColor}
+        style={{ width, ...(!!Icon ? { paddingLeft: '25px' } : {}) }}
+        {...props}
+      />
+      {!!Icon && (
+        <div
+          style={{
+            position: 'absolute',
+            left: '0',
+            top: '0',
+            transform: 'translateY(50%)',
+          }}
+        >
+          {Icon()}
+        </div>
+      )}
     </div>
   );
 };
@@ -34,10 +83,12 @@ interface IFilterSelectProps {
 }
 
 const FilterSelect = ({ input, width, ...props }: IFilterSelectProps) => {
+  const [isExpanded, setIsExpanded] = useState(false);
   return (
     <ProfileSidebar.SelectInput
       input={input}
       isMulti={false}
+      isSearchable={false}
       styles={{
         container: (provided, state) => ({
           ...provided,
@@ -67,7 +118,6 @@ const FilterSelect = ({ input, width, ...props }: IFilterSelectProps) => {
         input: (provided, state) => ({
           ...provided,
           position: 'absolute',
-          color: 'red',
         }),
         dropdownIndicator: (provided, state) => ({
           ...provided,
@@ -87,6 +137,17 @@ const FilterSelect = ({ input, width, ...props }: IFilterSelectProps) => {
       onChange={(value: any) => {
         input.onChange && input.onChange(value);
         props.onChange && props.onChange(value);
+      }}
+      onMenuOpen={() => setIsExpanded(true)}
+      onMenuClose={() => setIsExpanded(false)}
+      components={{
+        DropdownIndicator: (
+          props: IndicatorProps<
+            OptionTypeBase,
+            boolean,
+            GroupTypeBase<OptionTypeBase>
+          >
+        ) => <DropdownIndicator {...props} isExpanded={isExpanded} />,
       }}
     />
   );

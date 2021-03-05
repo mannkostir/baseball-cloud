@@ -1,19 +1,24 @@
 import React, { HTMLProps, SVGProps } from 'react';
 
-const DropdownCaret = (props: SVGProps<SVGSVGElement>) => {
+const DropdownCaret = ({
+  style,
+  ...props
+}: SVGProps<SVGSVGElement> & {
+  style?: React.HTMLAttributes<HTMLDivElement>['style'];
+}) => {
   return (
-    <div>
+    <div style={style || {}}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        width="8"
-        height="5"
-        viewBox="0 0 8 5"
+        width="16"
+        height="9"
+        viewBox="0 0 16 9"
         {...props}
       >
         <path
-          fill="#788B99"
-          fillRule="evenodd"
-          d="M8 .5c0-.273-.227-.5-.5-.5h-7C.227 0 0 .227 0 .5c0 .133.055.258.148.352l3.5 3.5A.497.497 0 0 0 4 4.5a.497.497 0 0 0 .352-.148l3.5-3.5A.497.497 0 0 0 8 .5z"
+          fill="#48BBFF"
+          fillRule="nonzero"
+          d="M13.469.432a1.081 1.081 0 0 1 1.565 0 1.165 1.165 0 0 1 0 1.615L8.78 8.43a1.083 1.083 0 0 1-1.567 0L.962 2.047a1.168 1.168 0 0 1 0-1.615 1.081 1.081 0 0 1 1.564 0L8 5.667 13.469.432z"
         ></path>
       </svg>
     </div>
