@@ -37,7 +37,7 @@ interface ILeaderboardFiltersProps {
 
 const LeaderboardFilters = ({ onFiltersChange }: ILeaderboardFiltersProps) => {
   return (
-    <div style={{ paddingRight: '40px' }}>
+    <div style={{ paddingRight: '40px', lineHeight: '1.2' }}>
       <Form onSubmit={() => {}}>
         {(props) => (
           <form

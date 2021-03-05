@@ -7,11 +7,13 @@ export const FilterInput = styled(ProfileSidebar.TextInput)<{
 }>`
   display: flex;
   align-items: center;
-  width: 66px;
+  width: 86px;
   padding: 5px;
   font-size: 16px;
   line-height: 19px;
   min-height: 38px;
+  height: auto;
+  margin-bottom: 0 !important;
   font-weight: 400;
   color: #788b99;
   background: transparent;

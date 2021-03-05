@@ -39,7 +39,14 @@ const NetworkFilters = ({ onFiltersChange }: INetworkFiltersProps) => {
   return (
     <Form onSubmit={() => {}}>
       {(props) => (
-        <form style={{ display: 'flex', flex: 1, justifyContent: 'flex-end' }}>
+        <form
+          style={{
+            display: 'flex',
+            flex: 1,
+            justifyContent: 'flex-end',
+            lineHeight: '1.2',
+          }}
+        >
           <Field
             name="school"
             placeholder="School"

@@ -102,9 +102,17 @@ const Network = () => {
           <div>Available Players ({profilesTotalCount})</div>
           <Filters.TextInput
             width="120px"
+            type="text"
             placeholder="Player Name"
             Icon={() => <Icons.Search />}
             placeholderColor="#788b99"
+            position="left"
+            onChange={(e) =>
+              onFiltersChange({
+                ...query,
+                ['player_name']: `${e.target.value}`,
+              })
+            }
           />
         </div>
         <div>

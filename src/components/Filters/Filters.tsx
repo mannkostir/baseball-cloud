@@ -40,35 +40,53 @@ const DropdownIndicator = ({
 interface IFilterInputProps {
   selected?: boolean;
   width?: string;
-  Icon?: () => JSX.Element;
+  Icon?: (props: any) => JSX.Element | null;
   placeholderColor?: string;
+  position?: 'left' | 'right';
   [key: string]: any;
 }
 
 const FilterInput = ({
   selected = false,
   width,
-  Icon,
+  Icon = (props: any) => <Icons.DropdownCaret {...props} />,
   placeholderColor,
+  position = 'right',
   ...props
 }: IFilterInputProps & InputHTMLAttributes<HTMLInputElement>) => {
+  const [isExpanded, setIsExpanded] = useState(false);
+
   return (
     <div style={{ position: 'relative' }}>
       <Styled.FilterInput
         placeholderColor={placeholderColor}
-        style={{ width, ...(!!Icon ? { paddingLeft: '25px' } : {}) }}
+        style={{
+          width,
+          ...(position === 'left'
+            ? { paddingLeft: '25px' }
+            : { paddingRight: '25px' }),
+        }}
+        onClick={() => setIsExpanded(true)}
+        onBlur={() => setIsExpanded(false)}
         {...props}
       />
       {!!Icon && (
         <div
           style={{
             position: 'absolute',
-            left: '0',
+            [position]: '0',
             top: '0',
             transform: 'translateY(50%)',
           }}
         >
-          {Icon()}
+          <Icon
+            style={{
+              ...(isExpanded
+                ? { transform: 'rotate(180deg)' }
+                : { transform: 'rotate(0deg)' }),
+              padding: '0 8px',
+            }}
+          />
         </div>
       )}
     </div>
@@ -105,6 +123,7 @@ const FilterSelect = ({ input, width, ...props }: IFilterSelectProps) => {
           border: 'none',
           outline: 'none',
           boxShadow: 'none',
+          height: '100%',
         }),
         placeholder: (provided, state) => ({
           ...provided,
