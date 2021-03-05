@@ -68,56 +68,60 @@ const ProfileComparison = ({
   };
 
   return (
-    <div>
-      <div>
-        <UserImage />
-        <div>
-          <span>
-            {playerData.first_name} {playerData.last_name}
-          </span>
-          <div>Age: {playerData.age}</div>
+    <div style={{ width: '100%' }}>
+      <div
+        style={{ display: 'flex', justifyContent: 'flex-start', width: '100%' }}
+      >
+        <div style={{ marginRight: '40px', width: '150px' }}>
+          <UserImage />
           <div>
-            Height: {playerData.feet} ft {playerData.inches} in
+            <span>
+              {playerData.first_name} {playerData.last_name}
+            </span>
+            <div>Age: {playerData.age}</div>
+            <div>
+              Height: {playerData.feet} ft {playerData.inches} in
+            </div>
+            <div>Weight: {playerData.weight} lbs</div>
           </div>
-          <div>Weight: {playerData.weight} lbs</div>
         </div>
-      </div>
-      <div>
-        <UserImage />
-        <Form onSubmit={getProfileNames}>
-          {(props) => (
-            <form>
-              <Field name="player_name">
-                {(fieldProps) => (
-                  <Filters.AsyncSelectInput
-                    {...fieldProps}
-                    placeholder="Enter player name"
-                    loadOptions={loadOptions}
-                    onChange={async (data: {
-                      value: string;
-                      label: string;
-                    }) => {
-                      await getProfile(data.value);
-                    }}
-                  />
-                )}
-              </Field>
-            </form>
-          )}
-        </Form>
-        <div>
-          <span>
-            {comparedProfile?.first_name} {comparedProfile?.last_name}
-          </span>
+        <div style={{ width: '150px' }}>
+          <UserImage />
+          <Form onSubmit={getProfileNames}>
+            {(props) => (
+              <form>
+                <Field name="player_name">
+                  {(fieldProps) => (
+                    <Filters.AsyncSelectInput
+                      {...fieldProps}
+                      placeholder="Enter player name"
+                      loadOptions={loadOptions}
+                      onChange={async (data: {
+                        value: string;
+                        label: string;
+                      }) => {
+                        await getProfile(data.value);
+                      }}
+                    />
+                  )}
+                </Field>
+              </form>
+            )}
+          </Form>
+          <div>
+            <span>
+              {comparedProfile?.first_name} {comparedProfile?.last_name}
+            </span>
+          </div>
+          <div>Age: {comparedProfile?.age || '-'}</div>
+          <div>
+            Height:{' '}
+            {comparedProfile?.feet && comparedProfile?.inches
+              ? `${comparedProfile.feet} ft ${comparedProfile.inches} in`
+              : '-'}
+          </div>
+          <div>Weight: {comparedProfile?.weight || '-'}</div>
         </div>
-        <div>Age: {comparedProfile?.age || '-'}</div>
-        <div>
-          Height:{' '}
-          {comparedProfile?.feet && comparedProfile?.inches
-            ? `${comparedProfile.feet} ft ${comparedProfile.inches} in`
-            : '-'}
-        </div>
-        <div>Weight: {comparedProfile?.weight || '-'}</div>
       </div>
       <Form onSubmit={() => {}}>
         {(props) => (
