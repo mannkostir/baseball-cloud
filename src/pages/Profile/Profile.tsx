@@ -1,7 +1,7 @@
 import PitcherSummary from '@/components/PitcherSummary';
 import ProfileAnalysis from '@/components/ProfileAnalysis';
 import RecentEvents from '@/components/RecentEvents';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components/macro';
 import SubmitButton from '@/components/SubmitButton';
 import DiscardButton from '@/components/DiscardButton';
@@ -61,6 +61,23 @@ const Profile = () => {
   const [profileData, setProfileData] = useState<Unpromise<
     ReturnType<typeof profilesService.getProfile>
   > | null>(null);
+
+  const summaryBatterValues = useMemo(() => {
+    if (!profileData) return;
+
+    const sum = profileData.batter_summary.reduce(
+      (acc, curr) => {
+        acc.exit_velocity += curr.exit_velocity;
+        acc.distance += curr.distance;
+        acc.launch_angle += curr.launch_angle;
+
+        return acc;
+      },
+      { exit_velocity: 0, distance: 0, launch_angle: 0 }
+    );
+
+    return sum;
+  }, [profileData]);
 
   const [isEditingProfile, setIsEditingProfile] = useState(false);
 

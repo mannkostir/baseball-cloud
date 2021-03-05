@@ -19,7 +19,13 @@ const Table = styled.table`
     border-radius: 4px;
     background-color: #f7f8f9;
   }
-  td {
+  & > tr {
+    display: flex;
+    > td {
+      flex: 1;
+    }
+  }
+  tbody > td {
     padding: 15px 0;
     margin-bottom: 10px;
   }

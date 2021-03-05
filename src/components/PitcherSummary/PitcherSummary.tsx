@@ -26,8 +26,6 @@ const PitcherSummary = ({ summary }: IPitcherSummaryProps) => {
     );
 
     return sum;
-
-    // return (summary.batter_summary[0]?.exit_velocity / 142) * 100;
   }, [summary]);
   return (
     <Card>

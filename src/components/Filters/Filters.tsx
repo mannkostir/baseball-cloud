@@ -188,11 +188,8 @@ const AsyncSelectInput = ({ input, ...props }: IFilterAsyncSelectProps) => {
         valueContainer: (provided, state) => ({
           ...provided,
           padding: '0',
-          width: `${
-            state.selectProps.placeholder
-              ? state.selectProps.placeholder.toString().length * 5 + 20
-              : '80'
-          }px`,
+          width: '100%',
+          flexWrap: 'nowrap',
         }),
         control: (provided, state) => ({
           ...provided,
@@ -204,6 +201,19 @@ const AsyncSelectInput = ({ input, ...props }: IFilterAsyncSelectProps) => {
         placeholder: (provided, state) => ({
           ...provided,
           color: '#48bbff',
+          position: 'static',
+          transform: 'none',
+          whiteSpace: 'nowrap',
+        }),
+        singleValue: (provided, state) => ({
+          ...provided,
+          position: 'static',
+          overflow: 'visible',
+          top: 0,
+          transform: 'none',
+        }),
+        input: (provided, state) => ({
+          ...provided,
         }),
         dropdownIndicator: (provided, state) => ({
           ...provided,
@@ -212,6 +222,10 @@ const AsyncSelectInput = ({ input, ...props }: IFilterAsyncSelectProps) => {
         }),
         indicatorsContainer: (provided, state) => ({
           ...provided,
+        }),
+        indicatorSeparator: (provided, state) => ({
+          ...provided,
+          display: 'none',
         }),
         menu: (provided, state) => ({
           ...provided,

@@ -66,7 +66,7 @@ const ProfileAnalysis = ({ profileData }: IProfileAnalysisProps) => {
         {selectedTab === 'comparison' && battingSummary && (
           <ProfileComparison
             playerData={profileData}
-            summary={battingSummary}
+            topValues={battingSummary.top_values}
           />
         )}
       </Styled.TabContent>
