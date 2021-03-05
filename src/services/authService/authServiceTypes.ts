@@ -1,6 +1,6 @@
 import { ResponseStatus, UserRole } from '@/types/commonTypes';
 
-export type User = {
+type User = {
   directPaid: boolean;
   email: string;
   id: number;

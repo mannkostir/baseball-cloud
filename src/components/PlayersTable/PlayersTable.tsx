@@ -1,13 +1,16 @@
-import { ProfileRecord } from '@/services/profilesService/profileServiceTypes';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import StyledTable from '../StyledTable';
 import { ReactComponent as LikeIcon } from '@/assets/images/heart.svg';
 import { ReactComponent as FilledLikeIcon } from '@/assets/images/like.svg';
 import LoadingScreen from '../LoadingScreen';
+import { Unpromise } from '@/types/commonTypes';
+import { profilesService } from '@/services/profilesService';
 
 interface IPlayersTableProps {
-  profiles: ProfileRecord[];
+  profiles: Unpromise<
+    ReturnType<typeof profilesService.getProfiles>
+  >['profiles'];
   isLoading: boolean;
   toggleFavorite: (id: number, isInFavor: boolean) => void;
 }
