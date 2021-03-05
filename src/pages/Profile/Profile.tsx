@@ -18,6 +18,10 @@ import LoadingScreen from '@/components/LoadingScreen';
 import { Unpromise } from '@/types/commonTypes';
 import { parseFormValues } from '@/utils/parseFormValues';
 import Container from '@/components/Container';
+import Icons from '@/components/Icons';
+import { useDispatch } from 'react-redux';
+import { useProfileService } from '@/services/profilesService/useProfileService';
+import { notificationsActions } from '@/store/notifications';
 
 const ProfileMain = styled.main`
   background: #788b99;
@@ -27,6 +31,7 @@ const ProfileMain = styled.main`
 `;
 
 const ProfileSidebarContainer = styled.aside`
+  position: relative;
   background: #fff;
   border-left: 1px solid rgba(0, 0, 0, 0.1);
   flex: 0 298px;
@@ -63,6 +68,32 @@ const Profile = () => {
 
   const params = useParams<{ id: string }>();
 
+  const dispatch = useDispatch();
+
+  const { toggleMyHolyFavor } = useProfileService();
+
+  const toggleFavor = async () => {
+    if (!profileData) return;
+
+    await toggleMyHolyFavor(+profileData.id, profileData.favorite);
+    await fetchProfile(profileData.id, false);
+
+    let message: string;
+
+    if (profileData.favorite) {
+      message = 'Removed from favorite';
+    } else {
+      message = 'Added to favorite';
+    }
+
+    dispatch(
+      notificationsActions.addNotification({
+        status: 'success',
+        message,
+      })
+    );
+  };
+
   const saveChanges = async (values: FormValues) => {
     try {
       if (!profileData) return;
@@ -84,6 +115,25 @@ const Profile = () => {
     }
   };
 
+  const fetchProfile = async (
+    profileId: string,
+    indicateLoading: boolean = true
+  ) => {
+    try {
+      indicateLoading && setIsLoading(true);
+
+      const profile = await profilesService.getProfile({
+        id: profileId,
+      });
+
+      setProfileData(profile);
+    } catch (e) {
+      throw e;
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
     let id: number | string;
 
@@ -95,21 +145,7 @@ const Profile = () => {
       return;
     }
 
-    (async () => {
-      try {
-        setIsLoading(true);
-
-        const profile = await profilesService.getProfile({
-          id: typeof id === 'string' ? id : id,
-        });
-
-        setProfileData(profile);
-      } catch (e) {
-        throw e;
-      } finally {
-        setIsLoading(false);
-      }
-    })();
+    fetchProfile(id);
   }, [currentProfileId, params.id]);
 
   return (
@@ -142,14 +178,48 @@ const Profile = () => {
               </Form>
             ) : (
               <>
-                <UserInfoCompound.UserInfo
-                  profileData={profileData}
-                  onEditButtonClick={() =>
-                    setIsEditingProfile(
-                      !params.id && currentProfileId ? true : false
-                    )
-                  }
-                />
+                {!params.id ? (
+                  <Icons.Edit
+                    style={{
+                      position: 'absolute',
+                      right: '13px',
+                      top: '12px',
+                      padding: 0,
+                      cursor: 'pointer',
+                      zIndex: 10,
+                    }}
+                    onClick={() =>
+                      setIsEditingProfile(
+                        !params.id && currentProfileId ? true : false
+                      )
+                    }
+                  />
+                ) : profileData.favorite ? (
+                  <Icons.ProfileUnlove
+                    style={{
+                      position: 'absolute',
+                      right: '13px',
+                      top: '12px',
+                      padding: 0,
+                      cursor: 'pointer',
+                      zIndex: 10,
+                    }}
+                    onClick={toggleFavor}
+                  />
+                ) : (
+                  <Icons.ProfileLove
+                    style={{
+                      position: 'absolute',
+                      right: '13px',
+                      top: '12px',
+                      padding: 0,
+                      cursor: 'pointer',
+                      zIndex: 10,
+                    }}
+                    onClick={toggleFavor}
+                  />
+                )}
+                <UserInfoCompound.UserInfo profileData={profileData} />
                 <PersonalInfo.View profileData={profileData} />
                 {profileData.school ? (
                   <SchoolInfoCompound.View profileData={profileData} />

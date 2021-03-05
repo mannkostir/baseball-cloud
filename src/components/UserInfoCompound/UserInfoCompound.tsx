@@ -31,27 +31,12 @@ const UserInfoCompound = () => {
 };
 
 interface IUserInfoProps {
-  onEditButtonClick?: () => void;
   profileData: Unpromise<ReturnType<typeof profilesService.getProfile>>;
 }
 
-const UserInfo = ({ onEditButtonClick, profileData }: IUserInfoProps) => {
+const UserInfo = ({ profileData }: IUserInfoProps) => {
   return (
     <Styled.Container>
-      <Icons.Edit
-        style={{
-          position: 'absolute',
-          right: '13px',
-          top: '12px',
-          padding: 0,
-          cursor: 'pointer',
-        }}
-        onClick={() => {
-          onEditButtonClick && onEditButtonClick();
-        }}
-      >
-        Edit
-      </Icons.Edit>
       <UserImage />
       <Styled.Username>{`${profileData.first_name} ${profileData.last_name}`}</Styled.Username>
       <Styled.Role>{profileData.position}</Styled.Role>
