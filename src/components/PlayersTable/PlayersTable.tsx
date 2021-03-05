@@ -33,7 +33,7 @@ const PlayersTable = ({
         {profiles.map((profile) => (
           <tr key={profile.id}>
             <td>
-              <Link to={`/profile/${profile.id}`}>
+              <Link style={{ color: 'inherit' }} to={`/profile/${profile.id}`}>
                 {profile.first_name} {profile.last_name}
               </Link>
             </td>

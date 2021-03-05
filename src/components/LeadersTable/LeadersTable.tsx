@@ -41,7 +41,10 @@ const LeadersTable = ({
           <tr key={index + 1}>
             <td>{index + 1}</td>
             <td>
-              <Link to={`/profile/${leader.batter_datraks_id}`}>
+              <Link
+                style={{ color: 'inherit' }}
+                to={`/profile/${leader.batter_datraks_id}`}
+              >
                 {leader.batter_name}
               </Link>
             </td>
