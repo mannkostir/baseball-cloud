@@ -154,8 +154,8 @@ const FilterSelect = ({ input, width, ...props }: IFilterSelectProps) => {
       }}
       {...props}
       onChange={(value: any) => {
-        input.onChange && input.onChange(value);
         props.onChange && props.onChange(value);
+        input.onChange && input.onChange(value);
       }}
       onMenuOpen={() => setIsExpanded(true)}
       onMenuClose={() => setIsExpanded(false)}

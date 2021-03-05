@@ -37,7 +37,7 @@ const ProfileAboutEdit = ({ profileData }: IProfileAboutEditProps) => {
       <Field name="biography">
         {(props) => (
           <ProfileSidebar.TextareaInput
-            placeholder="Describe yourself in a few words"
+            placeholder={'Describe yourself in a few words'}
             defaultValue={profileData.biography}
             {...props}
           />

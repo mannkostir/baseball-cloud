@@ -44,7 +44,9 @@ const TextareaInputAdapter = ({
   input,
   ...props
 }: ITextareaAdapterProps & HTMLAttributes<HTMLTextAreaElement>) => {
-  return <Styled.TextareaInput {...input} {...props} />;
+  return (
+    <Styled.TextareaInput {...input} {...props} value={input?.defaultValue} />
+  );
 };
 
 interface IReactSelectAdapterProps {

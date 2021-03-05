@@ -80,11 +80,6 @@ const NetworkFilters = ({ onFiltersChange }: INetworkFiltersProps) => {
             options={ProfilesCountOptions}
             initialValue={ProfilesCountOptions[0]}
           />
-          <Field
-            name="player_name"
-            placeholder="Search"
-            component={Filters.TextInput}
-          />
           <FormSpy
             subscription={{ values: true }}
             onChange={(values: FormValues) => {
