@@ -13,8 +13,8 @@ const UserPhoto = styled.div`
   margin-bottom: 8px;
 `;
 
-const UserImage = () => {
-  return <UserPhoto />;
+const UserImage = (props: React.HTMLAttributes<HTMLDivElement>) => {
+  return <UserPhoto {...props} />;
 };
 
 export default UserImage;
