@@ -45,7 +45,11 @@ export type ReactSelectValue<T = string> = { value: T; label: string };
 
 export type FormValue<T = string> = ReactSelectValue<T> | string | number;
 
-export type ReactSelectOptions<T = string> = { value: T; label: string }[];
+export type ReactSelectOptions<T = string> = {
+  value: T;
+  label: string;
+  allowFalsy?: boolean;
+}[];
 
 export type FilterType = 'exit_velocity' | 'carry_distance';
 

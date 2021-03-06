@@ -1,11 +1,14 @@
-export const parseFormValues = (values: {
-  [key: string]: { label: string; value: string } | string | number | any[];
-}) => {
+export const parseFormValues = (values: { [key: string]: any }) => {
   return Object.entries(values).reduce<Record<string, any>>(
     (acc, [key, value]) => {
       let changeValue = value;
 
       if (!changeValue) return acc;
+
+      if (!changeValue.value && changeValue.allowFalsy) {
+        acc[key] = null;
+        return acc;
+      }
 
       if (Array.isArray(value)) {
         changeValue = value.map((item) => item.value);

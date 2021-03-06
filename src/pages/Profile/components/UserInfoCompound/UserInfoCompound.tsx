@@ -22,8 +22,8 @@ const primaryPositionOptions: ReactSelectOptions<PlayerPosition> = [
   { value: 'pitcher', label: 'Pitcher' },
 ];
 
-const secondaryPositionOptions: ReactSelectOptions<PlayerPosition | null> = [
-  { value: null, label: '-' },
+const secondaryPositionOptions: ReactSelectOptions<PlayerPosition | ''> = [
+  { value: '', label: '-', allowFalsy: true },
   ...primaryPositionOptions,
 ];
 
@@ -40,8 +40,20 @@ const UserInfo = ({ profileData }: IUserInfoProps) => {
     <Styled.Container>
       <UserImage />
       <Styled.Username>{`${profileData.first_name} ${profileData.last_name}`}</Styled.Username>
-      <Styled.Role>{profileData.position}</Styled.Role>
-      <Styled.Role>{profileData.position2}</Styled.Role>
+      <Styled.Role>
+        {
+          primaryPositionOptions.find(
+            (option) => option.value === profileData.position
+          )?.label
+        }
+      </Styled.Role>
+      <Styled.Role>
+        {
+          secondaryPositionOptions.find(
+            (option) => option.value === profileData.position2
+          )?.label
+        }
+      </Styled.Role>
     </Styled.Container>
   );
 };
@@ -85,7 +97,7 @@ const UserInfoEditForm = ({ profileData }: IUserInfoEditFormProps) => {
         {(fieldProps) => (
           <Select
             {...fieldProps}
-            options={primaryPositionOptions}
+            options={secondaryPositionOptions}
             placeholder="Secondary Position in Game *"
           />
         )}
