@@ -3,8 +3,6 @@ import ProfileAnalysis from './components/ProfileAnalysis';
 import RecentEvents from './components/RecentEvents';
 import React, { useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components/macro';
-import SubmitButton from '@/components/SubmitButton';
-import DiscardButton from '@/components/DiscardButton';
 import { profilesService } from '@/services/profilesService';
 import { useProfileSelector } from '@/store/profile';
 import UserInfoCompound from './components/UserInfoCompound';
@@ -22,6 +20,7 @@ import Icons from '@/components/Icons';
 import { useDispatch } from 'react-redux';
 import { useProfileService } from '@/services/profilesService/useProfileService';
 import { notificationsActions } from '@/store/notifications';
+import { DiscardButton, SubmitButton } from '@/components/Buttons';
 
 const ProfileMain = styled.main`
   background: #788b99;

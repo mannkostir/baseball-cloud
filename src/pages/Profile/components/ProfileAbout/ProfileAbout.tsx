@@ -4,6 +4,7 @@ import styled from 'styled-components/macro';
 import { Form, Field } from 'react-final-form';
 import { profilesService } from '@/services/profilesService';
 import { Unpromise } from '@/types/commonTypes';
+import { Textarea } from '@/components/FinalFormAdapters';
 
 const AboutContent = styled(ProfileSidebar.Value)`
   color: #788b99;
@@ -34,12 +35,11 @@ interface IProfileAboutEditProps {
 const ProfileAboutEdit = ({ profileData }: IProfileAboutEditProps) => {
   return (
     <>
-      <Field name="biography">
-        {(props) => (
-          <ProfileSidebar.TextareaInput
-            placeholder={'Describe yourself in a few words'}
-            defaultValue={profileData.biography}
-            {...props}
+      <Field name="biography" initialValue={profileData.biography}>
+        {(fieldProps) => (
+          <Textarea
+            {...fieldProps}
+            placeholder="Describe yourself in a few words"
           />
         )}
       </Field>

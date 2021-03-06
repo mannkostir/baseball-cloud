@@ -45,7 +45,7 @@ const BattingValues = ({ battingSummary }: IBattingValuesProps) => {
         </thead>
         <tbody>
           {battingSummary?.average_values.map((value) => (
-            <tr>
+            <tr key={value.id}>
               <td>{value.pitch_type}</td>
               <td>{value.distance}</td>
               <td>{value.launch_angle}</td>

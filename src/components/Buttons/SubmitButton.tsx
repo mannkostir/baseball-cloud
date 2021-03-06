@@ -1,6 +1,7 @@
+import React from 'react';
 import styled from 'styled-components/macro';
 
-export const Button = styled.button`
+export const StyledButton = styled.button`
   font-size: 1rem;
   padding-top: 15px;
   padding-bottom: 17px;
@@ -22,3 +23,20 @@ export const Button = styled.button`
     box-shadow: inset 0 1px 3px 0 rgb(0 0 0 / 25%);
   }
 `;
+
+interface ISubmitButtonProps {
+  children: JSX.Element | JSX.Element[] | string;
+}
+
+const SubmitButton = ({
+  children,
+  ...props
+}: React.ButtonHTMLAttributes<HTMLButtonElement> & ISubmitButtonProps) => {
+  return (
+    <StyledButton type="submit" {...props}>
+      {children}
+    </StyledButton>
+  );
+};
+
+export default SubmitButton;

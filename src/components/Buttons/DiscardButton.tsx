@@ -1,5 +1,5 @@
 import React, { ButtonHTMLAttributes } from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 
 const StyledButton = styled.button`
   border: solid 1px #d1d7db;

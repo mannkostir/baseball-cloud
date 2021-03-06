@@ -1,5 +1,4 @@
 import React, { InputHTMLAttributes, useState } from 'react';
-import AsyncSelect, { AsyncProps, defaultProps } from 'react-select/async';
 import {
   CommonProps,
   components,
@@ -10,6 +9,8 @@ import {
 import ProfileSidebar from '../ProfileSidebar';
 import * as Styled from './Filters.styles';
 import Icons from '../Icons';
+import { AsyncSelect, Select } from '../FinalFormAdapters';
+import { FieldRenderProps } from 'react-final-form';
 
 const Filters = () => {
   return <div></div>;
@@ -18,11 +19,9 @@ const Filters = () => {
 const DropdownIndicator = ({
   isExpanded,
   ...props
-}: { isExpanded: boolean } & IndicatorProps<
-  OptionTypeBase,
-  boolean,
-  GroupTypeBase<OptionTypeBase>
->) => {
+}: any & {
+  isExpanded: boolean;
+}) => {
   return (
     <components.DropdownIndicator {...props}>
       <Icons.DropdownCaret
@@ -93,18 +92,14 @@ const FilterInput = ({
   );
 };
 
-interface IFilterSelectProps {
-  input: Record<string, any>;
-  onChange?: (value: any) => any | void;
-  width?: string;
-  [key: string]: any;
-}
-
-const FilterSelect = ({ input, width, ...props }: IFilterSelectProps) => {
+const FilterSelect = (
+  props: React.ComponentProps<typeof Select> & {
+    width?: string;
+  }
+) => {
   const [isExpanded, setIsExpanded] = useState(false);
   return (
-    <ProfileSidebar.SelectInput
-      input={input}
+    <Select
       isMulti={false}
       isSearchable={false}
       styles={{
@@ -115,7 +110,7 @@ const FilterSelect = ({ input, width, ...props }: IFilterSelectProps) => {
         valueContainer: (provided, state) => ({
           ...provided,
           padding: '0',
-          width: width || 'auto',
+          width: props.width || 'auto',
         }),
         control: (provided, state) => ({
           ...provided,
@@ -128,6 +123,9 @@ const FilterSelect = ({ input, width, ...props }: IFilterSelectProps) => {
         placeholder: (provided, state) => ({
           ...provided,
           color: '#48bbff',
+          position: 'static',
+          top: 0,
+          transform: 'none',
         }),
         singleValue: (provided, state) => ({
           textOverflow: 'ellipsis',
@@ -136,7 +134,7 @@ const FilterSelect = ({ input, width, ...props }: IFilterSelectProps) => {
         }),
         input: (provided, state) => ({
           ...provided,
-          position: 'absolute',
+          // position: 'absolute',
         }),
         dropdownIndicator: (provided, state) => ({
           ...provided,
@@ -146,6 +144,10 @@ const FilterSelect = ({ input, width, ...props }: IFilterSelectProps) => {
         indicatorsContainer: (provided, state) => ({
           ...provided,
         }),
+        indicatorSeparator: (provided, state) => ({
+          ...provided,
+          display: 'none',
+        }),
         menu: (provided, state) => ({
           ...provided,
           width: 'auto',
@@ -153,34 +155,20 @@ const FilterSelect = ({ input, width, ...props }: IFilterSelectProps) => {
         ...(props.style && props.style),
       }}
       {...props}
-      onChange={(value: any) => {
-        props.onChange && props.onChange(value);
-        input.onChange && input.onChange(value);
-      }}
       onMenuOpen={() => setIsExpanded(true)}
       onMenuClose={() => setIsExpanded(false)}
       components={{
-        DropdownIndicator: (
-          props: IndicatorProps<
-            OptionTypeBase,
-            boolean,
-            GroupTypeBase<OptionTypeBase>
-          >
-        ) => <DropdownIndicator {...props} isExpanded={isExpanded} />,
+        DropdownIndicator: (indicatorProps: any) => (
+          <DropdownIndicator {...indicatorProps} isExpanded={isExpanded} />
+        ),
       }}
     />
   );
 };
 
-interface IFilterAsyncSelectProps {
-  input: Record<string, any>;
-  [key: string]: any;
-}
-
-const AsyncSelectInput = ({ input, ...props }: IFilterAsyncSelectProps) => {
+const AsyncSelectInput = (props: React.ComponentProps<typeof AsyncSelect>) => {
   return (
     <AsyncSelect
-      input={input}
       styles={{
         container: (provided, state) => ({
           ...provided,

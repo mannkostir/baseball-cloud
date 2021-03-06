@@ -1,25 +1,39 @@
 import {
-  FormValues,
   PlayerPosition,
   ReactSelectOptions,
+  School,
+  Team,
 } from '@/types/commonTypes';
 import React from 'react';
-import { Field, Form, FormSpy } from 'react-final-form';
+import { Field, withTypes } from 'react-final-form';
 import Filters from '@/components/Filters';
 
-const FavoriteOptions: ReactSelectOptions<1 | null> = [
-  { value: null, label: 'All' },
+type FiltersFormTypes = {
+  school: { label: string; value: School };
+  team: { label: string; value: Team }[];
+  position: { label: string; value: PlayerPosition | '' };
+  age: number;
+  favorite: 1 | '';
+  profiles_count: 10 | 15 | 25;
+};
+
+const FavoriteOptions: ReactSelectOptions<FiltersFormTypes['favorite']> = [
+  { value: '', label: 'All' },
   { value: 1, label: 'Favorite' },
 ];
 
-const ProfilesCountOptions: ReactSelectOptions<10 | 15 | 25> = [
+const ProfilesCountOptions: ReactSelectOptions<
+  FiltersFormTypes['profiles_count']
+> = [
   { value: 10, label: '10' },
   { value: 15, label: '15' },
   { value: 25, label: '25' },
 ];
 
-const PositionOptions: ReactSelectOptions<PlayerPosition | null> = [
-  { value: null, label: 'All' },
+const PositionOptions: ReactSelectOptions<
+  FiltersFormTypes['position']['value']
+> = [
+  { value: '', label: 'All' },
   { value: 'catcher', label: 'Catcher' },
   { value: 'first_base', label: 'First Base' },
   { value: 'second_base', label: 'Second Base' },
@@ -32,12 +46,14 @@ const PositionOptions: ReactSelectOptions<PlayerPosition | null> = [
 let timeout: number | null;
 
 interface INetworkFiltersProps {
-  onFiltersChange: (value: FormValues) => void;
+  onFiltersChange: (value: FiltersFormTypes) => void;
 }
 
 const NetworkFilters = ({ onFiltersChange }: INetworkFiltersProps) => {
+  const NetworkFiltersForm = withTypes<FiltersFormTypes>();
+
   return (
-    <Form onSubmit={() => {}}>
+    <NetworkFiltersForm.Form onSubmit={() => {}}>
       {(props) => (
         <form
           style={{
@@ -47,52 +63,69 @@ const NetworkFilters = ({ onFiltersChange }: INetworkFiltersProps) => {
             lineHeight: '1.2',
           }}
         >
-          <Field
-            name="school"
-            placeholder="School"
-            component={Filters.TextInput}
-          />
-          <Field name="team" placeholder="Team" component={Filters.TextInput} />
+          <Field name="school">
+            {(fieldProps) => (
+              <Filters.TextInput {...fieldProps} placeholder="School" />
+            )}
+          </Field>
+          <Field name="team">
+            {(fieldProps) => (
+              <Filters.TextInput {...fieldProps} placeholder="Team" />
+            )}
+          </Field>
           <Field
             name="position"
-            placeholder="Position"
-            component={Filters.SelectInput}
-            options={PositionOptions}
-            initialValue={PositionOptions[0]}
-          />
-          <Field
-            name="age"
-            placeholder="Age"
-            component={Filters.TextInput}
-            parse={(value) => (+value > 0 ? +value : null)}
-          />
-          <Field
-            name="favorite"
-            placeholder="Favorite"
-            component={Filters.SelectInput}
-            options={FavoriteOptions}
-            initialValue={FavoriteOptions[0]}
-          />
+            format={(value) => (!value?.value ? { label: 'Position' } : value)}
+          >
+            {(fieldProps) => (
+              <Filters.SelectInput
+                {...fieldProps}
+                placeholder="Position"
+                options={PositionOptions}
+                initialValue={PositionOptions[0]}
+              />
+            )}
+          </Field>
+          <Field name="age" parse={(value) => (+value > 0 ? +value : null)}>
+            {(fieldProps) => (
+              <Filters.TextInput {...fieldProps} placeholder="Age" />
+            )}
+          </Field>
+          <Field name="favorite" initialValue={FavoriteOptions[0]}>
+            {(fieldProps) => (
+              <Filters.SelectInput
+                {...fieldProps}
+                placeholder="Favorite"
+                options={FavoriteOptions}
+              />
+            )}
+          </Field>
           <Field
             name="profiles_count"
-            placeholder="Show"
-            component={Filters.SelectInput}
-            options={ProfilesCountOptions}
             initialValue={ProfilesCountOptions[0]}
-          />
-          <FormSpy
-            subscription={{ values: true }}
-            onChange={(values: FormValues) => {
+            format={(value) => ({ label: `Show: ${value.value}` })}
+          >
+            {(fieldProps) => (
+              <Filters.SelectInput
+                {...fieldProps}
+                placeholder="Show"
+                options={ProfilesCountOptions}
+              />
+            )}
+          </Field>
+          <NetworkFiltersForm.FormSpy
+            subscription={{ values: true, modifiedSinceLastSubmit: true }}
+            onChange={(formState) => {
               if (timeout) return;
               timeout = window.setTimeout(async () => {
                 timeout = null;
-                onFiltersChange(values);
+                onFiltersChange(formState.values);
               }, 0);
             }}
-          ></FormSpy>
+          />
         </form>
       )}
-    </Form>
+    </NetworkFiltersForm.Form>
   );
 };
 

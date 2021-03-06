@@ -5,6 +5,7 @@ import { School, SchoolYear, Team, Unpromise } from '@/types/commonTypes';
 import React, { useCallback, useEffect, useState, useMemo } from 'react';
 import { Field, Form } from 'react-final-form';
 import ProfileSidebar from '@/components/ProfileSidebar';
+import { AsyncSelect, Select } from '@/components/FinalFormAdapters';
 
 type SchoolYearOptionsType = { value: SchoolYear; label: string }[];
 
@@ -59,9 +60,14 @@ const SchoolInfoEdit = ({ profileData }: ISchoolInfoEditProps) => {
   };
 
   const getSchoolsOptions = async (inputValue: string) => {
-    const schools = await getSchools(inputValue);
+    const schoolsRes = await getSchools(inputValue);
 
-    return schools.map((school) => ({ label: school.name, value: school }));
+    const schools = schoolsRes.map((school) => ({
+      label: school.name,
+      value: school,
+    }));
+
+    return schools;
   };
 
   const getTeams = async (search: string) => {
@@ -75,37 +81,45 @@ const SchoolInfoEdit = ({ profileData }: ISchoolInfoEditProps) => {
   };
 
   const defaultTeams = useMemo(() => {
-    return profileData.teams.map((team) => ({ label: team.name }));
+    return profileData.teams.map((team) => ({ label: team.name, value: team }));
   }, [profileData.teams]);
+
+  const defaultSchool = useMemo(() => {
+    return { label: profileData.school.name, value: profileData.school };
+  }, [profileData.school]);
 
   return (
     <>
-      <Field
-        name="school"
-        component={ProfileSidebar.AsyncSelectInput}
-        loadOptions={getSchoolsOptions}
-        defaultOptions={true}
-        placeholder={profileData.school.name}
-      ></Field>
+      <Field name="school" initialValue={defaultSchool}>
+        {(fieldProps) => (
+          <AsyncSelect
+            {...fieldProps}
+            loadOptions={getSchoolsOptions}
+            defaultOptions={true}
+            placeholder="School"
+          />
+        )}
+      </Field>
       <Field
         name="school_year"
-        component={ProfileSidebar.SelectInput}
-        placeholder={
-          profileData.school_year[0].toUpperCase() +
-          profileData.school_year.slice(1)
-        }
-        options={schoolYearOptions}
-      />
-      <Field
-        name="teams"
-        component={ProfileSidebar.AsyncSelectInput}
-        placeholder="Teams"
-        loadOptions={getTeamsOptions}
-        defaultOptions={true}
-        isMulti={true}
-        isClearable={false}
-        defaultValue={defaultTeams}
-      />
+        initialValue={schoolYearOptions.find(
+          (schoolYear) => schoolYear.value === profileData.school_year
+        )}
+      >
+        {(fieldProps) => <Select {...fieldProps} options={schoolYearOptions} />}
+      </Field>
+      <Field name="teams" initialValue={defaultTeams}>
+        {(fieldProps) => (
+          <AsyncSelect
+            {...fieldProps}
+            isMulti={true}
+            placeholder="Teams"
+            loadOptions={getTeamsOptions}
+            defaultOptions={true}
+            isClearable={false}
+          />
+        )}
+      </Field>
     </>
   );
 };

@@ -2,8 +2,8 @@ import { SignInRequest } from '@/services/authService/authServiceTypes';
 import React from 'react';
 import { Form, Field } from 'react-final-form';
 import Input from '@/components/Input';
-import SubmitButton from '@/components/SubmitButton';
 import * as Styled from './SignInForm.styles';
+import { SubmitButton } from '@/components/Buttons';
 
 type FormValues = {
   email: string;

@@ -1,7 +1,7 @@
 import styled from 'styled-components/macro';
-import ProfileSidebar from '../ProfileSidebar';
+import { Input } from '../FinalFormAdapters';
 
-export const FilterInput = styled(ProfileSidebar.TextInput)<{
+export const FilterInput = styled(Input)<{
   placeholderColor?: string;
   isFocused: boolean;
 }>`

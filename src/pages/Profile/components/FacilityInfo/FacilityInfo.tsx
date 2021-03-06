@@ -1,12 +1,11 @@
 import { profilesService } from '@/services/profilesService';
-import { Facility, Unpromise } from '@/types/commonTypes';
+import { Facility, ReactSelectOptions, Unpromise } from '@/types/commonTypes';
 import React from 'react';
 import { Field } from 'react-final-form';
 import ProfileSidebar from '@/components/ProfileSidebar';
+import { Select } from '@/components/FinalFormAdapters';
 
-type FacilityOptionsType = { value: Facility; label: string }[];
-
-const facilityOptions: FacilityOptionsType = [
+const facilityOptions: ReactSelectOptions<Facility> = [
   {
     value: { id: '32', email: 'facility@example.com', u_name: 'Example' },
     label: 'Example',
@@ -43,13 +42,18 @@ const FacilityInfoEdit = ({ profileData }: IFacilityInfoViewProps) => {
     <>
       <Field
         name="facilities"
-        component={ProfileSidebar.SelectInput}
-        placeholder="Facility"
-        options={facilityOptions}
-        defaultValue={facilityOptions.find(
+        initialValue={facilityOptions.find(
           (option) => option.value.id === profileData.facilities[0].id
         )}
-      />
+      >
+        {(fieldProps) => (
+          <Select
+            {...fieldProps}
+            placeholder="Facility"
+            options={facilityOptions}
+          />
+        )}
+      </Field>
     </>
   );
 };

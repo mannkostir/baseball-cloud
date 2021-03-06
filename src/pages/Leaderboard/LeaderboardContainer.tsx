@@ -4,7 +4,6 @@ import LeaderboardFilters from './components/LeaderboardFilters';
 import LeadersTable from './components/LeadersTable';
 import LoadingScreen from '@/components/LoadingScreen';
 import LeaderPitchingTable from './components/PitchingLeadersTable';
-import TabButton from '@/components/TabButton';
 import { GetLeaderboardQuery } from '@/services/leaderboardService/leaderboardServiceTypes';
 import { useProfileService } from '@/services/profilesService/useProfileService';
 import { notificationsActions } from '@/store/notifications';
@@ -18,6 +17,9 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components/macro';
 import { useLeaderboard } from './useLeaderboard';
+import { TabButton } from '@/components/Buttons';
+import { Field, Form } from 'react-final-form';
+import { Select } from '@/components/FinalFormAdapters';
 
 const Header = styled.header`
   padding: 16px;
@@ -138,29 +140,40 @@ const Leaderboard = () => {
               Pitching
             </TabButton>
           </div>
-          <Filters.SelectInput
-            input={{}}
-            options={
-              selectedMode === 'batting'
-                ? [...BattingTypeOptions]
-                : [
-                    { value: 'pitch_velocity', label: 'Pitch Velocity' },
-                    { value: 'spin_rate', label: 'Spin Rate' },
-                  ]
-            }
-            onChange={(value: any) =>
-              changeType(value?.value || 'pitch_velocity')
-            }
-            value={
-              selectedMode === 'batting'
-                ? BattingTypeOptions.find(
-                    (option) => option.value === selectedType
-                  )
-                : PitchingTypeOptions.find(
-                    (option) => option.value === selectedType
-                  )
-            }
-          />
+          <Form onSubmit={() => {}}>
+            {(props) => (
+              <Field name="mode">
+                {(fieldProps) => (
+                  <Filters.SelectInput
+                    {...fieldProps}
+                    options={
+                      selectedMode === 'batting'
+                        ? [...BattingTypeOptions]
+                        : [
+                            {
+                              value: 'pitch_velocity',
+                              label: 'Pitch Velocity',
+                            },
+                            { value: 'spin_rate', label: 'Spin Rate' },
+                          ]
+                    }
+                    onChange={(value: any) =>
+                      changeType(value?.value || 'pitch_velocity')
+                    }
+                    value={
+                      selectedMode === 'batting'
+                        ? BattingTypeOptions.find(
+                            (option) => option.value === selectedType
+                          )
+                        : PitchingTypeOptions.find(
+                            (option) => option.value === selectedType
+                          )
+                    }
+                  />
+                )}
+              </Field>
+            )}
+          </Form>
         </div>
         <div
           style={{

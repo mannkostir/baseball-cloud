@@ -4,8 +4,8 @@ import React, { useEffect, useState } from 'react';
 import BattingValues from '../BattingValues';
 import Card from '@/components/Card';
 import ProfileComparison from '../ProfileComparison';
-import TabButton from '@/components/TabButton';
 import * as Styled from './ProfileAnalysis.styles';
+import { TabButton } from '@/components/Buttons';
 
 type ProfileTabs = 'batting' | 'sessionReports' | 'comparison';
 

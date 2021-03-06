@@ -5,6 +5,7 @@ import { Field, Form } from 'react-final-form';
 import Icons from '@/components/Icons';
 import ProfileSidebar from '@/components/ProfileSidebar';
 import * as Styled from './PersonalInfo.styles';
+import { Input, Select } from '@/components/FinalFormAdapters';
 
 type ThrowsOptionsType = { label: string; value: 'l' | 'r' }[];
 type BatsOptionsType = ThrowsOptionsType;
@@ -89,49 +90,53 @@ const PersonalInfoEdit = ({ profileData }: IPersonalInfoViewProps) => {
     <>
       <Field
         name="age"
-        component={ProfileSidebar.TextInput}
-        defaultValue={profileData.age}
-        placeholder="Age *"
-      />
+        parse={(value: string) => (+value >= 0 ? +value : value)}
+        initialValue={profileData.age}
+      >
+        {(fieldProps) => (
+          <Input {...fieldProps} placeholder="Age *" type="number" />
+        )}
+      </Field>
       <ProfileSidebar.InlineInputsWrapper>
-        <Field
-          name="feet"
-          component={ProfileSidebar.TextInput}
-          defaultValue={profileData.feet}
-          placeholder="Feet *"
-        />
-        <Field
-          name="inches"
-          component={ProfileSidebar.TextInput}
-          defaultValue={profileData.inches}
-          placeholder="Inches"
-        />
+        <Field name="feet" initialValue={profileData.feet}>
+          {(fieldProps) => <Input {...fieldProps} placeholder="Feet *" />}
+        </Field>
+        <Field name="inches" initialValue={profileData.inches}>
+          {(fieldProps) => <Input {...fieldProps} placeholder="Inches" />}
+        </Field>
       </ProfileSidebar.InlineInputsWrapper>
-      <Field
-        name="weight"
-        component={ProfileSidebar.TextInput}
-        defaultValue={profileData.weight}
-        placeholder="Weight *"
-      />
+      <Field name="weight" initialValue={profileData.weight}>
+        {(fieldProps) => <Input {...fieldProps} placeholder="Weight *" />}
+      </Field>
       <ProfileSidebar.InlineInputsWrapper>
         <Field
           name="throws_hand"
-          component={ProfileSidebar.SelectInput}
-          defaultValue={throwsOptions.find(
+          initialValue={throwsOptions.find(
             (option) => option.value === profileData.throws_hand
           )}
-          placeholder="Throws *"
-          options={throwsOptions}
-        />
+        >
+          {(fieldProps) => (
+            <Select
+              {...fieldProps}
+              placeholder="Throws *"
+              options={throwsOptions}
+            />
+          )}
+        </Field>
         <Field
           name="bats_hand"
-          component={ProfileSidebar.SelectInput}
-          defaultValue={batsOptions.find(
+          initialValue={throwsOptions.find(
             (option) => option.value === profileData.bats_hand
           )}
-          placeholder="Bats *"
-          options={batsOptions}
-        />
+        >
+          {(fieldProps) => (
+            <Select
+              {...fieldProps}
+              placeholder="Bats *"
+              options={batsOptions}
+            />
+          )}
+        </Field>
       </ProfileSidebar.InlineInputsWrapper>
     </>
   );

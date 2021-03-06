@@ -3,8 +3,8 @@ import * as Styled from './SignUpForm.styles';
 import { Form, Field } from 'react-final-form';
 import Input from '@/components/Input';
 import { UserRole } from '@/types/commonTypes';
-import SubmitButton from '@/components/SubmitButton';
 import { SignUpRequest } from '@/services/authService/authServiceTypes';
+import { SubmitButton } from '@/components/Buttons';
 
 const rolesDescription: Record<UserRole, { title: string; content: string }> = {
   player: {

@@ -1,3 +1,5 @@
+import React from 'react';
+
 export type Unpromise<T extends Promise<any>> = T extends Promise<infer U>
   ? U
   : never;
@@ -80,3 +82,8 @@ export type FormValues = {
 };
 
 export type LeaderboardMode = 'batting' | 'pitching';
+
+export interface ICommonCompoundContainerProps<TElement = HTMLDivElement>
+  extends React.HTMLAttributes<TElement> {
+  children: JSX.Element | JSX.Element[];
+}

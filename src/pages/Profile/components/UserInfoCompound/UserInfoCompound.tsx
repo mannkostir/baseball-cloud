@@ -10,6 +10,7 @@ import Icons from '@/components/Icons';
 import ProfileSidebar from '@/components/ProfileSidebar';
 import UserImage from '@/components/UserImage';
 import * as Styled from './UserInfoCompound.styles';
+import { Input, Select } from '@/components/FinalFormAdapters';
 
 const primaryPositionOptions: ReactSelectOptions<PlayerPosition> = [
   { value: 'catcher', label: 'Catcher' },
@@ -50,13 +51,13 @@ interface IUserInfoEditFormProps {
 }
 
 const UserInfoEditForm = ({ profileData }: IUserInfoEditFormProps) => {
-  const defaultPrimaryPosition = useMemo(() => {
+  const initialPrimaryPosition = useMemo(() => {
     return primaryPositionOptions.find(
       (position) => position.value === profileData.position
     );
   }, []);
 
-  const defaultSecondaryPosition = useMemo(() => {
+  const initialSecondaryPosition = useMemo(() => {
     return secondaryPositionOptions.find(
       (position) => position.value === profileData.position2
     );
@@ -64,34 +65,31 @@ const UserInfoEditForm = ({ profileData }: IUserInfoEditFormProps) => {
   return (
     <>
       <ProfileSidebar.InlineInputsWrapper>
-        <Field
-          name="first_name"
-          placeholder="First Name *"
-          defaultValue={profileData.first_name}
-        >
-          {(inputProps) => (
-            <ProfileSidebar.TextInput input={inputProps.input} />
-          )}
+        <Field name="first_name" initialValue={profileData.first_name}>
+          {(fieldProps) => <Input {...fieldProps} placeholder="First Name *" />}
         </Field>
-        <Field
-          name="last_name"
-          placeholder="Last Name *"
-          defaultValue={profileData.last_name}
-          component={ProfileSidebar.TextInput}
-        />
+        <Field name="last_name" initialValue={profileData.last_name}>
+          {(fieldProps) => <Input {...fieldProps} placeholder="Last Name *" />}
+        </Field>
       </ProfileSidebar.InlineInputsWrapper>
-      <Field
-        name="position"
-        placeholder={defaultPrimaryPosition?.label || 'Position in Game *'}
-        component={ProfileSidebar.SelectInput}
-        options={primaryPositionOptions}
-      />
-      <Field
-        name="position2"
-        placeholder={profileData.position2}
-        component={ProfileSidebar.SelectInput}
-        options={secondaryPositionOptions}
-      />
+      <Field name="position" initialValue={initialPrimaryPosition}>
+        {(fieldProps) => (
+          <Select
+            {...fieldProps}
+            options={primaryPositionOptions}
+            placeholder="Position in Game *"
+          />
+        )}
+      </Field>
+      <Field name="position2" initialValue={initialSecondaryPosition}>
+        {(fieldProps) => (
+          <Select
+            {...fieldProps}
+            options={primaryPositionOptions}
+            placeholder="Secondary Position in Game *"
+          />
+        )}
+      </Field>
     </>
   );
 };

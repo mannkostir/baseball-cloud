@@ -1,25 +1,32 @@
-import {
-  FormValues,
-  PlayerPosition,
-  ReactSelectOptions,
-} from '@/types/commonTypes';
+import { PlayerPosition, ReactSelectOptions } from '@/types/commonTypes';
 import React from 'react';
-import { Field, Form, FormSpy } from 'react-final-form';
+import { Field, withTypes } from 'react-final-form';
 import Filters from '@/components/Filters';
 
-const DateOptions: ReactSelectOptions<'all' | 'last_week' | 'last_month'> = [
-  { value: 'all', label: 'All' },
+type FilterFormTypes = {
+  date: { label: string; value: '' | 'last_week' | 'last_month' };
+  school: string;
+  team: string;
+  position: { label: string; value: PlayerPosition | '' };
+  age: number;
+  favorite: 1 | '';
+};
+
+const DateOptions: ReactSelectOptions<FilterFormTypes['date']['value']> = [
+  { value: '', label: 'All' },
   { value: 'last_week', label: 'Last Week' },
   { value: 'last_month', label: 'Last Month' },
 ];
 
-const FavoriteOptions: ReactSelectOptions<1 | null> = [
-  { value: null, label: 'All' },
+const FavoriteOptions: ReactSelectOptions<FilterFormTypes['favorite']> = [
+  { value: '', label: 'All' },
   { value: 1, label: 'Favorite' },
 ];
 
-const PositionOptions: ReactSelectOptions<PlayerPosition | null> = [
-  { value: null, label: 'All' },
+const PositionOptions: ReactSelectOptions<
+  FilterFormTypes['position']['value']
+> = [
+  { value: '', label: 'All' },
   { value: 'catcher', label: 'Catcher' },
   { value: 'first_base', label: 'First Base' },
   { value: 'second_base', label: 'Second Base' },
@@ -32,68 +39,90 @@ const PositionOptions: ReactSelectOptions<PlayerPosition | null> = [
 let timeout: number | null;
 
 interface ILeaderboardFiltersProps {
-  onFiltersChange: (value: FormValues) => void;
+  onFiltersChange: (value: FilterFormTypes) => void;
 }
 
 const LeaderboardFilters = ({ onFiltersChange }: ILeaderboardFiltersProps) => {
+  const FilterForm = withTypes<FilterFormTypes>();
   return (
     <div style={{ paddingRight: '40px', lineHeight: '1.2' }}>
-      <Form onSubmit={() => {}}>
+      <FilterForm.Form onSubmit={() => {}}>
         {(props) => (
           <form
             style={{ display: 'flex', flex: 1, justifyContent: 'flex-end' }}
           >
             <Field
               name="date"
-              placeholder="Date"
-              options={DateOptions}
-              component={Filters.SelectInput}
               initialValue={DateOptions[0]}
-            />
-            <Field
-              name="school"
-              placeholder="School"
-              component={Filters.TextInput}
-            />
-            <Field
-              name="team"
-              placeholder="Team"
-              component={Filters.TextInput}
-            />
+              format={(value) =>
+                !value.value
+                  ? { label: 'Date' }
+                  : { label: `Date(${value.label})` }
+              }
+            >
+              {(fieldProps) => (
+                <Filters.SelectInput
+                  {...fieldProps}
+                  placeholder="Date"
+                  options={DateOptions}
+                />
+              )}
+            </Field>
+            <Field name="school">
+              {(fieldProps) => (
+                <Filters.TextInput {...fieldProps} placeholder="School" />
+              )}
+            </Field>
+            <Field name="team">
+              {(fieldProps) => (
+                <Filters.TextInput {...fieldProps} placeholder="Team" />
+              )}
+            </Field>
             <Field
               name="position"
-              placeholder="Position"
-              component={Filters.SelectInput}
-              options={PositionOptions}
-              initialValue={PositionOptions[0]}
-            />
+              format={(value) =>
+                !value?.value ? { label: 'Position' } : value
+              }
+            >
+              {(fieldProps) => (
+                <Filters.SelectInput
+                  {...fieldProps}
+                  placeholder="Position"
+                  options={PositionOptions}
+                  defaultVa={PositionOptions[0]}
+                />
+              )}
+            </Field>
             <Field
               name="age"
-              placeholder="Age"
-              component={Filters.TextInput}
-              parse={(value) => (+value > 0 ? +value : null)}
-            />
-            <Field
-              name="favorite"
-              placeholder="Favorite"
-              component={Filters.SelectInput}
-              options={FavoriteOptions}
-              initialValue={FavoriteOptions[0]}
-            />
-            <FormSpy
+              parse={(value: any) => (+value >= 1 ? +value : '')}
+            >
+              {(fieldProps) => (
+                <Filters.TextInput {...fieldProps} placeholder="Age" />
+              )}
+            </Field>
+            <Field name="favorite" initialValue={FavoriteOptions[0]}>
+              {(fieldProps) => (
+                <Filters.SelectInput
+                  {...fieldProps}
+                  placeholder="Favorite"
+                  options={FavoriteOptions}
+                />
+              )}
+            </Field>
+            <FilterForm.FormSpy
               subscription={{ values: true }}
-              onChange={(values: FormValues) => {
-                console.log(values);
+              onChange={(formState) => {
                 if (timeout) return;
                 timeout = window.setTimeout(async () => {
                   timeout = null;
-                  onFiltersChange(values);
+                  onFiltersChange(formState.values);
                 }, 0);
               }}
             />
           </form>
         )}
-      </Form>
+      </FilterForm.Form>
     </div>
   );
 };

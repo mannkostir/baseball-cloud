@@ -1,7 +1,7 @@
 export const parseFormValues = (values: {
   [key: string]: { label: string; value: string } | string | number | any[];
 }) => {
-  return Object.entries(values.values || values).reduce<Record<string, any>>(
+  return Object.entries(values).reduce<Record<string, any>>(
     (acc, [key, value]) => {
       let changeValue = value;
 
@@ -13,12 +13,11 @@ export const parseFormValues = (values: {
         changeValue = Object.keys(value).includes('value')
           ? value.value
           : value;
-        // changeValue = value?.label && value?.value ? value.value : '';
-        // if (!changeValue) return acc;
+
+        if (typeof changeValue !== 'number' && !changeValue) {
+          return acc;
+        }
       }
-      // else if (+value > 0) {
-      //   changeValue = +value;
-      // }
 
       acc[key] = changeValue;
 
