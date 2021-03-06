@@ -48,9 +48,9 @@ const ProfileComparison = ({
   const PlayerNameForm = withTypes<{
     ['player_name']: { label: string; value: string };
   }>();
-  const ValuesTypeForm = withTypes<
-    Record<'batting_values', typeof selectedType>
-  >();
+  const ValuesTypeForm = withTypes<{
+    ['batting_values']: { label: string; value: typeof selectedType };
+  }>();
 
   const getProfileNames = async (query: { player_name: string }) => {
     try {
@@ -177,7 +177,7 @@ const ProfileComparison = ({
                 // Delay happens not because of some exact timeout time, but
                 // because of how Event Loop works
                 setTimeout(() => {
-                  setSelectedType(formState.values.batting_values);
+                  setSelectedType(formState.values.batting_values.value);
                 }, 0);
               }}
             />
@@ -187,14 +187,14 @@ const ProfileComparison = ({
       <StyledTable>
         <tbody>
           {gameTypes.map((type) => (
-            <tr key={type}>
-              <td>{type}</td>
-              <td>
+            <tr key={type} style={{ display: 'flex' }}>
+              <td style={{ flex: 1 }}>{type}</td>
+              <td style={{ flex: 1 }}>
                 {topValues.find((value) => value.pitch_type === type)?.[
                   selectedType
                 ] || '-'}
               </td>
-              <td>
+              <td style={{ flex: 1 }}>
                 {comparedProfile?.batting_top_values.find(
                   (value) => value.pitch_type === type
                 )?.[selectedType] || '-'}
