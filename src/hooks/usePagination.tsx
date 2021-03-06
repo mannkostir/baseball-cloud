@@ -148,15 +148,17 @@ export const usePagination = ({
               {getPreviousPageNumber()}
               {getCurrentPageNumber()}
               {getNextPageNumber()}
-              <li
-                key={`page${pagesAmount}`}
-                onClick={() => goToPage(pagesAmount)}
-              >
-                <Link
-                  isActive={currentPage === pagesAmount}
-                  title={pagesAmount.toString()}
-                />
-              </li>
+              {pagesAmount > 1 && (
+                <li
+                  key={`page${pagesAmount}`}
+                  onClick={() => goToPage(pagesAmount)}
+                >
+                  <Link
+                    isActive={currentPage === pagesAmount}
+                    title={pagesAmount.toString()}
+                  />
+                </li>
+              )}
             </>
           ) : (
             <li>
