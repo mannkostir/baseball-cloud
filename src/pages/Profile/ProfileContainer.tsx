@@ -21,23 +21,13 @@ import { useDispatch } from 'react-redux';
 import { useProfileService } from '@/services/profilesService/useProfileService';
 import { notificationsActions } from '@/store/notifications';
 import { DiscardButton, SubmitButton } from '@/components/Buttons';
+import ProfileSidebar from '@/components/ProfileSidebar';
 
 const ProfileMain = styled.main`
   background: #788b99;
   flex: 2;
   overflow: auto;
   width: calc(100vw - 220px);
-`;
-
-const ProfileSidebarContainer = styled.aside`
-  position: relative;
-  background: #fff;
-  border-left: 1px solid rgba(0, 0, 0, 0.1);
-  flex: 0 298px;
-  overflow: auto;
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
 `;
 
 const ProfileSummary = styled.div`
@@ -168,7 +158,7 @@ const Profile = () => {
     <Container style={{ flexDirection: 'row' }}>
       {profileData && !isLoading ? (
         <>
-          <ProfileSidebarContainer>
+          <ProfileSidebar.Container>
             {isEditingProfile ? (
               <Form onSubmit={saveChanges}>
                 {(props) => (
@@ -248,7 +238,7 @@ const Profile = () => {
                 ) : null}
               </>
             )}
-          </ProfileSidebarContainer>
+          </ProfileSidebar.Container>
           <ProfileMain>
             <ProfileSummary>
               <PitcherSummary

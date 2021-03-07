@@ -92,7 +92,7 @@ const SchoolInfoEdit = ({ profileData }: ISchoolInfoEditProps) => {
     <>
       <Field name="school" initialValue={defaultSchool}>
         {(fieldProps) => (
-          <AsyncSelect
+          <ProfileSidebar.AsyncSelect
             {...fieldProps}
             loadOptions={getSchoolsOptions}
             defaultOptions={true}
@@ -106,11 +106,13 @@ const SchoolInfoEdit = ({ profileData }: ISchoolInfoEditProps) => {
           (schoolYear) => schoolYear.value === profileData.school_year
         )}
       >
-        {(fieldProps) => <Select {...fieldProps} options={schoolYearOptions} />}
+        {(fieldProps) => (
+          <ProfileSidebar.Select {...fieldProps} options={schoolYearOptions} />
+        )}
       </Field>
       <Field name="teams" initialValue={defaultTeams}>
         {(fieldProps) => (
-          <AsyncSelect
+          <ProfileSidebar.AsyncSelect
             {...fieldProps}
             isMulti={true}
             placeholder="Teams"

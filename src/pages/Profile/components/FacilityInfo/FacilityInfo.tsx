@@ -47,7 +47,7 @@ const FacilityInfoEdit = ({ profileData }: IFacilityInfoViewProps) => {
         )}
       >
         {(fieldProps) => (
-          <Select
+          <ProfileSidebar.Select
             {...fieldProps}
             placeholder="Facility"
             options={facilityOptions}

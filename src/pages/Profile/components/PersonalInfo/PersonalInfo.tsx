@@ -94,19 +94,29 @@ const PersonalInfoEdit = ({ profileData }: IPersonalInfoViewProps) => {
         initialValue={profileData.age}
       >
         {(fieldProps) => (
-          <Input {...fieldProps} placeholder="Age *" type="number" />
+          <ProfileSidebar.Input
+            {...fieldProps}
+            placeholder="Age *"
+            type="number"
+          />
         )}
       </Field>
       <ProfileSidebar.InlineInputsWrapper>
         <Field name="feet" initialValue={profileData.feet}>
-          {(fieldProps) => <Input {...fieldProps} placeholder="Feet *" />}
+          {(fieldProps) => (
+            <ProfileSidebar.Input {...fieldProps} placeholder="Feet *" />
+          )}
         </Field>
         <Field name="inches" initialValue={profileData.inches}>
-          {(fieldProps) => <Input {...fieldProps} placeholder="Inches" />}
+          {(fieldProps) => (
+            <ProfileSidebar.Input {...fieldProps} placeholder="Inches" />
+          )}
         </Field>
       </ProfileSidebar.InlineInputsWrapper>
       <Field name="weight" initialValue={profileData.weight}>
-        {(fieldProps) => <Input {...fieldProps} placeholder="Weight *" />}
+        {(fieldProps) => (
+          <ProfileSidebar.Input {...fieldProps} placeholder="Weight *" />
+        )}
       </Field>
       <ProfileSidebar.InlineInputsWrapper>
         <Field
@@ -116,7 +126,7 @@ const PersonalInfoEdit = ({ profileData }: IPersonalInfoViewProps) => {
           )}
         >
           {(fieldProps) => (
-            <Select
+            <ProfileSidebar.Select
               {...fieldProps}
               placeholder="Throws *"
               options={throwsOptions}
@@ -130,7 +140,7 @@ const PersonalInfoEdit = ({ profileData }: IPersonalInfoViewProps) => {
           )}
         >
           {(fieldProps) => (
-            <Select
+            <ProfileSidebar.Select
               {...fieldProps}
               placeholder="Bats *"
               options={batsOptions}

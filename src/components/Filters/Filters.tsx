@@ -134,7 +134,6 @@ const FilterSelect = (
         }),
         input: (provided, state) => ({
           ...provided,
-          // position: 'absolute',
         }),
         dropdownIndicator: (provided, state) => ({
           ...provided,

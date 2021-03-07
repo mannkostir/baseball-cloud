@@ -78,15 +78,19 @@ const UserInfoEditForm = ({ profileData }: IUserInfoEditFormProps) => {
     <>
       <ProfileSidebar.InlineInputsWrapper>
         <Field name="first_name" initialValue={profileData.first_name}>
-          {(fieldProps) => <Input {...fieldProps} placeholder="First Name *" />}
+          {(fieldProps) => (
+            <ProfileSidebar.Input {...fieldProps} placeholder="First Name *" />
+          )}
         </Field>
         <Field name="last_name" initialValue={profileData.last_name}>
-          {(fieldProps) => <Input {...fieldProps} placeholder="Last Name *" />}
+          {(fieldProps) => (
+            <ProfileSidebar.Input {...fieldProps} placeholder="Last Name *" />
+          )}
         </Field>
       </ProfileSidebar.InlineInputsWrapper>
       <Field name="position" initialValue={initialPrimaryPosition}>
         {(fieldProps) => (
-          <Select
+          <ProfileSidebar.Select
             {...fieldProps}
             options={primaryPositionOptions}
             placeholder="Position in Game *"
@@ -95,7 +99,7 @@ const UserInfoEditForm = ({ profileData }: IUserInfoEditFormProps) => {
       </Field>
       <Field name="position2" initialValue={initialSecondaryPosition}>
         {(fieldProps) => (
-          <Select
+          <ProfileSidebar.Select
             {...fieldProps}
             options={secondaryPositionOptions}
             placeholder="Secondary Position in Game *"

@@ -13,6 +13,7 @@ import Filters from '@/components/Filters';
 import StyledTable from '@/components/StyledTable';
 import UserImage from '@/components/UserImage';
 import { Select } from '@/components/FinalFormAdapters';
+import ProfileSidebar from '@/components/ProfileSidebar';
 
 const gameTypes: Array<'Fastball' | 'Curveball' | 'Changeup' | 'Slider'> = [
   'Fastball',
@@ -165,7 +166,10 @@ const ProfileComparison = ({
           <form>
             <Field name="batting_values" initialValue={BattingValuesOptions[0]}>
               {(fieldProps) => (
-                <Select options={BattingValuesOptions} {...fieldProps} />
+                <Filters.SelectInput
+                  options={BattingValuesOptions}
+                  {...fieldProps}
+                />
               )}
             </Field>
             <ValuesTypeForm.FormSpy

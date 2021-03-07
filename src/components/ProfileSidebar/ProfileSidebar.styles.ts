@@ -1,4 +1,16 @@
 import styled from 'styled-components/macro';
+import { Input, Textarea } from '../FinalFormAdapters';
+
+export const Container = styled.aside`
+  position: relative;
+  background: #fff;
+  border-left: 1px solid rgba(0, 0, 0, 0.1);
+  flex: 0 298px;
+  overflow: auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+`;
 
 export const DataItem = styled.div`
   display: flex;
@@ -17,6 +29,32 @@ export const SectionTitleContainer = styled.div`
     height: 1px;
     background-color: #e7ebef;
     z-index: 0;
+  }
+`;
+
+export const TextInput = styled(Input)`
+  height: 40px;
+  padding: 0 16px;
+`;
+
+export const TextareaInput = styled(Textarea)`
+  display: block;
+  width: 100%;
+  min-height: 110px;
+  resize: none;
+  border-radius: 4px;
+  background-color: #eff1f3;
+  padding: 11px 16px;
+  font-size: 1rem;
+  line-height: 1.13;
+  font-weight: 400;
+  color: #667784;
+  border: 1px solid transparent;
+  &:focus,
+  &:active {
+    outline: none;
+    background-color: #fff;
+    border: solid 1px #48bbff;
   }
 `;
 
