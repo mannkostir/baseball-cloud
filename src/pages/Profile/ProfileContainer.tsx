@@ -244,9 +244,11 @@ const Profile = () => {
               <PitcherSummary
                 summary={{ batter_summary: profileData.batter_summary }}
               />
-              <RecentEvents
-                events={{ recent_events: profileData.recent_events }}
-              />
+              {!params.id && (
+                <RecentEvents
+                  events={{ recent_events: profileData.recent_events }}
+                />
+              )}
             </ProfileSummary>
             <ProfileAnalysis profileData={profileData} />
           </ProfileMain>
