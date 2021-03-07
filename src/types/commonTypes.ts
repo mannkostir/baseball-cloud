@@ -81,6 +81,13 @@ export type ProfileAnalysisInfo = {
   position: PlayerPosition;
 };
 
+export type ProfileEvent = {
+  id: string | number;
+  date: string;
+  event_type: string;
+  event_name: string;
+};
+
 export type FormValues = {
   [key: string]: { label: string; value: string } | string | number | any;
 };

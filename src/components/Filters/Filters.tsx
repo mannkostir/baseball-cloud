@@ -154,12 +154,19 @@ const FilterSelect = (
         ...(props.style && props.style),
       }}
       {...props}
-      onMenuOpen={() => setIsExpanded(true)}
-      onMenuClose={() => setIsExpanded(false)}
+      onMenuOpen={() => {
+        setIsExpanded(true);
+        props.onMenuOpen && props.onMenuOpen();
+      }}
+      onMenuClose={() => {
+        setIsExpanded(false);
+        props.onMenuClose && props.onMenuClose();
+      }}
       components={{
         DropdownIndicator: (indicatorProps: any) => (
           <DropdownIndicator {...indicatorProps} isExpanded={isExpanded} />
         ),
+        ...props.components,
       }}
     />
   );

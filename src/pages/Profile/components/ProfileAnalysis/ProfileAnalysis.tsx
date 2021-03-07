@@ -1,16 +1,17 @@
 import { profilesService } from '@/services/profilesService';
-import { BattingSummary, ProfileAnalysisInfo } from '@/types/commonTypes';
+import { BattingSummary, Unpromise } from '@/types/commonTypes';
 import React, { useEffect, useState } from 'react';
 import BattingValues from '../BattingValues';
 import Card from '@/components/Card';
 import ProfileComparison from '../ProfileComparison';
 import * as Styled from './ProfileAnalysis.styles';
 import { TabButton } from '@/components/Buttons';
+import Sessions from '../Sessions';
 
 type ProfileTabs = 'batting' | 'sessionReports' | 'comparison';
 
 interface IProfileAnalysisProps {
-  profileData: ProfileAnalysisInfo;
+  profileData: Unpromise<ReturnType<typeof profilesService.getProfile>>;
 }
 
 const ProfileAnalysis = ({ profileData }: IProfileAnalysisProps) => {
@@ -62,6 +63,12 @@ const ProfileAnalysis = ({ profileData }: IProfileAnalysisProps) => {
       <Styled.TabContent>
         {selectedTab === 'batting' && battingSummary && (
           <BattingValues battingSummary={battingSummary} />
+        )}
+        {selectedTab === 'sessionReports' && battingSummary && (
+          <Sessions
+            events={profileData.recent_events}
+            profile_id={profileData.id}
+          />
         )}
         {selectedTab === 'comparison' && battingSummary && (
           <ProfileComparison

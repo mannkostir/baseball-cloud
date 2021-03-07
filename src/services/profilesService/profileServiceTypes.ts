@@ -5,6 +5,7 @@ import {
   SchoolYear,
   Team,
   BattingSummary,
+  ProfileEvent,
 } from '@/types/commonTypes';
 
 export type GetProfilesQuery = {
@@ -22,7 +23,7 @@ export type GetProfilesResponse = {
     profiles: {
       profiles: {
         age: number;
-        events: any[];
+        events: ProfileEvent[];
         favorite: boolean;
         feet: number;
         first_name: string;
@@ -179,7 +180,20 @@ export type UpdateProfileResponse = {
         last_name: string;
         position: PlayerPosition;
         position2: PlayerPosition | null;
-        recentEvents: any[];
+        recentEvents: {
+          data_rows_count: number;
+          date: string;
+          event_name: string;
+          event_type: string;
+          id: string;
+          is_pitcher: boolean;
+          recent_avatars: {
+            avatar: string | null;
+            first_name: string;
+            id: string;
+            last_name: string;
+          }[];
+        }[];
         school: School;
         school_year: SchoolYear;
         teams: Team[];
@@ -231,6 +245,22 @@ export type GetProfileNamesResponse = {
         position: PlayerPosition;
         weight: number;
       }[];
+    };
+  };
+};
+
+export type GetProfileEventsQuery = {
+  count: number;
+  date?: string;
+  event_type?: string;
+  offset: number;
+  profile_id: string;
+};
+export type GetProfileEventsResponse = {
+  data: {
+    profile_events: {
+      events: ProfileEvent[];
+      total_count: number;
     };
   };
 };

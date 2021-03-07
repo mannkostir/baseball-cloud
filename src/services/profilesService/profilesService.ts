@@ -3,6 +3,8 @@ import {
   GetBattingSummaryQuery,
   GetBattingSummaryResponse,
   GetCurrentProfileResponse,
+  GetProfileEventsQuery,
+  GetProfileEventsResponse,
   GetProfileNamesQuery,
   GetProfileNamesResponse,
   GetProfileQuery,
@@ -273,4 +275,23 @@ export const getProfileNames = async (query: GetProfileNamesQuery) => {
   });
 
   return res.data.data.profile_names.profile_names;
+};
+
+export const getProfileEvents = async (query: GetProfileEventsQuery) => {
+  const res = await fetchAPI.post<GetProfileEventsResponse>('graphql', {
+    query: `query ProfileEvents($input:FilterProfileEventsInput!) {
+      profile_events(input: $input) {
+        events {
+          id
+          date
+          event_type
+          event_name
+        }
+        total_count
+      }
+    }`,
+    variables: { input: query },
+  });
+
+  return res.data.data.profile_events;
 };
