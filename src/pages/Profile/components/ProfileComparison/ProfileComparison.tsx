@@ -91,6 +91,7 @@ const ProfileComparison = ({
         <div style={{ marginRight: '40px', flex: 1 }}>
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <UserImage
+              imageUrl={playerData.avatar}
               style={{
                 width: '40px',
                 height: '40px',
@@ -113,6 +114,7 @@ const ProfileComparison = ({
         <div style={{ flex: 1 }}>
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <UserImage
+              imageUrl={comparedProfile?.avatar}
               style={{
                 width: '40px',
                 height: '40px',

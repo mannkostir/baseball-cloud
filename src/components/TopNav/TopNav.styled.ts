@@ -28,15 +28,6 @@ export const NavLink = styled(Link)`
     bottom: -11px;
   }
 `;
-export const UserImage = styled.div`
-  background: url(${userImage});
-  width: 32px;
-  height: 32px;
-  background-size: cover;
-  background-position: 50% 50%;
-  margin-right: 8px;
-  cursor: pointer;
-`;
 export const UserDropdownToggle = styled.button`
   display: flex;
   align-items: center;

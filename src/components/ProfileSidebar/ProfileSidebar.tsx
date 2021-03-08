@@ -1,6 +1,8 @@
-import React, { HTMLAttributes } from 'react';
+import React, { HTMLAttributes, useState } from 'react';
 import { Select, AsyncSelect, Input, Textarea } from '../FinalFormAdapters';
 import * as Styled from './ProfileSidebar.styles';
+import UserImage from '@/components/UserImage';
+import { utilsService } from '@/services/utilsService';
 
 interface IProfileSidebar {
   children: JSX.Element | JSX.Element[] | string;
@@ -18,6 +20,99 @@ const SectionTitle = ({
     <Styled.SectionTitleContainer>
       <Styled.SectionTitle {...props}>{children}</Styled.SectionTitle>
     </Styled.SectionTitleContainer>
+  );
+};
+
+const AvatarInput = ({
+  playerAvatar,
+  ...props
+}: React.ComponentProps<typeof Input> & {
+  onUpload?: (url: string) => void;
+  playerAvatar?: string | null;
+}) => {
+  const [imageName, setImageName] = useState('');
+  const [imageUrl, setImageUrl] = useState('');
+  const [isImageUploaded, setIsImageUploaded] = useState(false);
+  const [
+    changeEvent,
+    setChangeEvent,
+  ] = useState<React.ChangeEvent<HTMLInputElement> | null>(null);
+  const [avatarFile, setAvatarFile] = useState<File | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const uploadPhoto = async () => {
+    try {
+      setIsLoading(true);
+      const signedUrl = await utilsService.getSignedUrl({
+        name: imageName,
+        avatarFile,
+      });
+
+      props.onUpload && props.onUpload(signedUrl.signedUrl);
+
+      props.input.onChange &&
+        props.input.onChange({
+          target: {
+            value: signedUrl?.signedUrl.match(/(?:(?!\?).)*/)?.[0] || '',
+          },
+        });
+    } catch (e) {
+      throw e;
+    } finally {
+      setIsLoading(false);
+      setIsImageUploaded(true);
+    }
+  };
+
+  const cancelPhotoUploading = () => {
+    setImageUrl('');
+  };
+  return (
+    <div>
+      <UserImage imageUrl={imageUrl || playerAvatar || null} />
+      <div>
+        {!imageUrl || isImageUploaded ? (
+          <label htmlFor="userAvatar">Select Photo</label>
+        ) : (
+          <>
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                uploadPhoto();
+              }}
+            >
+              Upload Photo
+            </button>
+            <button
+              onClick={() => {
+                cancelPhotoUploading();
+              }}
+            >
+              Cancel
+            </button>
+          </>
+        )}
+        <input
+          type="image/png"
+          id="userAvatar"
+          accept="image/png"
+          {...props}
+          onChange={(event) => {
+            const file = event.target.files?.[0] || null;
+
+            if (!file) return;
+
+            const image = URL.createObjectURL(file);
+
+            setImageName(file.name);
+            setImageUrl(image);
+
+            setAvatarFile(file);
+          }}
+          style={{ display: 'none' }}
+        />
+      </div>
+    </div>
   );
 };
 
@@ -193,5 +288,6 @@ ProfileSidebar.Input = TextInput;
 ProfileSidebar.Select = SelectInput;
 ProfileSidebar.AsyncSelect = AsyncSelectInput;
 ProfileSidebar.Textarea = TextareaInput;
+ProfileSidebar.AvatarInput = AvatarInput;
 
 export default ProfileSidebar;

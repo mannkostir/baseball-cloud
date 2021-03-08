@@ -4,7 +4,7 @@ import {
   ReactSelectOptions,
   Unpromise,
 } from '@/types/commonTypes';
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Field, FormRenderProps } from 'react-final-form';
 import Icons from '@/components/Icons';
 import ProfileSidebar from '@/components/ProfileSidebar';
@@ -38,7 +38,7 @@ interface IUserInfoProps {
 const UserInfo = ({ profileData }: IUserInfoProps) => {
   return (
     <Styled.Container>
-      <UserImage />
+      <UserImage imageUrl={profileData.avatar || undefined} />
       <Styled.Username>{`${profileData.first_name} ${profileData.last_name}`}</Styled.Username>
       <Styled.Role>
         {
@@ -76,6 +76,17 @@ const UserInfoEditForm = ({ profileData }: IUserInfoEditFormProps) => {
   }, []);
   return (
     <>
+      {false && (
+        <Field name="avatar">
+          {(fieldProps) => (
+            <ProfileSidebar.AvatarInput
+              playerAvatar={profileData.avatar}
+              {...fieldProps}
+              type="file"
+            />
+          )}
+        </Field>
+      )}
       <ProfileSidebar.InlineInputsWrapper>
         <Field name="first_name" initialValue={profileData.first_name}>
           {(fieldProps) => (

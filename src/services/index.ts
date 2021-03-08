@@ -4,8 +4,8 @@ import axios, { AxiosError, AxiosResponse } from 'axios';
 const instance = axios.create({
   baseURL: process.env.REACT_APP_API_BASE,
   headers: {
-    Accept: 'application/json',
-    'Content-Type': 'application/json',
+    Accept: 'application/json, */*, text/plain',
+    'Content-Type': 'application/json;charset=UTF-8',
   },
 });
 

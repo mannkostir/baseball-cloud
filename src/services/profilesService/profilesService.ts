@@ -205,8 +205,14 @@ export const updateProfile = async (query: UpdateProfileQuery) => {
         }
       }
     }`,
-    variables: { form: { ...query } },
+    variables: {
+      form: {
+        ...query,
+      },
+    },
   });
+
+  console.log(res);
 
   return res.data.data.update_profile.profile;
 };

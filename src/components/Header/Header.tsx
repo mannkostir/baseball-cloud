@@ -8,13 +8,16 @@ import * as Styled from './Header.styles';
 
 const Header = () => {
   const { isAuthenticated } = useAuthSelector();
-  const { fullName } = useProfileSelector();
+  const { fullName, avatar } = useProfileSelector();
+
   return (
     <Styled.HeaderContainer>
       <Link to="/">
         <Logo />
       </Link>
-      {isAuthenticated ? <TopNav username={fullName} /> : null}
+      {isAuthenticated ? (
+        <TopNav username={fullName} avatar={avatar || ''} />
+      ) : null}
     </Styled.HeaderContainer>
   );
 };

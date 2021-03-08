@@ -4,13 +4,15 @@ import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Icons from '../Icons';
 import ProfileSidebar from '../ProfileSidebar';
+import UserImage from '../UserImage';
 import * as Styled from './TopNav.styled';
 
 interface ITopNavProps {
   username: string;
+  avatar?: string | null;
 }
 
-const TopNav = ({ username }: ITopNavProps) => {
+const TopNav = ({ username, avatar = null }: ITopNavProps) => {
   const dispatch = useDispatch();
 
   const [isDropdownOpened, setIsDropdownOpened] = useState(false);
@@ -30,7 +32,10 @@ const TopNav = ({ username }: ITopNavProps) => {
         </Styled.NavItem>
         <Styled.NavItem>
           <Link to="/profile">
-            <Styled.UserImage />
+            <UserImage
+              imageUrl={avatar}
+              style={{ height: '32px', width: '32px', margin: 0 }}
+            />
           </Link>
         </Styled.NavItem>
         <Styled.NavItem>

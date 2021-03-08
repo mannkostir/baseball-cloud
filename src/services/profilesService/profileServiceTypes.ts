@@ -46,21 +46,7 @@ export type GetCurrentProfileResponse = {
   data: {
     current_profile: {
       age: number;
-      avatar: {
-        size_20_20: {
-          url: string | null;
-        };
-        size_32_32: {
-          url: string | null;
-        };
-        size_40_40: {
-          url: string | null;
-        };
-        size_100_100: {
-          url: string | null;
-        };
-        url: string | null;
-      } | null;
+      avatar: string | null;
       bats_hand: 'l' | 'r';
       biography: string;
       facilities: Facility[];
