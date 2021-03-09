@@ -41,9 +41,18 @@ const profileSlice = createSlice({
     },
   },
   extraReducers: (builder) =>
-    builder.addCase(profileActions.getCurrentProfile, (state) => {
-      state.isLoading = true;
-    }),
+    builder
+      .addCase(profileActions.getCurrentProfile, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(profileActions.updateProfile, (state, action) => {
+        state.firstName = action.payload.first_name;
+        state.lastName = action.payload.last_name;
+        state.avatar = action.payload.avatar;
+        state.fullName = `${action.payload.first_name || ''} ${
+          action.payload.last_name || ''
+        }`;
+      }),
 });
 
 export const profileInternalActions = profileSlice.actions;

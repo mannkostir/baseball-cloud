@@ -4,7 +4,7 @@ import RecentEvents from './components/RecentEvents';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components/macro';
 import { profilesAPI } from '@/api/profiles';
-import { useProfileSelector } from '@/store/profile';
+import { profileActions, useProfileSelector } from '@/store/profile';
 import UserInfoCompound from './components/UserInfoCompound';
 import { Form } from 'react-final-form';
 import SchoolInfoCompound from './components/SchoolInfo';
@@ -95,6 +95,8 @@ const Profile = () => {
         facilities: profileData.facilities,
         ...submitValues,
       });
+
+      dispatch(profileActions.updateProfile(updatedProfile));
 
       setProfileData({ ...profileData, ...updatedProfile });
     } catch (e) {

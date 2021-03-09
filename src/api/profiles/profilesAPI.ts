@@ -212,8 +212,6 @@ export const updateProfile = async (query: UpdateProfileQuery) => {
     },
   });
 
-  console.log(res);
-
   return res.data.data.update_profile.profile;
 };
 
