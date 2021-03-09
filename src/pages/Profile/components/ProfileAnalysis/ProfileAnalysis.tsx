@@ -8,7 +8,7 @@ import * as Styled from './ProfileAnalysis.styles';
 import { TabButton } from '@/components/Buttons';
 import Sessions from '../Sessions';
 import { useMount } from '@/hooks/useMount';
-import axios, { CancelTokenSource } from 'axios';
+import axios from 'axios';
 
 type ProfileTabs = 'batting' | 'sessionReports' | 'comparison';
 
