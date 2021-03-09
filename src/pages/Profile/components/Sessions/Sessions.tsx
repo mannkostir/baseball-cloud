@@ -87,7 +87,7 @@ const Sessions = ({
       ...filtersQuery,
       count: 10,
       offset: 0,
-      date: date.toLocaleDateString().replaceAll('/', '-'),
+      date: date.toLocaleDateString().replaceAll(/(\/|\.)/g, '-'),
       event_type:
         filtersQuery.event_type?.value || defaultFiltersQuery.event_type?.value,
       profile_id: '715',
@@ -125,7 +125,7 @@ const Sessions = ({
                               fieldProps.input.onChange({
                                 label: `Date (${date
                                   .toLocaleDateString()
-                                  .replaceAll('/', '-')})`,
+                                  .replaceAll(/(\/|\.)/g, '-')})`,
                                 value: date,
                               });
                             },
