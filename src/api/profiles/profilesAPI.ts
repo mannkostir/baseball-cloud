@@ -1,4 +1,5 @@
 import fetchAPI from '@/api';
+import { CancelToken } from 'axios';
 import {
   GetBattingSummaryQuery,
   GetBattingSummaryResponse,
@@ -17,9 +18,14 @@ import {
   UpdateProfileResponse,
 } from './profilesAPITypes';
 
-export const getProfiles = async (query: GetProfilesQuery) => {
-  const res = await fetchAPI.post<GetProfilesResponse>('/graphql', {
-    query: `query Profiles($input: FilterProfilesInput!) {
+export const getProfiles = async ({
+  cancelToken,
+  ...query
+}: GetProfilesQuery & { cancelToken?: CancelToken }) => {
+  const res = await fetchAPI.post<GetProfilesResponse>(
+    '/graphql',
+    {
+      query: `query Profiles($input: FilterProfilesInput!) {
       profiles(input: $input) {
         profiles {
           id
@@ -49,8 +55,12 @@ export const getProfiles = async (query: GetProfilesQuery) => {
         total_count
       }
     }`,
-    variables: { input: { ...query } },
-  });
+      variables: { input: { ...query } },
+    },
+    {
+      cancelToken,
+    }
+  );
 
   return res.data.data.profiles;
 };
@@ -93,9 +103,14 @@ export const getCurrentProfile = async () => {
   return res.data.data.current_profile;
 };
 
-export const getProfile = async (query: GetProfileQuery) => {
-  const res = await fetchAPI.post<GetProfileResponse>('/graphql', {
-    query: `query Profile($id: String!) {
+export const getProfile = async ({
+  cancelToken,
+  ...query
+}: GetProfileQuery & { cancelToken?: CancelToken }) => {
+  const res = await fetchAPI.post<GetProfileResponse>(
+    '/graphql',
+    {
+      query: `query Profile($id: String!) {
       profile(id: $id) {
         id
         first_name
@@ -158,8 +173,10 @@ export const getProfile = async (query: GetProfileQuery) => {
         paid
       }
     }`,
-    variables: { ...query },
-  });
+      variables: { ...query },
+    },
+    { cancelToken }
+  );
 
   return res.data.data.profile;
 };

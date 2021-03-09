@@ -1,13 +1,19 @@
 import fetchAPI from '@/api';
+import { CancelToken } from 'axios';
 import {
   GetLeaderboardQuery,
   GetLeaderboardResponse,
   GetPitchingLeaderboardResponse,
 } from './leaderboardAPITypes';
 
-export const getLeaderboard = async (query: GetLeaderboardQuery) => {
-  const res = await fetchAPI.post<GetLeaderboardResponse>('/graphql', {
-    query: `query LeaderboardBatting($input:FilterLeaderboardInput!) {
+export const getLeaderboard = async ({
+  cancelToken,
+  ...query
+}: GetLeaderboardQuery & { cancelToken?: CancelToken }) => {
+  const res = await fetchAPI.post<GetLeaderboardResponse>(
+    '/graphql',
+    {
+      query: `query LeaderboardBatting($input:FilterLeaderboardInput!) {
         leaderboard_batting(input: $input) {
           leaderboard_batting {
             batter_name
@@ -28,15 +34,22 @@ export const getLeaderboard = async (query: GetLeaderboardQuery) => {
           }
         }
       }`,
-    variables: { input: { ...query } },
-  });
+      variables: { input: { ...query } },
+    },
+    { cancelToken }
+  );
 
   return res.data.data.leaderboard_batting.leaderboard_batting;
 };
 
-export const getPitchingLeaderboard = async (query: GetLeaderboardQuery) => {
-  const res = await fetchAPI.post<GetPitchingLeaderboardResponse>('/graphql', {
-    query: `query LeaderboardPitching($input:FilterLeaderboardInput!) {
+export const getPitchingLeaderboard = async ({
+  cancelToken,
+  ...query
+}: GetLeaderboardQuery & { cancelToken?: CancelToken }) => {
+  const res = await fetchAPI.post<GetPitchingLeaderboardResponse>(
+    '/graphql',
+    {
+      query: `query LeaderboardPitching($input:FilterLeaderboardInput!) {
         leaderboard_pitching(input: $input) {
           leaderboard_pitching {
             pitcher_name
@@ -59,8 +72,10 @@ export const getPitchingLeaderboard = async (query: GetLeaderboardQuery) => {
           }
         }
       }`,
-    variables: { input: { ...query } },
-  });
+      variables: { input: { ...query } },
+    },
+    { cancelToken }
+  );
 
   return res.data.data.leaderboard_pitching.leaderboard_pitching;
 };

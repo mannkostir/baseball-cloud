@@ -1,6 +1,7 @@
 import { profilesAPI } from '@/api/profiles';
 import { GetProfilesQuery } from '@/api/profiles/profilesAPITypes';
 import { Unpromise } from '@/types/commonTypes';
+import axios, { CancelTokenSource } from 'axios';
 import { useState } from 'react';
 
 type ProfilesType = Unpromise<
@@ -19,6 +20,11 @@ export const useNetwork = () => {
 
   const [isLoading, setIsLoading] = useState(false);
 
+  const [
+    cancelTokenSource,
+    setCancelTokenSource,
+  ] = useState<CancelTokenSource | null>(null);
+
   const [profiles, setProfiles] = useState<ProfilesType>([]);
   const [
     profilesTotalCount,
@@ -29,9 +35,14 @@ export const useNetwork = () => {
     try {
       setIsLoading(true);
 
+      const source = axios.CancelToken.source();
+
+      setCancelTokenSource(source);
+
       const profilesResponse = await profilesAPI.getProfiles({
         ...defaultQuery,
         ...fetchQuery,
+        cancelToken: source.token,
       });
 
       setProfiles(profilesResponse.profiles);
@@ -43,5 +54,11 @@ export const useNetwork = () => {
     }
   };
 
-  return { fetchNetwork, profiles, profilesTotalCount, isLoading };
+  return {
+    fetchNetwork,
+    profiles,
+    profilesTotalCount,
+    isLoading,
+    cancelTokenSource,
+  };
 };

@@ -34,6 +34,7 @@ const Network = () => {
     profiles,
     profilesTotalCount,
     isLoading,
+    cancelTokenSource,
   } = useNetwork();
 
   const { toggleMyHolyFavor } = useProfileService();
@@ -42,6 +43,10 @@ const Network = () => {
     if (!query) return;
 
     fetchNetwork(query);
+
+    return () => {
+      cancelTokenSource?.cancel();
+    };
     // Exclude fetchNetwork from dependency (doable without disabling, revisit later)
   }, [query]); // eslint-disable-line react-hooks/exhaustive-deps
 

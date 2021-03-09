@@ -56,12 +56,17 @@ const Leaderboard = () => {
     leaderboardItems,
     leaderboardPitchingItems,
     isLoading,
+    cancelTokenSource,
   } = useLeaderboard();
 
   useEffect(() => {
     if (!query) return;
 
     fetchLeaderboard(query, selectedMode);
+
+    return () => {
+      cancelTokenSource?.cancel();
+    };
     // Exclude fetchLeaderboard from dependency (doable without disabling, revisit later)
   }, [query, selectedMode]); // eslint-disable-line react-hooks/exhaustive-deps
 

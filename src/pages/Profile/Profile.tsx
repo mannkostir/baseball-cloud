@@ -22,6 +22,7 @@ import { useProfileService } from '@/api/profiles/useProfilesAPI';
 import { notificationsActions } from '@/store/notifications';
 import { DiscardButton, SubmitButton } from '@/components/Buttons';
 import ProfileSidebar from '@/components/ProfileSidebar';
+import axios, { CancelTokenSource } from 'axios';
 
 const ProfileMain = styled.main`
   background: #788b99;
@@ -50,6 +51,11 @@ const Profile = () => {
   const [profileData, setProfileData] = useState<Unpromise<
     ReturnType<typeof profilesAPI.getProfile>
   > | null>(null);
+
+  const [
+    cancelTokenSource,
+    setCancelTokenSource,
+  ] = useState<CancelTokenSource | null>(null);
 
   const [isEditingProfile, setIsEditingProfile] = useState(false);
 
@@ -120,9 +126,14 @@ const Profile = () => {
     try {
       indicateLoading && setIsLoading(true);
 
+      const source = axios.CancelToken.source();
+
       const profile = await profilesAPI.getProfile({
         id: profileId,
+        cancelToken: source.token,
       });
+
+      setCancelTokenSource(source);
 
       setProfileData(profile);
     } catch (e) {
@@ -144,6 +155,10 @@ const Profile = () => {
     }
 
     fetchProfile(id);
+
+    return () => {
+      cancelTokenSource?.cancel();
+    };
   }, [currentProfileId, params.id]);
 
   return (
