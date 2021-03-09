@@ -2,7 +2,7 @@ import React, { HTMLAttributes, useState } from 'react';
 import { Select, AsyncSelect, Input, Textarea } from '../FinalFormAdapters';
 import * as Styled from './ProfileSidebar.styles';
 import UserImage from '@/components/UserImage';
-import { utilsService } from '@/services/utilsService';
+import { utilsAPI } from '@/api/utils';
 
 interface IProfileSidebar {
   children: JSX.Element | JSX.Element[] | string;
@@ -39,7 +39,7 @@ const AvatarInput = ({
   const uploadPhoto = async () => {
     try {
       setIsLoading(true);
-      const signedUrl = await utilsService.getSignedUrl({
+      const signedUrl = await utilsAPI.getSignedUrl({
         name: imageName,
         avatarFile,
       });

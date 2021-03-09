@@ -1,6 +1,6 @@
 import AuthView from '@/components/AuthView';
 import SignUpForm from './components/SignUpForm';
-import { SignUpRequest } from '@/services/authService/authServiceTypes';
+import { SignUpRequest } from '@/api/auth/authAPITypes';
 import { authActions } from '@/store/auth';
 import React from 'react';
 import { useDispatch } from 'react-redux';

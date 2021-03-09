@@ -1,8 +1,8 @@
-import { profilesService } from '.';
+import { profilesAPI } from '.';
 
 export const useProfileService = () => {
   const toggleMyHolyFavor = async (id: number, isInFavor: boolean) => {
-    await profilesService.updateFavoriteProfile({
+    await profilesAPI.updateFavoriteProfile({
       profile_id: id,
       favorite: isInFavor ? false : true,
     });

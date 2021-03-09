@@ -1,4 +1,4 @@
-import { profilesService } from '@/services/profilesService';
+import { profilesAPI } from '@/api/profiles';
 import { Unpromise } from '@/types/commonTypes';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { profileActions } from '.';
@@ -21,7 +21,7 @@ const profileSlice = createSlice({
     getCurrentProfileSucceeded(
       state,
       action: PayloadAction<
-        Unpromise<ReturnType<typeof profilesService.getCurrentProfile>>
+        Unpromise<ReturnType<typeof profilesAPI.getCurrentProfile>>
       >
     ) {
       state.firstName = action.payload.first_name;

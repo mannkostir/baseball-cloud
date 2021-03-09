@@ -1,14 +1,14 @@
-import { profilesService } from '@/services/profilesService';
-import { GetProfilesQuery } from '@/services/profilesService/profileServiceTypes';
+import { profilesAPI } from '@/api/profiles';
+import { GetProfilesQuery } from '@/api/profiles/profilesAPITypes';
 import { Unpromise } from '@/types/commonTypes';
 import { useState } from 'react';
 
 type ProfilesType = Unpromise<
-  ReturnType<typeof profilesService.getProfiles>
+  ReturnType<typeof profilesAPI.getProfiles>
 >['profiles'];
 
 type ProfilesTotalCountType = Unpromise<
-  ReturnType<typeof profilesService.getProfiles>
+  ReturnType<typeof profilesAPI.getProfiles>
 >['total_count'];
 
 export const useNetwork = () => {
@@ -29,7 +29,7 @@ export const useNetwork = () => {
     try {
       setIsLoading(true);
 
-      const profilesResponse = await profilesService.getProfiles({
+      const profilesResponse = await profilesAPI.getProfiles({
         ...defaultQuery,
         ...fetchQuery,
       });

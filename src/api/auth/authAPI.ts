@@ -7,8 +7,8 @@ import {
   SignUpResponse,
   ValidateTokenRequest,
   ValidateTokenResponse,
-} from './authServiceTypes';
-import fetchAPI from '@/services';
+} from './authAPITypes';
+import fetchAPI from '@/api';
 import { RequestHeaders, UserCredentials } from '@/types/commonTypes';
 
 export const signIn = async (

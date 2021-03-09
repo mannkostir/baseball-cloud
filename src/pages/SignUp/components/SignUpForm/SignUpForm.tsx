@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import * as Styled from './SignUpForm.styles';
 import { Form, Field } from 'react-final-form';
 import { UserRole } from '@/types/commonTypes';
-import { SignUpRequest } from '@/services/authService/authServiceTypes';
+import { SignUpRequest } from '@/api/auth/authAPITypes';
 import { SubmitButton } from '@/components/Buttons';
 import { Input } from '@/components/FinalFormAdapters';
 

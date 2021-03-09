@@ -1,4 +1,4 @@
-import { profilesService } from '@/services/profilesService';
+import { profilesAPI } from '@/api/profiles';
 import { Unpromise } from '@/types/commonTypes';
 import React, { useMemo } from 'react';
 import Card from '@/components/Card';
@@ -7,7 +7,7 @@ import * as Styled from './PitcherSummary.styles';
 
 interface IPitcherSummaryProps {
   summary: Pick<
-    Unpromise<ReturnType<typeof profilesService.getProfile>>,
+    Unpromise<ReturnType<typeof profilesAPI.getProfile>>,
     'batter_summary'
   >;
 }

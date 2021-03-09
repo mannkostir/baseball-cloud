@@ -4,7 +4,7 @@ import {
   SignOutResponse,
   SignUpResponse,
   ValidateTokenResponse,
-} from '@/services/authService/authServiceTypes';
+} from '@/api/auth/authAPITypes';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AuthState } from './authStoreTypes';
 import { UserCredentials } from '@/types/commonTypes';

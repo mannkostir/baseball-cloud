@@ -1,6 +1,6 @@
 import AuthView from '@/components/AuthView';
 import SignInForm from './components/SignInForm';
-import { SignInRequest } from '@/services/authService/authServiceTypes';
+import { SignInRequest } from '@/api/auth/authAPITypes';
 import { authActions } from '@/store/auth';
 import React from 'react';
 import { useDispatch } from 'react-redux';

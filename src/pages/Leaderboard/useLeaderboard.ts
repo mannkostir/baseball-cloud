@@ -1,14 +1,14 @@
-import { leaderboardService } from '@/services/leaderboardService';
+import { leaderboardAPI } from '@/api/leaderboard';
 import { LeaderboardMode, Unpromise } from '@/types/commonTypes';
 import { useState } from 'react';
-import { GetLeaderboardQuery } from '@/services/leaderboardService/leaderboardServiceTypes';
+import { GetLeaderboardQuery } from '@/api/leaderboard/leaderboardAPITypes';
 
 type LeaderoardItemsType = Unpromise<
-  ReturnType<typeof leaderboardService.getLeaderboard>
+  ReturnType<typeof leaderboardAPI.getLeaderboard>
 >;
 
 type LeaderboardPitchingItemsType = Unpromise<
-  ReturnType<typeof leaderboardService.getPitchingLeaderboard>
+  ReturnType<typeof leaderboardAPI.getPitchingLeaderboard>
 >;
 
 export const useLeaderboard = () => {
@@ -37,14 +37,14 @@ export const useLeaderboard = () => {
       setIsLoading(true);
 
       if (mode === 'batting') {
-        const leaders = await leaderboardService.getLeaderboard({
+        const leaders = await leaderboardAPI.getLeaderboard({
           ...defaultQuery,
           ...fetchQuery,
         });
 
         setLeaderboardItems(leaders);
       } else {
-        const leaders = await leaderboardService.getPitchingLeaderboard({
+        const leaders = await leaderboardAPI.getPitchingLeaderboard({
           ...defaultPitchingQuery,
           ...fetchQuery,
         });

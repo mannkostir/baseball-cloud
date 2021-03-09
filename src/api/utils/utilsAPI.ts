@@ -1,5 +1,5 @@
-import fetchAPI from '@/services';
-import { GetSignedUrlQuery, GetSignedUrlResponse } from './utilsServiceTypes';
+import fetchAPI from '@/api';
+import { GetSignedUrlQuery, GetSignedUrlResponse } from './utilsAPITypes';
 
 export const getSignedUrl = async (query: GetSignedUrlQuery) => {
   const res = await fetchAPI.post<GetSignedUrlResponse>('s3/signed_url', {

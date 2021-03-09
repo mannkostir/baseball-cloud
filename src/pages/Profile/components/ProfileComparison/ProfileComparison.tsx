@@ -1,4 +1,4 @@
-import { profilesService } from '@/services/profilesService';
+import { profilesAPI } from '@/api/profiles';
 import {
   BattingSummary,
   ProfileAnalysisInfo,
@@ -36,7 +36,7 @@ const ProfileComparison = ({
   topValues,
 }: IProfileComparisonProps) => {
   const [comparedProfile, setComparedProfile] = useState<Unpromise<
-    ReturnType<typeof profilesService.getProfile>
+    ReturnType<typeof profilesAPI.getProfile>
   > | null>(null);
   const [selectedType, setSelectedType] = useState<
     'exit_velocity' | 'launch_angle' | 'distance'
@@ -51,7 +51,7 @@ const ProfileComparison = ({
 
   const getProfileNames = async (query: { player_name: string }) => {
     try {
-      const names = await profilesService.getProfileNames({
+      const names = await profilesAPI.getProfileNames({
         player_name: query.player_name,
         position: playerData.position,
       });
@@ -67,7 +67,7 @@ const ProfileComparison = ({
 
   const getProfile = async (id: string) => {
     try {
-      const profile = await profilesService.getProfile({ id });
+      const profile = await profilesAPI.getProfile({ id });
 
       setComparedProfile(profile);
     } catch (e) {

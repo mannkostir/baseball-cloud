@@ -4,12 +4,10 @@ import StyledTable from '@/components/StyledTable';
 import { ReactComponent as LikeIcon } from '@/assets/images/heart.svg';
 import { ReactComponent as FilledLikeIcon } from '@/assets/images/like.svg';
 import { Unpromise } from '@/types/commonTypes';
-import { profilesService } from '@/services/profilesService';
+import { profilesAPI } from '@/api/profiles';
 
 interface IPlayersTableProps {
-  profiles: Unpromise<
-    ReturnType<typeof profilesService.getProfiles>
-  >['profiles'];
+  profiles: Unpromise<ReturnType<typeof profilesAPI.getProfiles>>['profiles'];
   isLoading: boolean;
   toggleFavorite: (id: number, isInFavor: boolean) => void;
 }

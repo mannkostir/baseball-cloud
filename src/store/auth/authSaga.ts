@@ -1,10 +1,10 @@
-import authService from '@/services/authService';
+import authService from '@/api/auth';
 import {
   SignInRequest,
   SignOutRequest,
   SignUpRequest,
   ValidateTokenRequest,
-} from '@/services/authService/authServiceTypes';
+} from '@/api/auth/authAPITypes';
 import { Unpromise } from '@/types/commonTypes';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { call, put, takeEvery } from 'redux-saga/effects';

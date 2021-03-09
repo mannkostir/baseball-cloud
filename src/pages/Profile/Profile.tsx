@@ -3,7 +3,7 @@ import ProfileAnalysis from './components/ProfileAnalysis';
 import RecentEvents from './components/RecentEvents';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components/macro';
-import { profilesService } from '@/services/profilesService';
+import { profilesAPI } from '@/api/profiles';
 import { useProfileSelector } from '@/store/profile';
 import UserInfoCompound from './components/UserInfoCompound';
 import { Form } from 'react-final-form';
@@ -18,7 +18,7 @@ import { parseFormValues } from '@/utils/parseFormValues';
 import FlexContainer from '@/components/FlexContainer';
 import Icons from '@/components/Icons';
 import { useDispatch } from 'react-redux';
-import { useProfileService } from '@/services/profilesService/useProfileService';
+import { useProfileService } from '@/api/profiles/useProfilesAPI';
 import { notificationsActions } from '@/store/notifications';
 import { DiscardButton, SubmitButton } from '@/components/Buttons';
 import ProfileSidebar from '@/components/ProfileSidebar';
@@ -48,7 +48,7 @@ type FormValues = {
 const Profile = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [profileData, setProfileData] = useState<Unpromise<
-    ReturnType<typeof profilesService.getProfile>
+    ReturnType<typeof profilesAPI.getProfile>
   > | null>(null);
 
   const [isEditingProfile, setIsEditingProfile] = useState(false);
@@ -89,7 +89,7 @@ const Profile = () => {
 
       const submitValues = parseFormValues(values);
 
-      const updatedProfile = await profilesService.updateProfile({
+      const updatedProfile = await profilesAPI.updateProfile({
         id: profileData.id,
         teams: profileData.teams,
         facilities: profileData.facilities,
@@ -111,7 +111,7 @@ const Profile = () => {
     try {
       indicateLoading && setIsLoading(true);
 
-      const profile = await profilesService.getProfile({
+      const profile = await profilesAPI.getProfile({
         id: profileId,
       });
 

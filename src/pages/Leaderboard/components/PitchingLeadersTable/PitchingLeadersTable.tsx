@@ -1,4 +1,4 @@
-import { leaderboardService } from '@/services/leaderboardService';
+import { leaderboardAPI } from '@/api/leaderboard';
 import { Unpromise } from '@/types/commonTypes';
 import React from 'react';
 import { Link } from 'react-router-dom';
@@ -8,7 +8,7 @@ import { ReactComponent as FilledLikeIcon } from '@/assets/images/like.svg';
 
 interface ILeadersTableProps {
   leaderboardItems: Unpromise<
-    ReturnType<typeof leaderboardService.getPitchingLeaderboard>
+    ReturnType<typeof leaderboardAPI.getPitchingLeaderboard>
   >;
   toggleFavorite: (id: number, isInFavor: boolean) => void;
 }

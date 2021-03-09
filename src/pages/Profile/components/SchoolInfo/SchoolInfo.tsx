@@ -1,6 +1,6 @@
-import { profilesService } from '@/services/profilesService';
-import { schoolsService } from '@/services/schoolsService';
-import { teamsService } from '@/services/teamsService';
+import { profilesAPI } from '@/api/profiles';
+import { schoolsAPI } from '@/api/schools';
+import { teamsAPI } from '@/api/teams';
 import { SchoolYear, Unpromise } from '@/types/commonTypes';
 import React, { useMemo } from 'react';
 import { Field } from 'react-final-form';
@@ -20,7 +20,7 @@ const SchoolInfoCompound = () => {
 };
 
 interface ISchoolInfoCompoundProps {
-  profileData: Unpromise<ReturnType<typeof profilesService.getProfile>>;
+  profileData: Unpromise<ReturnType<typeof profilesAPI.getProfile>>;
 }
 
 const SchoolInfoView = ({ profileData }: ISchoolInfoCompoundProps) => {
@@ -50,12 +50,12 @@ const SchoolInfoView = ({ profileData }: ISchoolInfoCompoundProps) => {
 };
 
 interface ISchoolInfoEditProps {
-  profileData: Unpromise<ReturnType<typeof profilesService.getProfile>>;
+  profileData: Unpromise<ReturnType<typeof profilesAPI.getProfile>>;
 }
 
 const SchoolInfoEdit = ({ profileData }: ISchoolInfoEditProps) => {
   const getSchools = async (search: string) => {
-    return await schoolsService.getSchools({ search });
+    return await schoolsAPI.getSchools({ search });
   };
 
   const getSchoolsOptions = async (inputValue: string) => {
@@ -70,7 +70,7 @@ const SchoolInfoEdit = ({ profileData }: ISchoolInfoEditProps) => {
   };
 
   const getTeams = async (search: string) => {
-    return await teamsService.getTeams({ search });
+    return await teamsAPI.getTeams({ search });
   };
 
   const getTeamsOptions = async (inputValue: string) => {

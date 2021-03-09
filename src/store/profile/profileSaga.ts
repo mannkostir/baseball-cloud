@@ -1,4 +1,4 @@
-import { profilesService } from '@/services/profilesService';
+import { profilesAPI } from '@/api/profiles';
 import { Unpromise } from '@/types/commonTypes';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { call, put, takeEvery } from 'redux-saga/effects';
@@ -8,8 +8,8 @@ import { profileInternalActions } from './profileSlice';
 function* getCurrentProfileWorker(action: PayloadAction<undefined>) {
   try {
     const data: Unpromise<
-      ReturnType<typeof profilesService.getCurrentProfile>
-    > = yield call(profilesService.getCurrentProfile);
+      ReturnType<typeof profilesAPI.getCurrentProfile>
+    > = yield call(profilesAPI.getCurrentProfile);
 
     yield put(profileInternalActions.getCurrentProfileSucceeded(data));
   } catch (e) {

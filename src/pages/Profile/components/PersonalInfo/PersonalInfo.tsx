@@ -1,4 +1,4 @@
-import { profilesService } from '@/services/profilesService';
+import { profilesAPI } from '@/api/profiles';
 import { Unpromise } from '@/types/commonTypes';
 import React from 'react';
 import { Field } from 'react-final-form';
@@ -21,7 +21,7 @@ const PersonalInfo = () => {
 };
 
 interface IPersonalInfoViewProps {
-  profileData: Unpromise<ReturnType<typeof profilesService.getProfile>>;
+  profileData: Unpromise<ReturnType<typeof profilesAPI.getProfile>>;
 }
 
 const PersonalInfoView = ({ profileData }: IPersonalInfoViewProps) => {
@@ -81,7 +81,7 @@ const PersonalInfoView = ({ profileData }: IPersonalInfoViewProps) => {
 };
 
 interface IPersonalInfoViewProps {
-  profileData: Unpromise<ReturnType<typeof profilesService.getProfile>>;
+  profileData: Unpromise<ReturnType<typeof profilesAPI.getProfile>>;
 }
 
 const PersonalInfoEdit = ({ profileData }: IPersonalInfoViewProps) => {

@@ -2,7 +2,7 @@ import React from 'react';
 import ProfileSidebar from '@/components/ProfileSidebar';
 import styled from 'styled-components/macro';
 import { Field } from 'react-final-form';
-import { profilesService } from '@/services/profilesService';
+import { profilesAPI } from '@/api/profiles';
 import { Unpromise } from '@/types/commonTypes';
 
 const AboutContent = styled(ProfileSidebar.Value)`
@@ -15,7 +15,7 @@ const ProfileAboutCompound = () => {
 };
 
 interface IProfileAboutViewProps {
-  profileData: Unpromise<ReturnType<typeof profilesService.getProfile>>;
+  profileData: Unpromise<ReturnType<typeof profilesAPI.getProfile>>;
 }
 
 const ProfileAboutView = ({ profileData }: IProfileAboutViewProps) => {
@@ -28,7 +28,7 @@ const ProfileAboutView = ({ profileData }: IProfileAboutViewProps) => {
 };
 
 interface IProfileAboutEditProps {
-  profileData: Unpromise<ReturnType<typeof profilesService.getProfile>>;
+  profileData: Unpromise<ReturnType<typeof profilesAPI.getProfile>>;
 }
 
 const ProfileAboutEdit = ({ profileData }: IProfileAboutEditProps) => {

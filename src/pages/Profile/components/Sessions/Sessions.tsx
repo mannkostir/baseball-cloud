@@ -1,7 +1,7 @@
 import Datepicker from '@/components/Datepicker';
 import Filters from '@/components/Filters';
 import StyledTable from '@/components/StyledTable';
-import { profilesService } from '@/services/profilesService';
+import { profilesAPI } from '@/api/profiles';
 import { ReactSelectOptions, Unpromise } from '@/types/commonTypes';
 import React, { useEffect, useState } from 'react';
 import { Field, withTypes } from 'react-final-form';
@@ -48,9 +48,7 @@ const Sessions = ({
   events,
 }: {
   profile_id: string;
-  events: Unpromise<
-    ReturnType<typeof profilesService.getProfile>
-  >['recent_events'];
+  events: Unpromise<ReturnType<typeof profilesAPI.getProfile>>['recent_events'];
 }) => {
   const defaultFiltersQuery: Partial<FilterFormValues> = {
     count: 10,
@@ -59,7 +57,7 @@ const Sessions = ({
   };
 
   const [currentSessions, setCurrentSessions] = useState<
-    Unpromise<ReturnType<typeof profilesService.getProfileEvents>>['events']
+    Unpromise<ReturnType<typeof profilesAPI.getProfileEvents>>['events']
   >([]);
   const [sessionsTotalAmount, setSessionsTotalAmount] = useState<number>(0);
 
@@ -84,7 +82,7 @@ const Sessions = ({
   const onFiltersChange = async (filtersQuery: typeof query) => {
     if (!Object.keys(filtersQuery).length) return;
 
-    const { events, total_count } = await profilesService.getProfileEvents({
+    const { events, total_count } = await profilesAPI.getProfileEvents({
       ...defaultFiltersQuery,
       ...filtersQuery,
       count: 10,

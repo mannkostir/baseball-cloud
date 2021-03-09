@@ -1,4 +1,4 @@
-import { profilesService } from '@/services/profilesService';
+import { profilesAPI } from '@/api/profiles';
 import {
   PlayerPosition,
   ReactSelectOptions,
@@ -30,7 +30,7 @@ const UserInfoCompound = () => {
 };
 
 interface IUserInfoProps {
-  profileData: Unpromise<ReturnType<typeof profilesService.getProfile>>;
+  profileData: Unpromise<ReturnType<typeof profilesAPI.getProfile>>;
 }
 
 const UserInfo = ({ profileData }: IUserInfoProps) => {
@@ -57,7 +57,7 @@ const UserInfo = ({ profileData }: IUserInfoProps) => {
 };
 
 interface IUserInfoEditFormProps {
-  profileData: Unpromise<ReturnType<typeof profilesService.getProfile>>;
+  profileData: Unpromise<ReturnType<typeof profilesAPI.getProfile>>;
 }
 
 const UserInfoEditForm = ({ profileData }: IUserInfoEditFormProps) => {

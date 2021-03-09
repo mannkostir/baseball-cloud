@@ -1,5 +1,5 @@
-import fetchAPI from '@/services';
-import { GetSchoolsQuery, GetSchoolsResponse } from './schoolsServiceTypes';
+import fetchAPI from '@/api';
+import { GetSchoolsQuery, GetSchoolsResponse } from './schoolsAPITypes';
 
 export const getSchools = async (query: GetSchoolsQuery) => {
   const res = await fetchAPI.post<GetSchoolsResponse>('graphql', {

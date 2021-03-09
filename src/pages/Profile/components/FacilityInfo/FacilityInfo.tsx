@@ -1,4 +1,4 @@
-import { profilesService } from '@/services/profilesService';
+import { profilesAPI } from '@/api/profiles';
 import { Facility, ReactSelectOptions, Unpromise } from '@/types/commonTypes';
 import React from 'react';
 import { Field } from 'react-final-form';
@@ -16,7 +16,7 @@ const FacilityInfoCompound = () => {
 };
 
 interface IFacilityInfoViewProps {
-  profileData: Unpromise<ReturnType<typeof profilesService.getProfile>>;
+  profileData: Unpromise<ReturnType<typeof profilesAPI.getProfile>>;
 }
 
 const FacilityInfoView = ({ profileData }: IFacilityInfoViewProps) => {
@@ -33,7 +33,7 @@ const FacilityInfoView = ({ profileData }: IFacilityInfoViewProps) => {
 };
 
 interface IFacilityInfoViewProps {
-  profileData: Unpromise<ReturnType<typeof profilesService.getProfile>>;
+  profileData: Unpromise<ReturnType<typeof profilesAPI.getProfile>>;
 }
 
 const FacilityInfoEdit = ({ profileData }: IFacilityInfoViewProps) => {

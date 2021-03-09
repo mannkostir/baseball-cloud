@@ -1,4 +1,4 @@
-import { leaderboardService } from '@/services/leaderboardService';
+import { leaderboardAPI } from '@/api/leaderboard';
 import { Unpromise } from '@/types/commonTypes';
 import React from 'react';
 import { Link } from 'react-router-dom';
@@ -7,9 +7,7 @@ import { ReactComponent as LikeIcon } from '@/assets/images/heart.svg';
 import { ReactComponent as FilledLikeIcon } from '@/assets/images/like.svg';
 
 interface ILeadersTableProps {
-  leaderboardItems: Unpromise<
-    ReturnType<typeof leaderboardService.getLeaderboard>
-  >;
+  leaderboardItems: Unpromise<ReturnType<typeof leaderboardAPI.getLeaderboard>>;
   toggleFavorite: (id: number, isInFavor: boolean) => void;
   isLoading: boolean;
   type: 'batting' | 'pitching';

@@ -1,5 +1,5 @@
-import fetchAPI from '@/services';
-import { GetTeamsResponse, GetTeamsQuery } from './teamsServiceTypes';
+import fetchAPI from '@/api';
+import { GetTeamsResponse, GetTeamsQuery } from './teamsAPITypes';
 
 export const getTeams = async (query: GetTeamsQuery) => {
   const res = await fetchAPI.post<GetTeamsResponse>(`graphql`, {

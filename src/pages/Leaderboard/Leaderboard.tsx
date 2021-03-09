@@ -4,8 +4,8 @@ import LeaderboardFilters from './components/LeaderboardFilters';
 import LeadersTable from './components/LeadersTable';
 import LoadingScreen from '@/components/LoadingScreen';
 import LeaderPitchingTable from './components/PitchingLeadersTable';
-import { GetLeaderboardQuery } from '@/services/leaderboardService/leaderboardServiceTypes';
-import { useProfileService } from '@/services/profilesService/useProfileService';
+import { GetLeaderboardQuery } from '@/api/leaderboard/leaderboardAPITypes';
+import { useProfileService } from '@/api/profiles/useProfilesAPI';
 import { notificationsActions } from '@/store/notifications';
 import {
   FormValues,

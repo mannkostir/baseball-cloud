@@ -1,4 +1,4 @@
-import fetchAPI from '@/services';
+import fetchAPI from '@/api';
 import {
   GetBattingSummaryQuery,
   GetBattingSummaryResponse,
@@ -15,7 +15,7 @@ import {
   UpdateFavoriteProfileResponse,
   UpdateProfileQuery,
   UpdateProfileResponse,
-} from './profileServiceTypes';
+} from './profilesAPITypes';
 
 export const getProfiles = async (query: GetProfilesQuery) => {
   const res = await fetchAPI.post<GetProfilesResponse>('/graphql', {

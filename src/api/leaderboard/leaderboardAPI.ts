@@ -1,9 +1,9 @@
-import fetchAPI from '@/services';
+import fetchAPI from '@/api';
 import {
   GetLeaderboardQuery,
   GetLeaderboardResponse,
   GetPitchingLeaderboardResponse,
-} from './leaderboardServiceTypes';
+} from './leaderboardAPITypes';
 
 export const getLeaderboard = async (query: GetLeaderboardQuery) => {
   const res = await fetchAPI.post<GetLeaderboardResponse>('/graphql', {

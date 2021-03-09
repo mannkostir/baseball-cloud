@@ -1,4 +1,4 @@
-import { profilesService } from '@/services/profilesService';
+import { profilesAPI } from '@/api/profiles';
 import { BattingSummary, Unpromise } from '@/types/commonTypes';
 import React, { useState } from 'react';
 import BattingValues from '../BattingValues';
@@ -12,7 +12,7 @@ import { useMount } from '@/hooks/useMount';
 type ProfileTabs = 'batting' | 'sessionReports' | 'comparison';
 
 interface IProfileAnalysisProps {
-  profileData: Unpromise<ReturnType<typeof profilesService.getProfile>>;
+  profileData: Unpromise<ReturnType<typeof profilesAPI.getProfile>>;
 }
 
 const ProfileAnalysis = ({ profileData }: IProfileAnalysisProps) => {
@@ -25,7 +25,7 @@ const ProfileAnalysis = ({ profileData }: IProfileAnalysisProps) => {
 
   useMount(() => {
     (async () => {
-      const data = await profilesService.getBattingSummary({
+      const data = await profilesAPI.getBattingSummary({
         id: profileData.id,
       });
 

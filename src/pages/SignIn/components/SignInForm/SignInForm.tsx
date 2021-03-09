@@ -1,4 +1,4 @@
-import { SignInRequest } from '@/services/authService/authServiceTypes';
+import { SignInRequest } from '@/api/auth/authAPITypes';
 import React from 'react';
 import { Form, Field } from 'react-final-form';
 import Input from '@/components/Input';

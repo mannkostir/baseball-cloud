@@ -3,7 +3,7 @@ import {
   SignOutRequest,
   SignUpRequest,
   ValidateTokenRequest,
-} from '@/services/authService/authServiceTypes';
+} from '@/api/auth/authAPITypes';
 import { createAction } from '@reduxjs/toolkit';
 
 enum AuthPublicActions {
