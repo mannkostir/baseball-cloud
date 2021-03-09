@@ -247,9 +247,14 @@ export const updateFavoriteProfile = async (
   return res.data.data.update_favorite_profile;
 };
 
-export const getBattingSummary = async (query: GetBattingSummaryQuery) => {
-  const res = await fetchAPI.post<GetBattingSummaryResponse>('graphql', {
-    query: `query BattingSummary($id:ID!) {
+export const getBattingSummary = async ({
+  cancelToken,
+  ...query
+}: GetBattingSummaryQuery & { cancelToken?: CancelToken }) => {
+  const res = await fetchAPI.post<GetBattingSummaryResponse>(
+    'graphql',
+    {
+      query: `query BattingSummary($id:ID!) {
       batting_summary(id: $id) {
         top_values {
           id
@@ -267,8 +272,10 @@ export const getBattingSummary = async (query: GetBattingSummaryQuery) => {
         }
       }
     }`,
-    variables: { ...query },
-  });
+      variables: { ...query },
+    },
+    { cancelToken }
+  );
 
   return res.data.data.batting_summary;
 };

@@ -8,6 +8,7 @@ import * as Styled from './ProfileAnalysis.styles';
 import { TabButton } from '@/components/Buttons';
 import Sessions from '../Sessions';
 import { useMount } from '@/hooks/useMount';
+import axios, { CancelTokenSource } from 'axios';
 
 type ProfileTabs = 'batting' | 'sessionReports' | 'comparison';
 
@@ -24,13 +25,24 @@ const ProfileAnalysis = ({ profileData }: IProfileAnalysisProps) => {
   }>();
 
   useMount(() => {
-    (async () => {
-      const data = await profilesAPI.getBattingSummary({
-        id: profileData.id,
-      });
+    const source = axios.CancelToken.source();
 
-      setBattingSummary(data);
+    (async () => {
+      try {
+        const data = await profilesAPI.getBattingSummary({
+          id: profileData.id,
+          cancelToken: source.token,
+        });
+
+        setBattingSummary(data);
+      } catch (e) {
+        if (e.message) throw e;
+      }
     })();
+
+    return () => {
+      source.cancel();
+    };
   });
 
   return (
