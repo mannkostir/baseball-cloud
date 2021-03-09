@@ -1,4 +1,4 @@
-import Container from '@/components/Container';
+import FlexContainer from '@/components/FlexContainer';
 import Filters from '@/components/Filters';
 import Icons from '@/components/Icons';
 import LoadingScreen from '@/components/LoadingScreen';
@@ -85,7 +85,7 @@ const Network = () => {
   };
 
   return (
-    <Container>
+    <FlexContainer>
       <Header>
         <h2>Network</h2>
         <NetworkFilters onFiltersChange={onFiltersChange} />
@@ -141,7 +141,7 @@ const Network = () => {
           />
         </div>
       </main>
-    </Container>
+    </FlexContainer>
   );
 };
 

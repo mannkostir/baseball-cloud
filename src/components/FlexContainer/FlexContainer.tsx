@@ -12,11 +12,11 @@ interface IContainerProps {
   children: JSX.Element | JSX.Element[];
 }
 
-const Container = ({
+const FlexContainer = ({
   children,
   ...props
 }: IContainerProps & React.HTMLAttributes<HTMLDivElement>) => {
   return <StyledContainer {...props}>{children}</StyledContainer>;
 };
 
-export default Container;
+export default FlexContainer;

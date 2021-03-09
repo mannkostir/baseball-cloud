@@ -1,1 +1,1 @@
-export { default } from './NetworkContainer';
+export { default } from './Network';

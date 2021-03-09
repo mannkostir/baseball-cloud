@@ -1,4 +1,4 @@
-import Container from '@/components/Container';
+import FlexContainer from '@/components/FlexContainer';
 import Filters from '@/components/Filters';
 import LeaderboardFilters from './components/LeaderboardFilters';
 import LeadersTable from './components/LeadersTable';
@@ -112,7 +112,7 @@ const Leaderboard = () => {
   };
 
   return (
-    <Container>
+    <FlexContainer>
       <Header>
         <h2>Leaderboard</h2>
         <LeaderboardFilters onFiltersChange={onFiltersChange} />
@@ -209,7 +209,7 @@ const Leaderboard = () => {
           )}
         </div>
       </main>
-    </Container>
+    </FlexContainer>
   );
 };
 

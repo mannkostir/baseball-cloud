@@ -15,7 +15,7 @@ import { useParams } from 'react-router-dom';
 import LoadingScreen from '@/components/LoadingScreen';
 import { Unpromise } from '@/types/commonTypes';
 import { parseFormValues } from '@/utils/parseFormValues';
-import Container from '@/components/Container';
+import FlexContainer from '@/components/FlexContainer';
 import Icons from '@/components/Icons';
 import { useDispatch } from 'react-redux';
 import { useProfileService } from '@/services/profilesService/useProfileService';
@@ -138,7 +138,7 @@ const Profile = () => {
   }, [currentProfileId, params.id]);
 
   return (
-    <Container style={{ flexDirection: 'row' }}>
+    <FlexContainer style={{ flexDirection: 'row' }}>
       {profileData && !isLoading ? (
         <>
           <ProfileSidebar.Container>
@@ -240,7 +240,7 @@ const Profile = () => {
       ) : (
         <LoadingScreen />
       )}
-    </Container>
+    </FlexContainer>
   );
 };
 
