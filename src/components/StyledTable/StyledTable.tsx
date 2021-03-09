@@ -3,8 +3,8 @@ import styled from 'styled-components/macro';
 
 const Table = styled.table`
   width: 100%;
-  border-collapse: collapse;
-  border-spacing: 0;
+  border-collapse: separate;
+  border-spacing: 0 4px;
   thead > tr {
     height: 80px;
   }
@@ -28,6 +28,9 @@ const Table = styled.table`
   tbody > td {
     padding: 15px 0;
     margin-bottom: 10px;
+  }
+  td {
+    padding: 15px 0;
   }
 `;
 
