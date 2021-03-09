@@ -98,6 +98,13 @@ const Profile = () => {
 
       dispatch(profileActions.updateProfile(updatedProfile));
 
+      dispatch(
+        notificationsActions.addNotification({
+          status: 'success',
+          message: 'Profile has been updated successfully.',
+        })
+      );
+
       setProfileData({ ...profileData, ...updatedProfile });
     } catch (e) {
       throw e;
