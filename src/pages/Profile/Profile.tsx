@@ -159,7 +159,7 @@ const Profile = () => {
     return () => {
       cancelTokenSource?.cancel();
     };
-  }, [currentProfileId, params.id]);
+  }, [currentProfileId, params.id]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <FlexContainer style={{ flexDirection: 'row' }}>
