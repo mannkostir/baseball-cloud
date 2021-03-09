@@ -84,7 +84,9 @@ const SchoolInfoEdit = ({ profileData }: ISchoolInfoEditProps) => {
   }, [profileData.teams]);
 
   const defaultSchool = useMemo(() => {
-    return { label: profileData.school?.name, value: profileData.school };
+    return profileData.school
+      ? { label: profileData.school?.name, value: profileData.school }
+      : '';
   }, [profileData.school]);
 
   return (
@@ -101,12 +103,18 @@ const SchoolInfoEdit = ({ profileData }: ISchoolInfoEditProps) => {
       </Field>
       <Field
         name="school_year"
-        initialValue={schoolYearOptions.find(
-          (schoolYear) => schoolYear.value === profileData.school_year
-        )}
+        initialValue={
+          schoolYearOptions.find(
+            (schoolYear) => schoolYear.value === profileData.school_year
+          ) || ''
+        }
       >
         {(fieldProps) => (
-          <ProfileSidebar.Select {...fieldProps} options={schoolYearOptions} />
+          <ProfileSidebar.Select
+            {...fieldProps}
+            placeholder="School Year"
+            options={schoolYearOptions}
+          />
         )}
       </Field>
       <Field name="teams" initialValue={defaultTeams}>
