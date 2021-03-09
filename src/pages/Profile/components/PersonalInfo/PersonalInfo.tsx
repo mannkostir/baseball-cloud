@@ -90,32 +90,53 @@ const PersonalInfoEdit = ({ profileData }: IPersonalInfoViewProps) => {
     <>
       <Field
         name="age"
-        parse={(value: string) => (+value >= 0 ? +value : value)}
         initialValue={profileData.age}
+        parse={(value) => (+value > 0 ? +value : null)}
       >
         {(fieldProps) => (
           <ProfileSidebar.Input
             {...fieldProps}
+            required
             placeholder="Age *"
             type="number"
           />
         )}
       </Field>
       <ProfileSidebar.InlineInputsWrapper>
-        <Field name="feet" initialValue={profileData.feet}>
+        <Field
+          name="feet"
+          initialValue={profileData.feet}
+          parse={(value) => (+value > 0 ? +value : null)}
+        >
           {(fieldProps) => (
-            <ProfileSidebar.Input {...fieldProps} placeholder="Feet *" />
+            <ProfileSidebar.Input
+              {...fieldProps}
+              required
+              placeholder="Feet *"
+            />
           )}
         </Field>
-        <Field name="inches" initialValue={profileData.inches}>
+        <Field
+          name="inches"
+          initialValue={profileData.inches}
+          parse={(value) => (+value > 0 ? +value : null)}
+        >
           {(fieldProps) => (
             <ProfileSidebar.Input {...fieldProps} placeholder="Inches" />
           )}
         </Field>
       </ProfileSidebar.InlineInputsWrapper>
-      <Field name="weight" initialValue={profileData.weight}>
+      <Field
+        name="weight"
+        initialValue={profileData.weight}
+        parse={(value) => (+value > 0 ? +value : null)}
+      >
         {(fieldProps) => (
-          <ProfileSidebar.Input {...fieldProps} placeholder="Weight *" />
+          <ProfileSidebar.Input
+            {...fieldProps}
+            required
+            placeholder="Weight *"
+          />
         )}
       </Field>
       <ProfileSidebar.InlineInputsWrapper>
@@ -128,6 +149,7 @@ const PersonalInfoEdit = ({ profileData }: IPersonalInfoViewProps) => {
           {(fieldProps) => (
             <ProfileSidebar.Select
               {...fieldProps}
+              required
               placeholder="Throws *"
               options={throwsOptions}
             />
@@ -142,6 +164,7 @@ const PersonalInfoEdit = ({ profileData }: IPersonalInfoViewProps) => {
           {(fieldProps) => (
             <ProfileSidebar.Select
               {...fieldProps}
+              required
               placeholder="Bats *"
               options={batsOptions}
             />
