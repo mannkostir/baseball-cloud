@@ -1,16 +1,8 @@
 import React, { InputHTMLAttributes, useState } from 'react';
-import {
-  CommonProps,
-  components,
-  GroupTypeBase,
-  OptionTypeBase,
-  IndicatorProps,
-} from 'react-select';
-import ProfileSidebar from '../ProfileSidebar';
+import { components } from 'react-select';
 import * as Styled from './Filters.styles';
 import Icons from '../Icons';
 import { AsyncSelect, Select } from '../FinalFormAdapters';
-import { FieldRenderProps } from 'react-final-form';
 
 const Filters = () => {
   return <div></div>;

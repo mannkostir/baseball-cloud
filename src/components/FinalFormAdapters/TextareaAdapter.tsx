@@ -1,6 +1,5 @@
 import React from 'react';
 import { FieldRenderProps } from 'react-final-form';
-import styled from 'styled-components/macro';
 
 const TextareaAdapter = ({
   input,

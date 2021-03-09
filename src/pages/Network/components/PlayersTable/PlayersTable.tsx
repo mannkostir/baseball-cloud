@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import StyledTable from '@/components/StyledTable';
 import { ReactComponent as LikeIcon } from '@/assets/images/heart.svg';
 import { ReactComponent as FilledLikeIcon } from '@/assets/images/like.svg';
-import LoadingScreen from '@/components/LoadingScreen';
 import { Unpromise } from '@/types/commonTypes';
 import { profilesService } from '@/services/profilesService';
 
@@ -45,13 +44,15 @@ const PlayersTable = ({
             <td>{profile.teams[0] ? profile.teams[0].name : '-'}</td>
             <td>{profile.age}</td>
             <td>
-              <a onClick={() => toggleFavorite(+profile.id, profile.favorite)}>
+              <button
+                onClick={() => toggleFavorite(+profile.id, profile.favorite)}
+              >
                 {profile.favorite ? (
                   <FilledLikeIcon width="17px" height="17px" fill="#48bbff" />
                 ) : (
                   <LikeIcon width="17px" height="17px" fill="#48bbff" />
                 )}
-              </a>
+              </button>
             </td>
           </tr>
         ))}

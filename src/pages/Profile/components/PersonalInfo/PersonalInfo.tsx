@@ -1,11 +1,10 @@
 import { profilesService } from '@/services/profilesService';
 import { Unpromise } from '@/types/commonTypes';
 import React from 'react';
-import { Field, Form } from 'react-final-form';
+import { Field } from 'react-final-form';
 import Icons from '@/components/Icons';
 import ProfileSidebar from '@/components/ProfileSidebar';
 import * as Styled from './PersonalInfo.styles';
-import { Input, Select } from '@/components/FinalFormAdapters';
 
 type ThrowsOptionsType = { label: string; value: 'l' | 'r' }[];
 type BatsOptionsType = ThrowsOptionsType;

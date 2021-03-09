@@ -55,7 +55,7 @@ const LeadersTable = ({
             <td>{leader.launch_angle}</td>
             <td>{leader.distance}</td>
             <td>
-              <a
+              <button
                 onClick={() =>
                   toggleFavorite(leader.batter_datraks_id, leader.favorite)
                 }
@@ -65,7 +65,7 @@ const LeadersTable = ({
                 ) : (
                   <LikeIcon width="17px" height="17px" fill="#48bbff" />
                 )}
-              </a>
+              </button>
             </td>
           </tr>
         ))}

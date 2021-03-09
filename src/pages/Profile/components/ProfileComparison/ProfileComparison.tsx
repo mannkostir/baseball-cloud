@@ -1,19 +1,15 @@
 import { profilesService } from '@/services/profilesService';
 import {
   BattingSummary,
-  FormValues,
-  PlayerPosition,
   ProfileAnalysisInfo,
   ReactSelectOptions,
   Unpromise,
 } from '@/types/commonTypes';
-import React, { useEffect, useState } from 'react';
-import { Field, Form, FormSpy, withTypes } from 'react-final-form';
+import React, { useState } from 'react';
+import { Field, withTypes } from 'react-final-form';
 import Filters from '@/components/Filters';
 import StyledTable from '@/components/StyledTable';
 import UserImage from '@/components/UserImage';
-import { Select } from '@/components/FinalFormAdapters';
-import ProfileSidebar from '@/components/ProfileSidebar';
 
 const gameTypes: Array<'Fastball' | 'Curveball' | 'Changeup' | 'Slider'> = [
   'Fastball',

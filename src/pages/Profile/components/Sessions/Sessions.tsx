@@ -3,7 +3,6 @@ import Filters from '@/components/Filters';
 import StyledTable from '@/components/StyledTable';
 import { profilesService } from '@/services/profilesService';
 import { ReactSelectOptions, Unpromise } from '@/types/commonTypes';
-import { parseFormValues } from '@/utils/parseFormValues';
 import React, { useEffect, useState } from 'react';
 import { Field, withTypes } from 'react-final-form';
 import { components } from 'react-select';
@@ -76,7 +75,7 @@ const Sessions = ({
     if (!query) return;
 
     onFiltersChange(query);
-  }, [query]);
+  }, [query]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const onDateChange = (date: Date) => {
     setDate(date);

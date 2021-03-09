@@ -1,10 +1,9 @@
 import React from 'react';
 import ProfileSidebar from '@/components/ProfileSidebar';
 import styled from 'styled-components/macro';
-import { Form, Field } from 'react-final-form';
+import { Field } from 'react-final-form';
 import { profilesService } from '@/services/profilesService';
 import { Unpromise } from '@/types/commonTypes';
-import { Textarea } from '@/components/FinalFormAdapters';
 
 const AboutContent = styled(ProfileSidebar.Value)`
   color: #788b99;

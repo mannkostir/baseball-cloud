@@ -4,13 +4,11 @@ import {
   ReactSelectOptions,
   Unpromise,
 } from '@/types/commonTypes';
-import React, { useMemo, useState } from 'react';
-import { Field, FormRenderProps } from 'react-final-form';
-import Icons from '@/components/Icons';
+import React, { useMemo } from 'react';
+import { Field } from 'react-final-form';
 import ProfileSidebar from '@/components/ProfileSidebar';
 import UserImage from '@/components/UserImage';
 import * as Styled from './UserInfoCompound.styles';
-import { Input, Select } from '@/components/FinalFormAdapters';
 
 const primaryPositionOptions: ReactSelectOptions<PlayerPosition> = [
   { value: 'catcher', label: 'Catcher' },
@@ -67,13 +65,13 @@ const UserInfoEditForm = ({ profileData }: IUserInfoEditFormProps) => {
     return primaryPositionOptions.find(
       (position) => position.value === profileData.position
     );
-  }, []);
+  }, [profileData.position]);
 
   const initialSecondaryPosition = useMemo(() => {
     return secondaryPositionOptions.find(
       (position) => position.value === profileData.position2
     );
-  }, []);
+  }, [profileData.position2]);
   return (
     <>
       {false && (

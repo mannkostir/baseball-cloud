@@ -3,7 +3,6 @@ import { Facility, ReactSelectOptions, Unpromise } from '@/types/commonTypes';
 import React from 'react';
 import { Field } from 'react-final-form';
 import ProfileSidebar from '@/components/ProfileSidebar';
-import { Select } from '@/components/FinalFormAdapters';
 
 const facilityOptions: ReactSelectOptions<Facility> = [
   {

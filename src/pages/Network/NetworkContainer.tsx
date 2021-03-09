@@ -5,7 +5,6 @@ import LoadingScreen from '@/components/LoadingScreen';
 import NetworkFilters from './components/NetworkFilters';
 import Pagination from '@/components/Pagination';
 import PlayersTable from './components/PlayersTable';
-import { usePagination } from '@/hooks/usePagination';
 import { GetProfilesQuery } from '@/services/profilesService/profileServiceTypes';
 import { useProfileService } from '@/services/profilesService/useProfileService';
 import { notificationsActions } from '@/store/notifications';
@@ -43,7 +42,8 @@ const Network = () => {
     if (!query) return;
 
     fetchNetwork(query);
-  }, [query]);
+    // Exclude fetchNetwork from dependency (doable without disabling, revisit later)
+  }, [query]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const onPageChange = (currentPage: number) => {
     if (!query || !query?.profiles_count) return;
@@ -110,7 +110,7 @@ const Network = () => {
             onChange={(e) =>
               onFiltersChange({
                 ...query,
-                ['player_name']: `${e.target.value}`,
+                player_name: `${e.target.value}`,
               })
             }
           />

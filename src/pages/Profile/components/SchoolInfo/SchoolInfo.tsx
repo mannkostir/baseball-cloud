@@ -1,11 +1,10 @@
 import { profilesService } from '@/services/profilesService';
 import { schoolsService } from '@/services/schoolsService';
 import { teamsService } from '@/services/teamsService';
-import { School, SchoolYear, Team, Unpromise } from '@/types/commonTypes';
-import React, { useCallback, useEffect, useState, useMemo } from 'react';
-import { Field, Form } from 'react-final-form';
+import { SchoolYear, Unpromise } from '@/types/commonTypes';
+import React, { useMemo } from 'react';
+import { Field } from 'react-final-form';
 import ProfileSidebar from '@/components/ProfileSidebar';
-import { AsyncSelect, Select } from '@/components/FinalFormAdapters';
 
 type SchoolYearOptionsType = { value: SchoolYear; label: string }[];
 

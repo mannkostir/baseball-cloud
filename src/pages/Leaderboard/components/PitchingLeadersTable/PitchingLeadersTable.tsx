@@ -51,7 +51,7 @@ const LeaderPitchingTable = ({
             <td>{leader.velocity}</td>
             <td>{leader.spin_rate}</td>
             <td>
-              <a
+              <button
                 onClick={() =>
                   toggleFavorite(leader.pitcher_datraks_id, leader.favorite)
                 }
@@ -61,7 +61,7 @@ const LeaderPitchingTable = ({
                 ) : (
                   <LikeIcon width="17px" height="17px" fill="#48bbff" />
                 )}
-              </a>
+              </button>
             </td>
           </tr>
         ))}

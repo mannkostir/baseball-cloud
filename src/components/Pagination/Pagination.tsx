@@ -12,7 +12,7 @@ const StyledPagination = styled.div`
     display: flex;
     justify-content: center;
   }
-  li > a {
+  li > button {
     position: relative;
     padding: 6px 12px;
     line-height: 1.42857143;
@@ -24,7 +24,7 @@ const StyledPagination = styled.div`
     margin: 0 2px;
     background-color: #f7f8f9;
   }
-  li > a.active {
+  li > button.active {
     pointer-events: none;
     z-index: 3;
     color: #fff;
@@ -55,7 +55,8 @@ const Pagination = ({
 
   useEffect(() => {
     onPageChange(currentPage);
-  }, [currentPage]);
+    // Don't want to pass or mess with useCallback for onPageChange
+  }, [currentPage]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <StyledPagination>

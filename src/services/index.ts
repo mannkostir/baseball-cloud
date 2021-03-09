@@ -1,4 +1,4 @@
-import { RequestHeaders, UserCredentials } from '@/types/commonTypes';
+import { RequestHeaders } from '@/types/commonTypes';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 
 const instance = axios.create({

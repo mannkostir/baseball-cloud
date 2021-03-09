@@ -33,10 +33,6 @@ const AvatarInput = ({
   const [imageName, setImageName] = useState('');
   const [imageUrl, setImageUrl] = useState('');
   const [isImageUploaded, setIsImageUploaded] = useState(false);
-  const [
-    changeEvent,
-    setChangeEvent,
-  ] = useState<React.ChangeEvent<HTMLInputElement> | null>(null);
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -71,6 +67,7 @@ const AvatarInput = ({
     <div>
       <UserImage imageUrl={imageUrl || playerAvatar || null} />
       <div>
+        {isLoading && 'Loading'}
         {!imageUrl || isImageUploaded ? (
           <label htmlFor="userAvatar">Select Photo</label>
         ) : (
@@ -134,7 +131,7 @@ const SelectInput = (props: React.ComponentProps<typeof Select>) => {
           lineHeight: '1.13',
           borderSpacing: '0',
           borderCollapse: 'separate',
-          [':hover']: {
+          ':hover': {
             boxShadow: state.isFocused ? 'none' : '0 1px 0 rgb(0 0 0 / 6%)',
             borderColor: '#48bbff',
           },
@@ -211,7 +208,7 @@ const AsyncSelectInput = (props: React.ComponentProps<typeof AsyncSelect>) => {
           lineHeight: '1.13',
           borderSpacing: '0',
           borderCollapse: 'separate',
-          [':hover']: {
+          ':hover': {
             boxShadow: state.isFocused ? 'none' : '0 1px 0 rgb(0 0 0 / 6%)',
             borderColor: '#48bbff',
           },

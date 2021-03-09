@@ -46,16 +46,20 @@ export const usePagination = ({
 
   const Link = useCallback(
     ({
-      isActive,
+      isActive = false,
       title,
       ...args
-    }: React.HTMLAttributes<HTMLLinkElement> & {
+    }: React.ButtonHTMLAttributes<HTMLButtonElement> & {
       title: string;
-      isActive: boolean;
+      isActive?: boolean;
     }) => {
-      return <a className={isActive ? 'active' : ''}>{title}</a>;
+      return (
+        <button {...args} className={isActive ? 'active' : ''}>
+          {title}
+        </button>
+      );
     },
-    [pagesAmount, currentPage, goToPage]
+    []
   );
 
   const getPreviousPageNumber = () => {
@@ -64,7 +68,7 @@ export const usePagination = ({
       <>
         {currentPage - 2 > 1 && (
           <li>
-            <a aria-disabled={true}>...</a>
+            <Link aria-disabled={true} title="..." />
           </li>
         )}
         <li
@@ -106,7 +110,7 @@ export const usePagination = ({
         )}
         {currentPage + 2 < pagesAmount && (
           <li>
-            <a aria-disabled={true}>...</a>
+            <Link aria-disabled={true} title="..." />
           </li>
         )}
       </>
@@ -117,10 +121,7 @@ export const usePagination = ({
     if (currentPage === 1 || currentPage === pagesAmount) return;
     return (
       <li key={`page${currentPage}`} onClick={() => goToPage(currentPage)}>
-        <Link
-          isActive={currentPage === currentPage}
-          title={currentPage.toString()}
-        />
+        <Link isActive={true} title={currentPage.toString()} />
       </li>
     );
   };
@@ -138,7 +139,7 @@ export const usePagination = ({
       return (
         <ul {...args}>
           <li onClick={previousPage}>
-            <a>{'<<'}</a>
+            <Link aria-disabled={true} title="<<" />
           </li>
           {pagesAmount ? (
             <>
@@ -162,16 +163,17 @@ export const usePagination = ({
             </>
           ) : (
             <li>
-              <a aria-disabled={true}>...</a>
+              <Link aria-disabled={true} title="..." />
             </li>
           )}
           <li onClick={nextPage}>
-            <a>{'>>'}</a>
+            <Link aria-disabled={true} title=">>" />
           </li>
         </ul>
       );
     },
-    [pagesAmount, currentPage, goToPage]
+    // disabling warning in order to exclude functions from dependency array
+    [pagesAmount, currentPage, goToPage] // eslint-disable-line react-hooks/exhaustive-deps
   );
 
   return {

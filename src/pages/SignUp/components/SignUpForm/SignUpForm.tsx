@@ -96,8 +96,9 @@ const SignUpForm = ({ signUp }: ISignUpFormProps) => {
               )}
             </Field>
             <Styled.Legal>
-              By clicking Sign Up, you agree to our <a>Terms of Service</a> and{' '}
-              <a>Privacy Policy</a>.
+              By clicking Sign Up, you agree to our{' '}
+              <a href="/legal/terms">Terms of Service</a> and{' '}
+              <a href="/legal/privacy">Privacy Policy</a>.
             </Styled.Legal>
             <SubmitButton>Sign Up</SubmitButton>
           </form>

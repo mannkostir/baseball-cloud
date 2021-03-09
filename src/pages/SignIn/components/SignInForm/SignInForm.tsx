@@ -37,7 +37,7 @@ const SignInForm = ({ signIn }: ISignInFormProps) => {
         )}
       </Form>
       <Styled.ForgottenPassword>
-        <a>Forgotten password?</a>
+        <button>Forgotten password?</button>
       </Styled.ForgottenPassword>
       <Styled.FormFooter>
         Don't have an account?{' '}

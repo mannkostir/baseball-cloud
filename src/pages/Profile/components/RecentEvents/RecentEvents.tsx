@@ -2,7 +2,6 @@ import { profilesService } from '@/services/profilesService';
 import { Unpromise } from '@/types/commonTypes';
 import React from 'react';
 import Card from '@/components/Card';
-import * as Styled from './RecentEvents.styles';
 
 interface IRecentEvents {
   events: Pick<

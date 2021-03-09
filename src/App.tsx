@@ -6,10 +6,11 @@ import Footer from './components/Footer';
 import Header from './components/Header';
 import LoadingScreen from './components/LoadingScreen';
 import Notifications from './components/Notifications';
+import { useMount } from './hooks/useMount';
 import Routes from './Routes';
 import { authActions, useAuthSelector } from './store/auth';
 import { useNotificationSelector } from './store/notifications';
-import { profileActions, useProfileSelector } from './store/profile';
+import { profileActions } from './store/profile';
 
 function App() {
   const { currentNotifications } = useNotificationSelector();
@@ -17,17 +18,18 @@ function App() {
   const { isAuthenticated, isAuthLoading } = useAuthSelector();
   const dispatch = useDispatch();
 
-  useEffect(() => {
+  useMount(() => {
     if (isAuthenticated) return;
 
     dispatch(authActions.validateToken());
-  }, []);
+  });
 
   useEffect(() => {
     if (!isAuthenticated) return;
 
     dispatch(profileActions.getCurrentProfile());
-  }, [isAuthenticated]);
+    // disabling warning because passing dispatch as dependency is not intended
+  }, [isAuthenticated]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <Router>

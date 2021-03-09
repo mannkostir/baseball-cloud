@@ -19,7 +19,6 @@ import styled from 'styled-components/macro';
 import { useLeaderboard } from './useLeaderboard';
 import { TabButton } from '@/components/Buttons';
 import { Field, Form } from 'react-final-form';
-import { Select } from '@/components/FinalFormAdapters';
 
 const Header = styled.header`
   padding: 16px;
@@ -63,7 +62,8 @@ const Leaderboard = () => {
     if (!query) return;
 
     fetchLeaderboard(query, selectedMode);
-  }, [query]);
+    // Exclude fetchLeaderboard from dependency (doable without disabling, revisit later)
+  }, [query, selectedMode]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const onFiltersChange = async (values: FormValues) => {
     const submitValues = parseFormValues(values);

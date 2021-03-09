@@ -1,4 +1,4 @@
-import React, { HTMLProps, SVGProps } from 'react';
+import React, { SVGProps } from 'react';
 
 const DropdownCaret = ({
   style,

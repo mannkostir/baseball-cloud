@@ -1,12 +1,13 @@
 import { profilesService } from '@/services/profilesService';
 import { BattingSummary, Unpromise } from '@/types/commonTypes';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import BattingValues from '../BattingValues';
 import Card from '@/components/Card';
 import ProfileComparison from '../ProfileComparison';
 import * as Styled from './ProfileAnalysis.styles';
 import { TabButton } from '@/components/Buttons';
 import Sessions from '../Sessions';
+import { useMount } from '@/hooks/useMount';
 
 type ProfileTabs = 'batting' | 'sessionReports' | 'comparison';
 
@@ -22,7 +23,7 @@ const ProfileAnalysis = ({ profileData }: IProfileAnalysisProps) => {
     top_values: BattingSummary[];
   }>();
 
-  useEffect(() => {
+  useMount(() => {
     (async () => {
       const data = await profilesService.getBattingSummary({
         id: profileData.id,
@@ -30,7 +31,7 @@ const ProfileAnalysis = ({ profileData }: IProfileAnalysisProps) => {
 
       setBattingSummary(data);
     })();
-  }, []);
+  });
 
   return (
     <Card>

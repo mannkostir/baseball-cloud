@@ -1,4 +1,4 @@
-import React, { HTMLProps } from 'react';
+import React from 'react';
 
 const Edit = (props: React.SVGProps<SVGSVGElement>) => {
   return (

@@ -1,5 +1,4 @@
 import React from 'react';
-import { FieldInputProps } from 'react-final-form';
 import Select from 'react-select';
 
 const ReactSelectInput = (

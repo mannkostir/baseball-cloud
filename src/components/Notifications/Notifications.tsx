@@ -1,6 +1,6 @@
 import { notificationsActions } from '@/store/notifications';
 import { Notification } from '@/types/commonTypes';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import * as Styled from './Notifications.styles';
 
 interface INotificationProps {
@@ -36,7 +36,8 @@ const NotificationsItem = ({
     } else {
       setTerminateTimeout();
     }
-  }, [isMouseOver]);
+    // The only dependency should be isMouseOver
+  }, [isMouseOver]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <Styled.NotificationWrapper

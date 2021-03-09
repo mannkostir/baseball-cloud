@@ -7,7 +7,7 @@ import {
 } from '@/services/authService/authServiceTypes';
 import { Unpromise } from '@/types/commonTypes';
 import { PayloadAction } from '@reduxjs/toolkit';
-import { call, put, takeEvery, takeLatest } from 'redux-saga/effects';
+import { call, put, takeEvery } from 'redux-saga/effects';
 import { authInternalActions } from './authSlice';
 import { authActions } from '.';
 

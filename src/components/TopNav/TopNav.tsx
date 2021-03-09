@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Icons from '../Icons';
-import ProfileSidebar from '../ProfileSidebar';
 import UserImage from '../UserImage';
 import * as Styled from './TopNav.styled';
 
