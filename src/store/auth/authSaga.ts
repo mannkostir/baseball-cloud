@@ -18,6 +18,11 @@ function* signInWorker(action: PayloadAction<SignInRequest>) {
       action.payload
     );
 
+    localStorage.setItem(
+      'credentials',
+      JSON.stringify({ ...data.credentials })
+    );
+
     yield put(authInternalActions.signInSucceeded(data));
   } catch (e) {
     console.error(e);
@@ -45,6 +50,8 @@ function* signOutWorker(action: PayloadAction<SignOutRequest>) {
       authService.signOut,
       action.payload
     );
+
+    localStorage.removeItem('credentials');
 
     yield put(authInternalActions.signOutSucceeded(data));
   } catch (e) {

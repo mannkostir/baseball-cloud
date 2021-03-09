@@ -26,11 +26,6 @@ const authSlice = createSlice({
       state.userId = action.payload.data.id;
       state.isLoading = false;
       state.error = '';
-
-      localStorage.setItem(
-        'credentials',
-        JSON.stringify({ ...action.payload.credentials })
-      );
     },
     signInFailed(state, action: PayloadAction<{ message: string }>) {
       state.error = action.payload.message;
@@ -45,7 +40,6 @@ const authSlice = createSlice({
       state.isLoading = false;
     },
     signOutSucceeded(state, action: PayloadAction<SignOutResponse>) {
-      localStorage.removeItem('credentials');
       return defaultAuth;
     },
     signOutFailed(state, action: PayloadAction<{ message: string }>) {
