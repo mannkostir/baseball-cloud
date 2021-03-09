@@ -42,7 +42,7 @@ const TopNav = ({ username, avatar = null }: ITopNavProps) => {
           <Styled.UserDropdownToggle
             onClick={() => setIsDropdownOpened((isOpened) => !isOpened)}
           >
-            {username}{' '}
+            {username.trim() ? username : 'Profile Name'}{' '}
             <Icons.NavDropdownCaret
               style={{ marginLeft: '6px', transform: 'translateY(-15%)' }}
             />

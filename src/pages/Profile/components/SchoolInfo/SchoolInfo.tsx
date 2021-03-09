@@ -85,7 +85,7 @@ const SchoolInfoEdit = ({ profileData }: ISchoolInfoEditProps) => {
   }, [profileData.teams]);
 
   const defaultSchool = useMemo(() => {
-    return { label: profileData.school.name, value: profileData.school };
+    return { label: profileData.school?.name, value: profileData.school };
   }, [profileData.school]);
 
   return (

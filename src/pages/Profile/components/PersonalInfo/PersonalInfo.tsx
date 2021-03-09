@@ -65,7 +65,7 @@ const PersonalInfoView = ({ profileData }: IPersonalInfoViewProps) => {
             </Styled.TraitIcon>
             <Styled.TraitTitle>Throws</Styled.TraitTitle>
           </Styled.TraitTitleWrapper>
-          <span>{profileData.throws_hand.toUpperCase()}</span>
+          <span>{profileData.throws_hand?.toUpperCase()}</span>
         </Styled.TraitsItem>
         <Styled.TraitsItem>
           <Styled.TraitTitleWrapper>
@@ -74,7 +74,7 @@ const PersonalInfoView = ({ profileData }: IPersonalInfoViewProps) => {
             </Styled.TraitIcon>
             <Styled.TraitTitle>Bats</Styled.TraitTitle>
           </Styled.TraitTitleWrapper>
-          <span>{profileData.bats_hand.toUpperCase()}</span>
+          <span>{profileData.bats_hand?.toUpperCase()}</span>
         </Styled.TraitsItem>
       </Styled.TraitsList>
     </Styled.Container>

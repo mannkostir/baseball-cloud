@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import * as Styled from './SignUpForm.styles';
 import { Form, Field } from 'react-final-form';
-import Input from '@/components/Input';
 import { UserRole } from '@/types/commonTypes';
 import { SignUpRequest } from '@/services/authService/authServiceTypes';
 import { SubmitButton } from '@/components/Buttons';
+import { Input } from '@/components/FinalFormAdapters';
 
 const rolesDescription: Record<UserRole, { title: string; content: string }> = {
   player: {
@@ -33,6 +33,7 @@ const SignUpForm = ({ signUp }: ISignUpFormProps) => {
   const [selectedRole, setSelectedRole] = useState<UserRole>('player');
 
   const onSubmit = (values: FormValues) => {
+    console.log(values);
     signUp({
       email: values.email,
       password: values.password,
@@ -68,15 +69,31 @@ const SignUpForm = ({ signUp }: ISignUpFormProps) => {
       </Styled.FormHeader>
       <Form onSubmit={onSubmit}>
         {(props) => (
-          <form>
+          <form onSubmit={props.handleSubmit}>
             <Field name="email">
-              {(props) => <Input placeholder="Email" />}
+              {(fieldProps) => (
+                <Input {...fieldProps} placeholder="Email" required={true} />
+              )}
             </Field>
             <Field name="password">
-              {(props) => <Input placeholder="Password" />}
+              {(fieldProps) => (
+                <Input
+                  {...fieldProps}
+                  type="password"
+                  placeholder="Password"
+                  required={true}
+                />
+              )}
             </Field>
             <Field name="passwordConfirmation">
-              {(props) => <Input placeholder="Confirm Password" />}
+              {(fieldProps) => (
+                <Input
+                  {...fieldProps}
+                  type="password"
+                  placeholder="Confirm Password"
+                  required={true}
+                />
+              )}
             </Field>
             <Styled.Legal>
               By clicking Sign Up, you agree to our <a>Terms of Service</a> and{' '}

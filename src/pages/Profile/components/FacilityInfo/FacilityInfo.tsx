@@ -43,7 +43,7 @@ const FacilityInfoEdit = ({ profileData }: IFacilityInfoViewProps) => {
       <Field
         name="facilities"
         initialValue={facilityOptions.find(
-          (option) => option.value.id === profileData.facilities[0].id
+          (option) => option.value.id === profileData.facilities[0]?.id
         )}
       >
         {(fieldProps) => (

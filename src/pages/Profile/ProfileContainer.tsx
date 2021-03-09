@@ -159,7 +159,8 @@ const Profile = () => {
       {profileData && !isLoading ? (
         <>
           <ProfileSidebar.Container>
-            {isEditingProfile ? (
+            {isEditingProfile ||
+            (!profileData.first_name && !profileData.last_name) ? (
               <Form onSubmit={saveChanges}>
                 {(props) => (
                   <form onSubmit={props.handleSubmit}>

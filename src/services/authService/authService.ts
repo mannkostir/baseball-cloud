@@ -30,7 +30,7 @@ export const signIn = async (
 };
 
 export const signUp = async (params: SignUpRequest) => {
-  const { data } = await fetchAPI.post<SignUpResponse>('/auth/sign_up', {
+  const { data } = await fetchAPI.post<SignUpResponse>('/auth', {
     ...params,
   });
 
