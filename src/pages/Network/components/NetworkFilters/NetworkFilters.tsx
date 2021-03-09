@@ -75,14 +75,16 @@ const NetworkFilters = ({ onFiltersChange }: INetworkFiltersProps) => {
           </Field>
           <Field
             name="position"
-            format={(value) => (!value?.value ? { label: 'Position' } : value)}
+            format={(value) =>
+              !value?.value ? { label: 'Position', value: '' } : value
+            }
+            initialValue={PositionOptions[0]}
           >
             {(fieldProps) => (
               <Filters.SelectInput
                 {...fieldProps}
                 placeholder="Position"
                 options={PositionOptions}
-                initialValue={PositionOptions[0]}
               />
             )}
           </Field>

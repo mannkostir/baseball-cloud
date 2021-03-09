@@ -81,7 +81,7 @@ const LeaderboardFilters = ({ onFiltersChange }: ILeaderboardFiltersProps) => {
             <Field
               name="position"
               format={(value) =>
-                !value?.value ? { label: 'Position' } : value
+                !value?.value ? { label: 'Position', value: '' } : value
               }
             >
               {(fieldProps) => (
