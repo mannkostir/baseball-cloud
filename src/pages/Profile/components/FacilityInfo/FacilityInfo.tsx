@@ -39,6 +39,7 @@ interface IFacilityInfoViewProps {
 const FacilityInfoEdit = ({ profileData }: IFacilityInfoViewProps) => {
   return (
     <>
+      <ProfileSidebar.SectionTitle>Facility</ProfileSidebar.SectionTitle>
       <Field
         name="facilities"
         initialValue={facilityOptions.find(

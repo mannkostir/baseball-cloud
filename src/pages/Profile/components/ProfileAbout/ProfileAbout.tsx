@@ -34,6 +34,7 @@ interface IProfileAboutEditProps {
 const ProfileAboutEdit = ({ profileData }: IProfileAboutEditProps) => {
   return (
     <>
+      <ProfileSidebar.SectionTitle>About</ProfileSidebar.SectionTitle>
       <Field name="biography" initialValue={profileData.biography}>
         {(fieldProps) => (
           <ProfileSidebar.Textarea

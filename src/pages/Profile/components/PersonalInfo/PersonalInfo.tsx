@@ -87,6 +87,7 @@ interface IPersonalInfoViewProps {
 const PersonalInfoEdit = ({ profileData }: IPersonalInfoViewProps) => {
   return (
     <>
+      <ProfileSidebar.SectionTitle>Personal Info</ProfileSidebar.SectionTitle>
       <Field
         name="age"
         initialValue={profileData.age}

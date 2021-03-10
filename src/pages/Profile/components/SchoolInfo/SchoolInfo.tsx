@@ -91,6 +91,7 @@ const SchoolInfoEdit = ({ profileData }: ISchoolInfoEditProps) => {
 
   return (
     <>
+      <ProfileSidebar.SectionTitle>School</ProfileSidebar.SectionTitle>
       <Field name="school" initialValue={defaultSchool}>
         {(fieldProps) => (
           <ProfileSidebar.AsyncSelect
